@@ -1,4 +1,0 @@
-[
-	../app-kitty
-	./packages.nix
-]
