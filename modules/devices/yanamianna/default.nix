@@ -15,6 +15,6 @@
 				pkgs.nvim
 				pkgs.tmux
 				pkgs.zsh
-			]
+			];
 	};
 }

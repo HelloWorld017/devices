@@ -1,8 +1,7 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, options, ... }:
 {
 	config = {
 		# Nix Configuration
-		nix.configureBuildUsers = true;
 		nix.settings.substituters = [ "https://cache.nixos.org/" ];
 		nix.settings.trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ]; 
 		nix.settings.trusted-users = [ "@admin" ];
@@ -10,6 +9,15 @@
 		nix.settings.auto-optimise-store = true;
 
 		nixpkgs.config.allowUnfree = true;
-		services.nix-daemon.enable = true;
-	};
+	}
+	// (
+		if (builtins.hasAttr "configureBuildUsers" options.nix) then {
+			nix.configureBuildUsers = true;
+		} else {}
+	)
+	// (
+		if (builtins.hasAttr "nix-daemon" options.services) then {
+			services.nix-daemon.enable = true;
+		} else {}
+	);
 }

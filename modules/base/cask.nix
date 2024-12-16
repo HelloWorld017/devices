@@ -1,6 +1,6 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, options, ... }:
 {
-	config = lib.mkIf pkgs.stdenv.isDarwin {
+	config = if (builtins.hasAttr "homebrew" options) then {
 		# Initialize Homebrew Casks
 		homebrew = {
 			enable = true;
@@ -29,5 +29,5 @@
 
 		env.HOMEBREW_NO_ALAYTICS = "1";
 		env.PATH = [ "/opt/homebrew/bin" ];
-	};
+	} else {};
 }

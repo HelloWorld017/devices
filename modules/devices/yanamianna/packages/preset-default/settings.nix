@@ -4,7 +4,6 @@
 	boot.loader.efi.canTouchEfiVariables = true;
 
 	networking.hostName = "nenw-yanamianna";
-	networking.wireless.enable = true;
 	networking.networkmanager.enable = true;
 
 	time.timeZone = "Asia/Seoul";
