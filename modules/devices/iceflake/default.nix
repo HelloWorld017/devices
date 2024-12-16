@@ -8,11 +8,17 @@
 		in
 			[home-manager.darwinModules.home-manager] ++
 			base ++
-			pkgs.applications.presets.all ++
-			pkgs.cli.presets.all ++
-			pkgs.settings.presets.all ++
-			pkgs.theme.presets.all ++
-			devicePkgs.applications.presets.all ++
-			devicePkgs.cli.presets.all;
+			devicePkgs.preset-default ++
+			devicePkgs.preset-work ++
+			[
+				pkgs.alacritty
+				pkgs.fonts
+				pkgs.git
+				pkgs.karabiner
+				pkgs.kitty
+				pkgs.nvim
+				pkgs.tmux
+				pkgs.zsh
+			];
 	};
 }

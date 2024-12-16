@@ -1,4 +1,4 @@
 {
-	applications = import ./applications;
-	cli = import ./cli;
+	preset-default = import ./preset-default;
+	preset-work = import ./preset-work;
 }

@@ -7,7 +7,10 @@
 		in
 			[home-manager.nixosModules.home-manager] ++
 			base ++
-			pkgs.cli.presets.developments ++
-			pkgs.cli.presets.essentials;
+			[
+				pkgs.nvim
+				pkgs.git
+				pkgs.zsh
+			];
 	};
 }
