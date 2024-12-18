@@ -1,4 +1,4 @@
-{ pkgs, lib, config, options, ... }:
+{ pkgs, lib, options, ... }:
 let
 	user = "nenw";
 in with lib; {
@@ -33,9 +33,15 @@ in with lib; {
 				default = {};
 				description = "Home-manager provided programs";
 			};
+
+			wayland = mkOption {
+				type = attrs;
+				default = {};
+				description = "Home-manager provided wayland settings";
+			};
 		};
 	};
-	
+
 	config = {
 		programs.zsh.enable = true;
 		users.users.${user} = {
@@ -57,6 +63,7 @@ in with lib; {
 				};
 				programs = mkAliasDefinitions options.home.programs;
 				services = mkAliasDefinitions options.home.services;
+				wayland = mkAliasDefinitions options.home.wayland;
 				xdg = {
 					configFile = mkAliasDefinitions options.home.configFile;
 				};

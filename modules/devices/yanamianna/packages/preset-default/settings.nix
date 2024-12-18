@@ -20,6 +20,15 @@
 		LC_TIME = "ko_KR.UTF-8";
 	};
 
+	services.gnome.gnome-keyring.enable = true;
+	services.upower.enable = true;
+	services.pipewire = {
+		enable = true;
+		alsa.enable = true;
+		alsa.support32Bit = true;
+		pulse.enable = true;
+	};
+
 	services.xserver.xkb = {
 		layout = "us";
 		variant = "";
@@ -28,8 +37,13 @@
 	users.users.nenw = {
 		isNormalUser = true;
 		description = "nenw*";
-		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [];
+		extraGroups = [
+			"audio"
+			"docker"
+			"networkmanager"
+			"wheel"
+		];
+		packages = [];
 	};
 
 	system.stateVersion = "24.11";
