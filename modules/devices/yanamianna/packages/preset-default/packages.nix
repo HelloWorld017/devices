@@ -17,29 +17,39 @@
 
 	config = {
 		environment.systemPackages = with pkgs; [
-			wget
+			coreutils
 			git
+			llvmPackages_19.llvm
+			wget
 		];
 
 		home.packages = with pkgs; [
+			android-tools
 			bat
 			btop
+			chromium
+			cmake
+			docker
+			docker-compose
 			eza
 			fastmod
 			fd
+			ffmpeg
 			fzf
 			jq
+			keeweb
 			kubectl
+			musescore
 			nodejs
 			nodePackages.pnpm
 			pkg-config
 			python314
 			pv
 			ripgrep
+			spotify
 			tealdeer
 			thefuck
 			virtualenv
-			wget
 		];
 	};
 }
