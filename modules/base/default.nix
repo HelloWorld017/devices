@@ -1,6 +1,8 @@
-[
-	./cask.nix
-	./env.nix
-	./home.nix
-	./nix.nix
-]
+{
+	imports = [
+		./brew.nix
+		./env.nix
+		./home.nix
+		./nix.nix
+	];
+}

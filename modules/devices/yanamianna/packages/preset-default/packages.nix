@@ -1,5 +1,20 @@
-{ config, lib, pkgs, ... }:
+{ self, pkgs, ... }:
 {
+	imports =
+		let pkgs = import "${self}/modules/packages";
+		in
+			[
+				pkgs.alacritty
+				pkgs.anyrun
+				pkgs.firefox
+				pkgs.fonts
+				pkgs.git
+				pkgs.hyprland
+				pkgs.nvim
+				pkgs.tmux
+				pkgs.zsh
+			];
+
 	config = {
 		environment.systemPackages = with pkgs; [
 			wget

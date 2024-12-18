@@ -1,5 +1,7 @@
-[
-	./hardware.nix
-	./packages.nix
-	./settings.nix
-]
+{
+	imports = [
+		./hardware.nix
+		./packages.nix
+		./settings.nix
+	];
+}

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, options, ... }:
+{ options, ... }:
 {
 	config = if (builtins.hasAttr "homebrew" options) then {
 		# Initialize Homebrew Casks
