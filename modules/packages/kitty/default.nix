@@ -1,17 +1,13 @@
-{ config, lib, pkgs, ... }:
-
+{ options, lib, pkgs, ... }:
 {
 	config = lib.mkMerge [
-		(lib.mkIf pkgs.stdenv.isDarwin {
-			homebrew.casks = [
-				"kitty"
-			];
-		})
-		(lib.mkIf (!pkgs.stdenv.isDarwin) {
-			home.packages = with pkgs; [ kitty ];
+		(if (builtins.hasAttr "homebrew" options) then {
+			homebrew.casks = [ "kitty" ];
+		} else {
+			home.packages = [ pkgs.kitty ];
 		})
 		({
-			home.file.".config/kitty/kitty.conf".text =
+			home.configFile."kitty/kitty.conf".text =
 				(builtins.readFile ./assets/kitty.conf);
 
 			home.programs.zsh = {

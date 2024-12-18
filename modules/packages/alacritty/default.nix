@@ -1,23 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, options, ... }:
 {
 	config = lib.mkMerge [
-		(lib.mkIf pkgs.stdenv.isDarwin {
-			homebrew.casks = [
-				"alacritty"
-			];
-		})
-		(lib.mkIf (!pkgs.stdenv.isDarwin) {
-			home.packages = with pkgs; [ alacritty ];
+		(if (builtins.hasAttr "homebrew" options) then {
+			homebrew.casks = [ "alacritty" ];
+		} else {
+			home.packages = [ pkgs.alacritty ];
 		})
 		({
-			home.file.".config/kitty/kitty.conf".text =
-				(builtins.readFile ./assets/kitty.conf);
-
-			home.programs.zsh = {
-				shellAliases = {
-					icat = "kitty +kitten icat";
-				};
-			};
+			home.configFile."alacritty/alacritty.toml".text =
+				(builtins.readFile ./assets/alacritty.toml);
 		})
 	];
 }
