@@ -39,9 +39,6 @@ call plug#begin('~/.vim/plugged')
 	" surround.vim: Handle parentheses and more surroundings
 	Plug 'tpope/vim-surround'
 
-	" editorconfig.vim: Respect projects' editor configuration
-	Plug 'editorconfig/editorconfig-vim'
-
 	" peekaboo.vim: Show register contents
 	" > Max height issue: junegunn/vim-peekaboo#74
 	" Plug 'junegunn/vim-peekaboo'
