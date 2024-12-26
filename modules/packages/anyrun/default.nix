@@ -16,6 +16,7 @@
 					in with anyrunPkgs; [
 						applications
 						dictionary
+						rink
 						shell
 						symbols
 						translate

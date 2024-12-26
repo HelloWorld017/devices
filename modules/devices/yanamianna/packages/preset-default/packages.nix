@@ -50,6 +50,7 @@ in {
 			telegram-desktop
 			thefuck
 			virtualenv
+			wl-clipboard
 			(repo.overrides.keeweb pkgs)
 		];
 	};
