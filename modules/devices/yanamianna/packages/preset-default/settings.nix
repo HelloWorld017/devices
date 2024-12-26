@@ -46,5 +46,12 @@
 		packages = [];
 	};
 
+	home.wayland.windowManager.hyprland.settings = {
+		monitor = [
+			"desc:DELL U2718Q M5R5, preferred, auto, 1.5"
+			"desc:DELL U2720Q 4M6X, preferred, auto-left, 1.5"
+		];
+	};
+
 	system.stateVersion = "24.11";
 }

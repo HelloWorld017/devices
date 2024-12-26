@@ -1,25 +1,24 @@
 { self, pkgs, ... }:
-{
-	imports =
-		let pkgs = import "${self}/modules/packages";
-		in
-			[
-				pkgs.alacritty
-				pkgs.anyrun
-				pkgs.firefox
-				pkgs.fonts
-				pkgs.git
-				pkgs.hyprland
-				pkgs.nvim
-				pkgs.tmux
-				pkgs.zsh
-			];
+let repo = import "${self}/modules/packages";
+in {
+	imports = [
+		repo.alacritty
+		repo.anyrun
+		repo.firefox
+		repo.fonts
+		repo.git
+		repo.hyprland
+		repo.ime
+		repo.nvim
+		repo.tmux
+		repo.zsh
+	];
 
 	config = {
 		environment.systemPackages = with pkgs; [
+			clang_19
 			coreutils
 			git
-			llvmPackages_19.llvm
 			wget
 		];
 
@@ -29,6 +28,7 @@
 			btop
 			chromium
 			cmake
+			discord
 			docker
 			docker-compose
 			eza
@@ -37,7 +37,6 @@
 			ffmpeg
 			fzf
 			jq
-			keeweb
 			kubectl
 			musescore
 			nodejs
@@ -48,8 +47,10 @@
 			ripgrep
 			spotify
 			tealdeer
+			telegram-desktop
 			thefuck
 			virtualenv
+			(repo.overrides.keeweb pkgs)
 		];
 	};
 }
