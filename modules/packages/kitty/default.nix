@@ -1,7 +1,7 @@
 { options, lib, pkgs, ... }:
 {
 	config = lib.mkMerge [
-		(if (builtins.hasAttr "homebrew" options) then {
+		(if options ? "homebrew" then {
 			homebrew.casks = [ "kitty" ];
 		} else {
 			home.packages = [ pkgs.kitty ];

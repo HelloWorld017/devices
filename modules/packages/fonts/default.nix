@@ -2,7 +2,7 @@
 
 {
 	config = lib.mkMerge [
-		(if (builtins.hasAttr "fontconfig" options.fonts) then {
+		(if options.fonts ? "fontconfig" then {
 			fonts.fontconfig = {
 				enable = true;
 				defaultFonts = {

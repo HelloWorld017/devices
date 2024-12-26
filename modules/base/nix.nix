@@ -11,12 +11,12 @@
 		nixpkgs.config.allowUnfree = true;
 	}
 	// (
-		if (builtins.hasAttr "configureBuildUsers" options.nix) then {
+		if options.nix ? "configureBuildUsers" then {
 			nix.configureBuildUsers = true;
 		} else {}
 	)
 	// (
-		if (builtins.hasAttr "nix-daemon" options.services) then {
+		if options.services ? "nix-daemon" then {
 			services.nix-daemon.enable = true;
 		} else {}
 	);

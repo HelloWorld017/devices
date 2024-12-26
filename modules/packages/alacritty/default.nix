@@ -1,7 +1,7 @@
 { lib, pkgs, options, ... }:
 {
 	config = lib.mkMerge [
-		(if (builtins.hasAttr "homebrew" options) then {
+		(if options ? "homebrew" then {
 			homebrew.casks = [ "alacritty" ];
 		} else {
 			home.packages = [ pkgs.alacritty ];
