@@ -1,5 +1,6 @@
 { self, darwin, home-manager, ... } @inputs:
 let
+	system = "aarch64-darwin";
 	base = import "${self}/modules/base";
 	pkgs = import "${self}/modules/packages";
 	utils = import "${self}/utils";
@@ -7,8 +8,8 @@ let
 in
 	{
 		darwinConfigurations."nenw-iceflake" = darwin.lib.darwinSystem {
-			system = "aarch64-darwin";
-			specialArgs = { inherit self inputs utils; };
+			inherit system;
+			specialArgs = { inherit self inputs utils system; };
 			modules = [
 				base
 				devicePkgs.preset-default

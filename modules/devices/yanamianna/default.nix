@@ -1,13 +1,14 @@
 { self, nixpkgs, home-manager, ... } @inputs:
 let
+	system = "x86_64-linux";
 	base = import "${self}/modules/base";
 	utils = import "${self}/utils";
 	devicePkgs = import ./packages;
 in
 	{
 		nixosConfigurations."nenw-yanamianna" = nixpkgs.lib.nixosSystem {
-			system = "x86_64-linux";
-			specialArgs = { inherit self inputs utils; };
+			inherit system;
+			specialArgs = { inherit self inputs utils system; };
 			modules = [
 				base
 				devicePkgs.preset-default

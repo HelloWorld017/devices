@@ -1,0 +1,3 @@
+font-family = "Sarasa Term K Nerd Font"
+command = "tmux new -A -s default"
+scrollback-limit = 67108864
