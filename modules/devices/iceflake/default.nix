@@ -2,12 +2,13 @@
 let
 	base = import "${self}/modules/base";
 	pkgs = import "${self}/modules/packages";
+	utils = import "${self}/utils";
 	devicePkgs = import ./packages;
 in
 	{
 		darwinConfigurations."nenw-iceflake" = darwin.lib.darwinSystem {
 			system = "aarch64-darwin";
-			specialArgs = { inherit self inputs; };
+			specialArgs = { inherit self inputs utils; };
 			modules = [
 				base
 				devicePkgs.preset-default
