@@ -37,6 +37,7 @@ in {
 			ffmpeg
 			fzf
 			jq
+			keeweb
 			kubectl
 			musescore
 			nodejs
@@ -51,7 +52,6 @@ in {
 			thefuck
 			virtualenv
 			wl-clipboard
-			(repo.overrides.keeweb pkgs)
 		];
 	};
 }

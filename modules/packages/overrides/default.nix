@@ -1,3 +1,0 @@
-{
-	keeweb = import ./keeweb.nix;
-}
