@@ -3,11 +3,10 @@ let
 	system = "aarch64-linux";
 	base = import "${self}/modules/base";
 	pkgs = import "${self}/modules/packages";
-	utils = import "${self}/utils";
 in {
 	nixosConfigurations."nenw-seasalt" = nixpkgs.lib.nixosSystem {
 		inherit system;
-		specialArgs = { inherit self inputs utils system; };
+		specialArgs = { inherit self inputs system; };
 		modules = [
 			base
 			pkgs.nvim
