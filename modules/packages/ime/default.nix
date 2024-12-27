@@ -8,7 +8,50 @@
 				fcitx5-gtk
 				fcitx5-mozc
 				fcitx5-hangul
+				(callPackage ./fcitx5-candlelight.nix {})
+				(callPackage ./fcitx5-fluent.nix {})
 			];
+		};
+
+		# fcitx5 settings
+		home.configFile = {
+			"fcitx5/config" = { text = (builtins.readFile ./assets/fcitx_config); force = true; };
+			"fcitx5/profile" = { text = (builtins.readFile ./assets/fcitx_profile); force = true; };
+			"fcitx5/conf/classicui.conf".text = (builtins.readFile ./assets/fcitx_classicui);
+		};
+
+		services.xserver.xkb = {
+			layout = "ansi-korean";
+			variant = "";
+			options = "";
+			extraLayouts.ansi-korean = {
+				description = "ANSI layout with RAlt Hangul swap, CapsLock issue fix";
+				languages = [ "eng" ];
+				symbolsFile = ./assets/xkb_ansi_korean;
+			};
+		};
+
+		# Because hyprland has different xkeyboard-config deps
+		# > (extraLayouts does not work)
+		home.configFile."xkb/symbols/ansi-korean".text = (builtins.readFile ./assets/xkb_ansi_korean);
+
+		home.wayland.windowManager.hyprland = {
+			settings = {
+				input = {
+					kb_layout = "ansi-korean";
+					kb_variant = "";
+					kb_options = "";
+				};
+
+				windowrule = [
+					"pseudo, fcitx"
+				];
+
+				exec-once = [
+					"fcitx5 -d -r"
+					"fcitx5-remote -r"
+				];
+			};
 		};
 	};
 }

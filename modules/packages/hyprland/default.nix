@@ -67,7 +67,6 @@
 				xwayland = {
 					force_zero_scaling = true;
 				};
-
 			};
 
 			plugins = with pkgs.hyprlandPlugins; [

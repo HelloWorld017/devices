@@ -1,0 +1,16 @@
+xkb_symbols "ansi-korean" {
+	include "us"
+
+	replace key <CAPS> {
+		repeat = no,
+		type[group1] = "ALPHABETIC",
+		symbols[group1] = [ Caps_Lock, Caps_Lock ],
+		actions[group1] = [ LockMods(modifiers=Lock), LockMods(modifiers=Shift+Lock,affect=unlock) ]
+	};
+
+	replace key <RCTL> { [ Hangul_Hanja ] };
+	replace key <RALT> {
+		type[group1] = "ONE_LEVEL",
+		symbols[group1] = [ Hangul ]
+	};
+};

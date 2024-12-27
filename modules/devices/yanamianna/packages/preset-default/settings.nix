@@ -29,11 +29,6 @@
 		pulse.enable = true;
 	};
 
-	services.xserver.xkb = {
-		layout = "us";
-		variant = "";
-	};
-
 	users.users.nenw = {
 		isNormalUser = true;
 		description = "nenw*";
