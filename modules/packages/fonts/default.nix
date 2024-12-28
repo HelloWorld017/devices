@@ -14,8 +14,10 @@
 		} else {})
 		{
 			fonts.packages = with pkgs; [
+				(pkgs.callPackage ./aquatico.nix {})
 				(pkgs.callPackage ./sarasa-gothic.nix {})
 				(pkgs.callPackage ./metropolis.nix {})
+				geist-font
 				pretendard
 				pretendard-jp
 			];

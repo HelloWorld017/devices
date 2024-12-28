@@ -1,8 +1,11 @@
 { pkgs, lib, config, ... }:
 {
 	imports = [
-		./hyprbars.nix
+		./hypridle.nix
+		./hyprlock.nix
 		./keybinds.nix
+
+		# ./hyprbars.nix
 	];
 
 	options = with lib.types; {
