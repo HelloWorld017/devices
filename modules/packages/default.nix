@@ -3,6 +3,7 @@
 	anyrun = import ./anyrun;
 	firefox = import ./firefox;
 	fonts = import ./fonts;
+	ghostty = import ./ghostty;
 	git = import ./git;
 	hyprland = import ./hyprland;
 	ime = import ./ime;

@@ -6,6 +6,7 @@ in {
 		repo.anyrun
 		repo.firefox
 		repo.fonts
+		repo.ghostty
 		repo.git
 		repo.hyprland
 		repo.ime

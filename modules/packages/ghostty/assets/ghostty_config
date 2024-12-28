@@ -1,3 +1,36 @@
-font-family = "Sarasa Term K Nerd Font"
-command = "tmux new -A -s default"
+# Default Options
+initial-command = "tmux new -A -s default"
+command = "tmux new"
+copy-on-select = clipboard
 scrollback-limit = 67108864
+
+# Color & Theme
+foreground = f6f6f6
+background = 101010
+background-opacity = 0.75
+background-blur-radius = 20
+palette = 0=#002221
+palette = 1=#ea3431
+palette = 2=#00b6b6
+palette = 3=#f8b017
+palette = 4=#4894fd
+palette = 5=#e01dca
+palette = 6=#1ab2ad
+palette = 7=#99dddb
+palette = 8=#006562
+palette = 9=#ea3431
+palette = 10=#00b6b6
+palette = 11=#f8b017
+palette = 12=#4894fd
+palette = 13=#e01dca
+palette = 14=#1ab2ad
+palette = 15=#e6f6f6
+window-padding-x = 8
+window-padding-y = 12
+window-padding-balance = true
+gtk-titlebar = false
+
+# Typography
+font-family = "Sarasa Term K Nerd Font"
+font-size = 12
+adjust-cell-height = 20%
