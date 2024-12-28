@@ -1,4 +1,4 @@
-{ pkgs, lib, config, options, ... }:
+{ options, ... }:
 {
 	config = {
 		# Nix Configuration

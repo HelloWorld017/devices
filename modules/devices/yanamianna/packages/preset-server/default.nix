@@ -1,10 +1,11 @@
 {
 	imports = [
 		./firewall.nix
-		./services.nix
+		./ingress.nix
+		./services/openssh.nix
 	];
 
 	config = {
-		virtualisation.docker.enabled = true;
+		virtualisation.podman.enable = true;
 	};
 }

@@ -11,6 +11,7 @@ in
 			modules = [
 				base
 				devicePkgs.preset-default
+				devicePkgs.preset-server
 				home-manager.nixosModules.home-manager
 			];
 		};
