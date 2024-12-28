@@ -50,16 +50,19 @@
 					};
 				};
 
-				env = [
+				env = let
+					asString = val: builtins.toJSON val;
+					asIntString = val: asString (builtins.ceil val);
+				in [
 					# Should not add QT_QPA_PLATFORM,wayland
 					# > Some applications have bugs with wayland (e.g. MuseScore).
 					# > The nixpkg already handles them.
 
 					"QT_AUTO_SCREEN_SCALE_FACTOR,1"
 					"QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-					"GDK_SCALE,${toString config.pkgs.hyprland.scale}"
-					"XCURSOR_SIZE,${toString (16 * config.pkgs.hyprland.scale)}"
-					"HYPRCURSOR_SIZE,${toString (16 * config.pkgs.hyprland.scale)}"
+					"GDK_SCALE,${asString config.pkgs.hyprland.scale}"
+					"XCURSOR_SIZE,${asIntString (16 * config.pkgs.hyprland.scale)}"
+					"HYPRCURSOR_SIZE,${asIntString (16 * config.pkgs.hyprland.scale)}"
 				];
 
 				input = {
@@ -76,6 +79,12 @@
 				hy3
 			];
 		};
+
+		home.packages = with pkgs; [
+			grim
+			hyprpicker
+			slurp
+		];
 
 		environment.sessionVariables = {
 			NIXOS_OZONE_WL = "1";

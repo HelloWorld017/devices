@@ -1,5 +1,5 @@
 { lib, ... }:
-let mainMod = "SUPER";
+let mainMod = "Super";
 in {
 	config = {
 		home.wayland.windowManager.hyprland.settings = {
@@ -18,6 +18,15 @@ in {
 
 				# Group: Super + G
 				"${mainMod}, G, togglegroup"
+
+				# Screenshot: Super + Shift + S
+				("${mainMod} Shift, S, exec, " +
+					''grim -g "$(slurp -b '#000000a0' -c '#ffffff30' -w 1)" - | wl-copy &&'' +
+					''notify-send "Screenshot Taken"'')
+
+				# Picker: Super + Shift + P
+				("${mainMod} Shift, P, exec, " +
+					''wl-copy -p $(hyprpicker -a) && notify-send "Color Picked"'')
 			];
 
 			bindm = [
