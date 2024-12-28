@@ -27,32 +27,40 @@ in {
 			android-tools
 			bat
 			btop
+			buildah
 			chromium
 			cmake
 			discord
-			docker
-			docker-compose
 			eza
+			fastfetch
 			fastmod
 			fd
 			ffmpeg
+			figma-linux
 			fzf
 			jq
 			keeweb
 			kubectl
+			lm_sensors
 			musescore
 			nodejs
 			nodePackages.pnpm
 			pkg-config
+			podman
+			podman-compose
 			python314
 			pv
 			ripgrep
+			smartmontools
 			spotify
 			tealdeer
 			telegram-desktop
 			thefuck
+			unzip
+			usbutils
 			virtualenv
 			wl-clipboard
+			zip
 		];
 	};
 }
