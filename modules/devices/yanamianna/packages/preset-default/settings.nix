@@ -1,10 +1,16 @@
 { config, pkgs, ... }:
 {
+	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
 	networking.hostName = "nenw-yanamianna";
 	networking.networkmanager.enable = true;
+
+	hardware.graphics = {
+		enable = true;
+		enable32Bit = true;
+	};
 
 	time.timeZone = "Asia/Seoul";
 	i18n.defaultLocale = "en_US.UTF-8";
