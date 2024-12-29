@@ -21,6 +21,11 @@
 		};
 
 		ghostty = { url = "github:ghostty-org/ghostty"; };
+		hyprswitch = {
+			url = "github:h3rmt/hyprswitch/release";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		nnf = { url = "github:thelegy/nixos-nftables-firewall"; };
 	};
 

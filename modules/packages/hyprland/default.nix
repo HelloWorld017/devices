@@ -3,6 +3,7 @@
 	imports = [
 		./hypridle.nix
 		./hyprlock.nix
+		./hyprswitch.nix
 		./keybinds.nix
 
 		# ./hyprbars.nix
