@@ -50,6 +50,8 @@
 					allowedUDPPorts = [ 53 ];
 				};
 			};
+
+			# FIXME run `podman network reload` after firewall service reloads
 		};
 	};
 }
