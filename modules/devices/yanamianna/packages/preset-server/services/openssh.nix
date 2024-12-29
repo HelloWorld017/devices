@@ -14,12 +14,10 @@
 		};
 
 		# Firewall
-		networking.nftables.firewall.rules = {
-			ssh = {
-				from = [ "local" ];
-				to = [ "out" ];
-				allowedTCPPorts = [ 37089 ];
-			};
+		yanamianna.firewallRules.ssh = {
+			from = [ "local" ];
+			to = [ "out" ];
+			allowedTCPPorts = [ 37089 ];
 		};
 	};
 }

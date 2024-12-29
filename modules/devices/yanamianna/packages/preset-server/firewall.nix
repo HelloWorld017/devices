@@ -1,8 +1,18 @@
-{ inputs, ... }:
+{ inputs, lib, config, ... }:
 {
 	imports = [
 		inputs.nnf.nixosModules.default
 	];
+
+	options = with lib.types; {
+		yanamianna = {
+			firewallRules = lib.mkOption {
+				type = attrs;
+				default = {};
+				description = "firewall rules";
+			};
+		};
+	};
 
 	config = {
 		networking.nftables.enable = true;
@@ -13,6 +23,7 @@
 			# Zones
 			zones = {
 				uplink = { interfaces = [ "enp4s0" ]; };
+				podman = { interfaces = [ "podman*" ]; };
 				local = {
 					parent = "uplink";
 					ipv4Addresses = [ "192.168.25.0/24" ];
@@ -29,6 +40,15 @@
 				nnf-drop.enable = true;
 				nnf-icmp.enable = true;
 				nnf-loopback.enable = true;
+			};
+
+			# Rules
+			rules = config.yanamianna.firewallRules // {
+				podman = {
+					from = [ "podman" ];
+					to = [ "out" ];
+					allowedUDPPorts = [ 53 ];
+				};
 			};
 		};
 	};
