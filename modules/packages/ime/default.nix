@@ -8,8 +8,8 @@
 				fcitx5-gtk
 				fcitx5-mozc
 				fcitx5-hangul
+				fcitx5-fluent
 				(callPackage ./fcitx5-candlelight.nix {})
-				(callPackage ./fcitx5-fluent.nix {})
 			];
 		};
 
@@ -30,6 +30,10 @@
 				symbolsFile = ./assets/xkb_ansi_korean;
 			};
 		};
+
+		# Workaround for theme issue
+		# > Reference: NixOS/nixpkgs#264815
+		environment.pathsToLink = [ "/share/fcitx5" ];
 
 		# Because hyprland has different xkeyboard-config deps
 		# > (extraLayouts does not work)
