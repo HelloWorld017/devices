@@ -2,37 +2,15 @@
 {
 	options = with lib.types; {
 		yanamianna = {
-			acmeChallengeRoot = lib.mkOption {
-				type = str;
-				default = "/var/lib/acme/.challenges";
-				description = "challenge root for acme";
-			};
-
-			acmeDomainNames = lib.mkOption {
+			acmeReloadServices = lib.mkOption {
 				type = listOf str;
 				default = [];
-				description = "domain names for acme challenge";
+				description = "services which will be reloaded on acme renew";
 			};
 		};
 	};
 
 	config = {
-		services.nginx = {
-			virtualHosts = {
-				"asterisk.nenw.dev" = {
-					serverAliases = [ "*.nenw.dev" ];
-
-					locations."/.well-known/acme-challenge" = {
-						root = config.yanamianna.acmeChallengeRoot;
-					};
-
-					locations."./" = {
-						return = "301 https://$host$request_uri";
-					};
-				};
-			};
-		};
-
 		users.users.nginx = {
 			extraGroups = [ "acme" ];
 		};
@@ -41,9 +19,14 @@
 			acceptTerms = true;
 			defaults.email = "khi@nenw.dev";
 			certs."nenw.dev" = {
-				domain = "asterisk.nenw.dev";
-				webroot = config.yanamianna.acmeChallengeRoot;
-				extraDomainNames = config.yanamianna.acmeDomainNames;
+				dnsProvider = "cloudflare";
+				dnsResolver = "1.1.1.1:53";
+				credentialFiles = {
+					CLOUDFLARE_DNS_API_TOKEN_FILE = "/var/lib/acme/.secrets/cloudflare";
+				};
+				dnsPropagationCheck = true;
+				extraDomainNames = [ "*.nenw.dev" ];
+				reloadServices = [ "nginx" ] ++ config.yanamianna.acmeReloadServices;
 			};
 		};
 	};

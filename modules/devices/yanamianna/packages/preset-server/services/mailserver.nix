@@ -1,14 +1,23 @@
 { ... }:
 {
 	config = {
+		# Service
+		yanamianna.podmanServices.mailserver.enable = true;
+
+		# Ingress
+		yanamianna.ingressRules."webmail.nenw.dev" = {
+			acmeHost = "nenw.dev";
+			proxyPort = 20618;
+		};
+
 		# Firewall
 		yanamianna.firewallRules.mailserver = {
 			from = "all";
-			to = [ "out" ];
+			to = [ "out" "podman" ];
 			allowedTCPPorts = [ 25 110 143 587 993 995 ];
 		};
 
 		# Acme
-		yanamianna.acmeDomainNames = [ "mail-internal.nenw.dev" ];
+		yanamianna.acmeReloadServices = [ "mailserver" ];
 	};
 }

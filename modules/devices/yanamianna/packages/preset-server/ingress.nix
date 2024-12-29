@@ -14,7 +14,28 @@
 		# Service
 		services.nginx = {
 			enable = true;
-			virtualHosts = config.yanamianna.ingressRules;
+			recommendedGzipSettings = true;
+			recommendedOptimisation = true;
+			recommendedProxySettings = true;
+			recommendedTlsSettings = true;
+
+			virtualHosts = lib.mapAttrs (name: value: lib.mkMerge [
+				{
+					forceSSL = true;
+				}
+				(lib.mkIf (value ? "acmeHost") {
+					useACMEHost = value.acmeHost;
+				})
+				(lib.mkIf (!(value ? "acmeHost")) {
+					enableACME = true;
+				})
+				(lib.mkIf (value ? "proxyPort") {
+					locations."/" = {
+						proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
+					};
+				})
+				(removeAttrs value ["proxyPort" "acmeHost"])
+			]) config.yanamianna.ingressRules;
 		};
 
 		# Firewall
