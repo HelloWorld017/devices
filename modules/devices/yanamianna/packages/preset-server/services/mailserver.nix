@@ -13,7 +13,7 @@
 		# Firewall
 		yanamianna.firewallRules.mailserver = {
 			from = "all";
-			to = [ "out" "podman" ];
+			to = "all";
 			allowedTCPPorts = [ 25 110 143 587 993 995 ];
 		};
 

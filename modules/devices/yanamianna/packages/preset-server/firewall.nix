@@ -16,6 +16,20 @@
 
 	config = {
 		networking.nftables.enable = true;
+		networking.nftables.chains = let
+			internalRule = {
+				after = lib.mkForce ["veryEarly"];
+				before = ["conntrack" "early"];
+				rules = lib.singleton ''
+					iifname { lo } accept
+					iifname { podman* } accept
+				'';
+			};
+		in {
+			input.internal = internalRule;
+			forward.internal = internalRule;
+		};
+
 		networking.nftables.firewall = {
 			enable = true;
 			localZoneName = "out";
@@ -39,19 +53,9 @@
 				nnf-conntrack.enable = true;
 				nnf-drop.enable = true;
 				nnf-icmp.enable = true;
-				nnf-loopback.enable = true;
 			};
 
-			# Rules
-			rules = config.yanamianna.firewallRules // {
-				podman = {
-					from = [ "podman" ];
-					to = [ "out" ];
-					allowedUDPPorts = [ 53 ];
-				};
-			};
-
-			# FIXME run `podman network reload` after firewall service reloads
+			# FIXME nftable flushes podman rules
 		};
 	};
 }
