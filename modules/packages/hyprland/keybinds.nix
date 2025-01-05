@@ -44,6 +44,9 @@ in {
 				"${mainMod}, ], changegroupactive, f"
 				"${mainMod}, [, changegroupactive, b"
 
+				# Lock: Super + Ctrl + Q
+				"${mainMod} Ctrl, Q, exec, loginctl lock-session"
+
 				# Screenshot: Super + Shift + S
 				("${mainMod} Shift, S, exec, " +
 					''grim -g "$(slurp -b 000000a0 -c ffffff30 -w 1)" - | wl-copy && '' +
