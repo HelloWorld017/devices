@@ -27,6 +27,7 @@ in {
 			android-tools
 			bat
 			binwalk
+			blender-hip
 			btop
 			buildah
 			chromium
@@ -46,6 +47,7 @@ in {
 			keeweb
 			kubectl
 			lm_sensors
+			loupe
 			musescore
 			nautilus
 			nodejs
@@ -63,8 +65,11 @@ in {
 			thefuck
 			unzip
 			usbutils
+			verapdf
 			virtualenv
+			wev
 			wl-clipboard
+			yt-dlp
 			zip
 		];
 	};
