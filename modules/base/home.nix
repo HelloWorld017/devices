@@ -16,6 +16,12 @@ in with lib; {
 				description = "Config files to place in $HOME/.config";
 			};
 
+			defaultApplications = mkOption {
+				type = attrs;
+				default = {};
+				description = "Default applications to open mime (currently not active)";
+			};
+
 			services = mkOption {
 				type = attrs;
 				default = {};
@@ -65,6 +71,10 @@ in with lib; {
 				services = mkAliasDefinitions options.home.services;
 				wayland = mkAliasDefinitions options.home.wayland;
 				xdg = {
+					mimeApps = {
+						enable = false;
+						defaultApplications = mkAliasDefinitions options.home.defaultApplications;
+					};
 					configFile = mkAliasDefinitions options.home.configFile;
 				};
 			};

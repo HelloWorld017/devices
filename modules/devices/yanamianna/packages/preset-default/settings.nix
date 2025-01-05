@@ -54,5 +54,14 @@
 		];
 	};
 
+	home.defaultApplications = let
+		browser = [ "firefox.desktop" ];
+		imageViewer = [ "org.gnome.Loupe.dekstop" ];
+	in {
+		"application/pdf" = browser;
+		"image/svg+xml" = browser;
+		"image/jpeg" = imageViewer;
+	};
+
 	system.stateVersion = "24.11";
 }
