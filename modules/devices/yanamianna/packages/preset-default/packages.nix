@@ -26,10 +26,12 @@ in {
 		home.packages = with pkgs; [
 			android-tools
 			bat
+			binwalk
 			btop
 			buildah
 			chromium
 			cmake
+			dig
 			discord
 			eza
 			fastfetch
@@ -37,12 +39,15 @@ in {
 			fd
 			ffmpeg
 			figma-linux
+			file
 			fzf
+			inetutils
 			jq
 			keeweb
 			kubectl
 			lm_sensors
 			musescore
+			nautilus
 			nodejs
 			nodePackages.pnpm
 			pkg-config
