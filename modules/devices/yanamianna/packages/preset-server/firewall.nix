@@ -56,6 +56,7 @@
 			};
 
 			# FIXME nftable flushes podman rules
+			rules = config.yanamianna.firewallRules;
 		};
 	};
 }
