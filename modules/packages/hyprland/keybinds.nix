@@ -41,8 +41,8 @@ in {
 				"${mainMod} Shift, G, moveoutofgroup, active"
 
 				# Group Rotation: Super + ][
-				"${mainMod}, ], changegroupactive, f"
-				"${mainMod}, [, changegroupactive, b"
+				"${mainMod}, bracketleft, changegroupactive, f"
+				"${mainMod}, bracketright, changegroupactive, b"
 
 				# Lock: Super + Ctrl + Q
 				"${mainMod} Ctrl, Q, exec, loginctl lock-session"
