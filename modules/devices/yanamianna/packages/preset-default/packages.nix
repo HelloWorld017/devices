@@ -42,6 +42,7 @@ in {
 			figma-linux
 			file
 			fzf
+			ghostscript
 			inetutils
 			jq
 			keeweb
