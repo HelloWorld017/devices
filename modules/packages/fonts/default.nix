@@ -13,6 +13,7 @@
 			};
 		} else {})
 		{
+			fonts.fontDir.enable = true;
 			fonts.packages = with pkgs; [
 				(pkgs.callPackage ./aquatico.nix {})
 				(pkgs.callPackage ./sarasa-gothic.nix {})
