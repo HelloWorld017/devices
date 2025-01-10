@@ -106,6 +106,7 @@ let
 
 		"eslint" = {
 			"format.enable" = true;
+			"experimental.useFlatConfig" = true;
 
 			# the eslint's formatter takes lower priority than the tsserver's
 			"autoFixOnSave" = true;
