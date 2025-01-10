@@ -43,6 +43,7 @@ in {
 			file
 			fzf
 			ghostscript
+			gjs
 			inetutils
 			jq
 			keeweb
@@ -56,6 +57,7 @@ in {
 			pkg-config
 			podman
 			podman-compose
+			protobuf
 			python314
 			pv
 			ripgrep
