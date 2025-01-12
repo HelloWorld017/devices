@@ -20,6 +20,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		figma-linux = {
+			url = "github:HelloWorld017/figma-linux-nixos";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		ghostty = { url = "github:ghostty-org/ghostty"; };
 		hyprswitch = {
 			url = "github:h3rmt/hyprswitch/release";

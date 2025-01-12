@@ -1,4 +1,4 @@
-{ self, pkgs, ... }:
+{ self, pkgs, inputs, system, ... }:
 let repo = import "${self}/modules/packages";
 in {
 	imports = [
@@ -39,7 +39,6 @@ in {
 			fastmod
 			fd
 			ffmpeg
-			figma-linux
 			file
 			fzf
 			ghostscript
@@ -74,6 +73,8 @@ in {
 			wl-clipboard
 			yt-dlp
 			zip
+
+			inputs.figma-linux.packages.${system}.default
 		];
 	};
 }
