@@ -67,7 +67,7 @@ in {
 			thefuck
 			unzip
 			usbutils
-			verapdf
+			# verapdf: build error in 1.26.4
 			virtualenv
 			wev
 			wl-clipboard
