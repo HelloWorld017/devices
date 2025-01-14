@@ -1,4 +1,4 @@
-{ pkgs, rollingPkgs, ... }:
+{ pkgs, inputs, system, ... }:
 
 let
 	cocSettings = {
@@ -123,7 +123,7 @@ in {
 
 		home.programs.neovim = {
 			enable = true;
-			package = rollingPkgs.neovim-unwrapped;
+			package = inputs.neovim-nightly.packages.${system}.default;
 			extraConfig = builtins.readFile ./assets/init.nvim;
 		};
 

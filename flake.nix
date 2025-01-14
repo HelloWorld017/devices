@@ -32,6 +32,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		neovim-nightly = {
+			url = "github:nix-community/neovim-nightly-overlay";
+			inputs.nixpkgs.follows = "nixpkgs-rolling";
+		};
+
 		nnf = { url = "github:thelegy/nixos-nftables-firewall"; };
 	};
 
