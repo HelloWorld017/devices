@@ -1,18 +1,18 @@
-{ self, nixpkgs, nixpkgs-rolling, home-manager, ... } @inputs:
+{ nixpkgs, home-manager, ... } @inputs:
 let
-	system = "x86_64-linux";
-	base = import "${self}/modules/base";
-	devicePkgs = import ./packages;
-	rollingPkgs = nixpkgs-rolling.legacyPackages.${system};
+	device = (import ../utils.nix).defineDevice {
+		inherit inputs;
+		system = "x86_64-linux";
+	};
+	deviceRepo = import ./packages;
 in
 	{
 		nixosConfigurations."nenw-yanamianna" = nixpkgs.lib.nixosSystem {
-			inherit system;
-			specialArgs = { inherit self inputs system rollingPkgs; };
+			inherit (device) system specialArgs;
 			modules = [
-				base
-				devicePkgs.preset-default
-				devicePkgs.preset-server
+				device.base
+				deviceRepo.preset-default
+				deviceRepo.preset-server
 				home-manager.nixosModules.home-manager
 			];
 		};

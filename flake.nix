@@ -15,6 +15,8 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		std = { url = "github:chessai/nix-std"; };
+
 		# Other Inputs
 		anyrun = {
 			url = "github:anyrun-org/anyrun";

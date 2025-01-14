@@ -1,17 +1,17 @@
-{ self, nixpkgs, home-manager, ... } @inputs:
+{ nixpkgs, home-manager, ... } @inputs:
 let
-	system = "aarch64-linux";
-	base = import "${self}/modules/base";
-	pkgs = import "${self}/modules/packages";
+	device = (import ../utils.nix).defineDevice {
+		inherit inputs;
+		system = "aarch64-linux";
+	};
 in {
 	nixosConfigurations."nenw-seasalt" = nixpkgs.lib.nixosSystem {
-		inherit system;
-		specialArgs = { inherit self inputs system; };
-		modules = [
+		inherit (device) system specialArgs;
+		modules = with device; [
 			base
-			pkgs.nvim
-			pkgs.git
-			pkgs.zsh
+			repo.nvim
+			repo.git
+			repo.zsh
 			home-manager.nixosModules.home-manager
 		];
 	};

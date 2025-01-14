@@ -1,6 +1,5 @@
-{ self, pkgs, inputs, system, ... }:
-let repo = import "${self}/modules/packages";
-in {
+{ pkgs, repo, inputs, system, ... }:
+{
 	imports = [
 		repo.alacritty
 		repo.anyrun
