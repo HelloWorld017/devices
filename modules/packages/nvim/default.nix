@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, rollingPkgs, ... }:
 
 let
 	cocSettings = {
@@ -120,8 +120,10 @@ in {
 			nil
 			nodePackages.graphql-language-service-cli
 		];
+
 		home.programs.neovim = {
 			enable = true;
+			package = rollingPkgs.neovim-unwrapped;
 			extraConfig = builtins.readFile ./assets/init.nvim;
 		};
 

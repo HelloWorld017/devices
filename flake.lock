@@ -273,6 +273,22 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/e9b51731911566bbf7e4895475a87fe06961de0b.tar.gz"
       }
     },
+    "nixpkgs-rolling": {
+      "locked": {
+        "lastModified": 1736755442,
+        "narHash": "sha256-a3MMEY7i/wdF0gb7WFNTn6onzaiMOvwj7OerRVenA8o=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ef56e777fedaa4da8c66a150081523c5de1e0171",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1733423277,
@@ -349,6 +365,7 @@
         "home-manager": "home-manager",
         "hyprswitch": "hyprswitch",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-rolling": "nixpkgs-rolling",
         "nnf": "nnf"
       }
     },
