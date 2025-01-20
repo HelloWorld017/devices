@@ -40,6 +40,12 @@ in with lib; {
 				description = "Home-manager provided programs";
 			};
 
+			fonts = mkOption {
+				type = attrs;
+				default = {};
+				description = "Home-manager provided fonts";
+			};
+
 			wayland = mkOption {
 				type = attrs;
 				default = {};
@@ -67,6 +73,7 @@ in with lib; {
 					packages = mkAliasDefinitions options.home.packages;
 					stateVersion = "22.05";
 				};
+				fonts = mkAliasDefinitions options.home.fonts;
 				programs = mkAliasDefinitions options.home.programs;
 				services = mkAliasDefinitions options.home.services;
 				wayland = mkAliasDefinitions options.home.wayland;
