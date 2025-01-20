@@ -60,7 +60,6 @@
 			pv
 			ripgrep
 			smartmontools
-			spotify
 			tealdeer
 			telegram-desktop
 			thefuck
@@ -74,6 +73,7 @@
 			zip
 
 			inputs.figma-linux.packages.${system}.default
+			(repo.patches pkgs).spotify
 		];
 	};
 }

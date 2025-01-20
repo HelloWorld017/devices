@@ -10,6 +10,7 @@
 	karabiner = import ./karabiner;
 	kitty = import ./kitty;
 	nvim = import ./nvim;
+	patches = import ./patches;
 	tmux = import ./tmux;
 	zsh = import ./zsh;
 }
