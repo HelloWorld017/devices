@@ -53,7 +53,7 @@
 				} //
 				{
 					# Desktop Environment Related Aliases
-					"e." = "open .";
+					"e." = if pkgs.stdenv.isDarwin then "open ." else "xdg-open .";
 				};
 
 			initExtra = (builtins.readFile ./assets/init.zsh);
