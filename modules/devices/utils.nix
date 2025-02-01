@@ -5,7 +5,10 @@
 			repo = import "${self}/modules/packages";
 			self = inputs.self;
 			std = inputs.std.lib;
-			rollingPkgs = inputs.nixpkgs-rolling.legacyPackages.${system};
+			rollingPkgs = import inputs.nixpkgs-rolling {
+				inherit system;
+				config.allowUnfree = true;
+			};
 		in {
 			inherit base repo system;
 

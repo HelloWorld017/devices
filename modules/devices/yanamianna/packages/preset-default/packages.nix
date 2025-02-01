@@ -1,4 +1,4 @@
-{ pkgs, repo, inputs, system, ... }:
+{ pkgs, rollingPkgs, repo, inputs, system, ... }:
 {
 	imports = [
 		repo.alacritty
@@ -32,7 +32,6 @@
 			chromium
 			cmake
 			dig
-			discord
 			eza
 			fastfetch
 			fastmod
@@ -66,6 +65,7 @@
 			unzip
 			usbutils
 			# verapdf: build error in 1.26.4
+			vesktop
 			virtualenv
 			wev
 			wl-clipboard
