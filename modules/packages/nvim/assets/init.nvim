@@ -69,6 +69,9 @@ call plug#begin('~/.vim/plugged')
 	Plug 'sonph/onehalf', { 'rtp': 'vim' }
 	Plug 'nyoom-engineering/oxocarbon.nvim'
 	Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+
+	" fcitx.nvim: Integrate with fcitx
+	Plug 'niuiic/fcitx.nvim'
 call plug#end()
 
 " Editor Configuration
@@ -359,6 +362,10 @@ lua << EOF
 	}
 
 	vim.notify = require'notify'
+
+	if vim.fn.has('linux') then
+		require'fcitx'.setup()
+	end
 
 	-- require'flit'.setup()
 EOF
