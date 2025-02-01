@@ -1,5 +1,5 @@
 [Hotkey]
-EnumerateWithTriggerKeys=True
+EnumerateWithTriggerKeys=False
 EnumerateSkipFirst=False
 EnumerateGroupForwardKeys=
 EnumerateGroupBackwardKeys=
@@ -10,7 +10,6 @@ EnumerateGroupBackwardKeys=
 2=Hangul
 
 [Hotkey/AltTriggerKeys]
-0=Shift_L
 
 [Hotkey/EnumerateForwardKeys]
 0=Super+space
@@ -23,6 +22,7 @@ EnumerateGroupBackwardKeys=
 
 [Hotkey/DeactivateKeys]
 0=Hangul_Romaja
+1=Escape
 
 [Hotkey/PrevPage]
 0=Up
