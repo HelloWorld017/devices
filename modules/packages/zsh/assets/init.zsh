@@ -54,13 +54,6 @@ zinit wait lucid light-mode for \
 zinit wait lucid light-mode for \
 	zdharma/history-search-multi-word
 
-# > Docker Compose (for Mac)
-zinit lucid light-mode for \
-	as"completion" is-snippet id-as"docker-completions/docker" \
-		"https://github.com/docker/cli/blob/master/contrib/completion/zsh/_docker" \
-	as"completion" is-snippet id-as"docker-completions/docker-compose" \
-		"https://github.com/docker/compose/blob/master/contrib/completion/zsh/_docker-compose"
-
 # Fuzzy Finder
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers color=always {}'"
