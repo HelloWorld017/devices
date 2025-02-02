@@ -17,6 +17,7 @@
 
 		security.acme = {
 			acceptTerms = true;
+			preliminarySelfsigned = true;
 			defaults.email = "khi@nenw.dev";
 			certs."nenw.dev" = {
 				dnsProvider = "cloudflare";
@@ -26,8 +27,17 @@
 				};
 				dnsPropagationCheck = true;
 				extraDomainNames = [ "*.nenw.dev" ];
+				renewInterval = "weekly";
 				reloadServices = [ "nginx" ] ++ config.yanamianna.acmeReloadServices;
 			};
+
+			certs."localhost" = {
+				server = "https://127.0.0.1/acme-failing";
+				webroot = "/var/lib/acme/.challenges-failing";
+				renewInterval = "yearly";
+			};
 		};
+
+		systemd.services."acme-localhost".enable = lib.mkForce false;
 	};
 }
