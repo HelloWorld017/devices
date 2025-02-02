@@ -23,6 +23,7 @@
 				rules = lib.singleton ''
 					iifname { lo } accept
 					iifname { podman* } accept
+					iifname { tailscale* } accept
 				'';
 			};
 		in {

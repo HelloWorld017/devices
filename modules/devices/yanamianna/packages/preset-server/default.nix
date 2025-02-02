@@ -7,5 +7,6 @@
 		./services/blog.nix
 		./services/mailserver.nix
 		./services/openssh.nix
+		./services/tailscale.nix
 	];
 }
