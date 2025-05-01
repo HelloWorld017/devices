@@ -7,17 +7,17 @@ A repository containing nix-based configurations which is currently running on m
 * `packages/` - per-application configs
 
 ## Devices
-* `matchafloat`
-	* Status: `Draft`
-	* Device: LG Gram 2-in-1 14 (2019)
-	* Platform: home-manager on Arch Linux
 * `seasalt`
 	* Status: `Draft`
 	* Device: Galaxy Tab S9
 	* Platform: home-manager on Android with custom kernel
+* `akebi`
+	* Status: `Active`
+	* Device: Ryzen 5700X
+	* Platform: NixOS 25.05 on Windows 11 + WSL2
 * `yanamianna`
 	* Status: `Active`
-	* Device: Ryzen 5700X / Radeon RX7600 XT
+	* Device: Ryzen 5700G
 	* Platform: NixOS 25.05
 
 ### Deprecated Devices
