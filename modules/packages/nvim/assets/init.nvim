@@ -363,7 +363,7 @@ lua << EOF
 
 	vim.notify = require'notify'
 
-	if vim.fn.has('linux') then
+	if vim.fn.has('linux') and string.find(vim.env.GTK_IM_MODULE or '', 'fcitx') then
 		require'fcitx'.setup()
 	end
 
