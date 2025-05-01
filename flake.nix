@@ -16,6 +16,7 @@
 		};
 
 		std = { url = "github:chessai/nix-std"; };
+		wsl = { url = "github:nix-community/NixOS-WSL/main"; };
 
 		# Other Inputs
 		anyrun = {
