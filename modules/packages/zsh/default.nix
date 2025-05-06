@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, options, ... }:
 
 {
 	config = {
@@ -51,10 +51,20 @@
 					dcdown = "docker-compose down";
 					kc = "kubectl";
 				} //
-				{
-					# Desktop Environment Related Aliases
-					"e." = if pkgs.stdenv.isDarwin then "open ." else "xdg-open .";
-				};
+				(if options ? "wsl" then {
+					# Windows-Only Aliases
+					"e." = "explorer.exe .";
+					"pbcopy" = "win32yank.exe -i";
+					"pbpaste" = "win32yank.exe -o";
+				} else if pkgs.stdenv.isDarwin then {
+					# Mac-Only Aliases
+					"e." = "open .";
+				} else {
+					# Linux-Only Aliases
+					"e." = "xdg-open .";
+					"pbcopy" = "wl-copy";
+					"pbpaste" = "wl-paste";
+				});
 
 			initExtra = (builtins.readFile ./assets/init.zsh);
 		};

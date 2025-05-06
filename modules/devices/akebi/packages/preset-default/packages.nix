@@ -4,6 +4,7 @@
 		repo.git
 		repo.nvim
 		repo.tmux
+		repo.wsl
 		repo.zsh
 	];
 

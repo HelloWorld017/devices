@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, wsl, ... } @inputs:
+{ nixpkgs, home-manager, ... } @inputs:
 let
 	device = (import ../utils.nix).defineDevice {
 		inherit inputs;
@@ -13,7 +13,6 @@ in
 				device.base
 				deviceRepo.preset-default
 				home-manager.nixosModules.home-manager
-				wsl.nixosModules.default
 			];
 		};
 	}

@@ -12,5 +12,6 @@
 	nvim = import ./nvim;
 	patches = import ./patches;
 	tmux = import ./tmux;
+	wsl = import ./wsl;
 	zsh = import ./zsh;
 }
