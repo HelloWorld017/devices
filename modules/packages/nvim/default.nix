@@ -69,6 +69,13 @@ let
 			};
 		};
 
+		# UI / Inlay
+		"inlayHint" = {
+			"enable" = true;
+			"enableParameter" = true;
+			"position" = "eol";
+		};
+
 		# LSP
 		"languageserver" = {
 			"graphql" = {
@@ -89,6 +96,10 @@ let
 		};
 
 		"typescript" = {
+			"inlayHints" = {
+				"parameterNames.enabled" = "literals";
+			};
+
 			"format" = {
 				"enable" = false;
 			};
@@ -104,12 +115,14 @@ let
 			"filetypes" = ["graphql"];
 		};
 
+		"editor.codeActionsOnSave" = {
+			# the eslint's formatter takes lower priority than the tsserver's
+			"source.fixAll.eslint" = "always";
+		};
+
 		"eslint" = {
 			"format.enable" = true;
 			"experimental.useFlatConfig" = true;
-
-			# the eslint's formatter takes lower priority than the tsserver's
-			"autoFixOnSave" = true;
 		};
 	};
 in {
