@@ -1,5 +1,7 @@
 { pkgs, rollingPkgs, repo, inputs, system, ... }:
-{
+let
+	patchedPkgs = (repo.patches pkgs);
+in {
 	imports = [
 		repo.alacritty
 		repo.anyrun
@@ -37,6 +39,7 @@
 			fastmod
 			fd
 			ffmpeg
+			inputs.figma-linux.packages.${system}.default
 			file
 			fzf
 			ghostscript
@@ -50,30 +53,30 @@
 			musescore
 			nautilus
 			nodejs
-			nodePackages.pnpm
+			obs-studio
 			pkg-config
+			nodePackages.pnpm
 			podman
 			podman-compose
+			prismlauncher
 			protobuf
 			python314
 			pv
 			ripgrep
 			smartmontools
+			patchedPkgs.spotify
 			tealdeer
 			telegram-desktop
 			thefuck
 			unzip
 			usbutils
 			# verapdf: build error in 1.26.4
-			vesktop
+			rollingPkgs.vesktop
 			virtualenv
 			wev
 			wl-clipboard
 			yt-dlp
 			zip
-
-			inputs.figma-linux.packages.${system}.default
-			(repo.patches pkgs).spotify
 		];
 	};
 }
