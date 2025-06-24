@@ -72,6 +72,10 @@ call plug#begin('~/.vim/plugged')
 
 	" fcitx.nvim: Integrate with fcitx
 	Plug 'niuiic/fcitx.nvim'
+
+	" Comment.nvim : Commenting / Commenting-out
+	Plug 'numToStr/Comment.nvim'
+	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 call plug#end()
 
 " Editor Configuration
@@ -179,6 +183,11 @@ inoremap <silent><expr> <TAB>
 		\ : CheckBackspace()
 			\ ? "\<Tab>"
 			\ : coc#refresh()
+
+" > Commenting
+" >> C to commenting
+nmap <silent> cc gcc<CR>
+vmap <silent> C gb<CR>
 
 inoremap <silent><expr> <S-TAB>
 	\ coc#pum#visible()
@@ -366,6 +375,14 @@ lua << EOF
 	if vim.fn.has('linux') and string.find(vim.env.GTK_IM_MODULE or '', 'fcitx') then
 		require'fcitx'.setup()
 	end
+
+	require'ts_context_commentstring'.setup {
+		enable_autocmd = false
+	}
+
+	require'Comment'.setup {
+		pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+	}
 
 	-- require'flit'.setup()
 EOF
