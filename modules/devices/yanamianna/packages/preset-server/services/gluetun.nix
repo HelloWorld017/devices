@@ -5,7 +5,7 @@
 		yanamianna.podmanServices.gluetun.enable = true;
 
 		# Firewall
-		yanamianna.firewallRules.ssh = {
+		yanamianna.firewallRules.gluetun = {
 			from = [ "local" ];
 			to = [ "out" ];
 			allowedTCPPorts = [ 30021 ];
