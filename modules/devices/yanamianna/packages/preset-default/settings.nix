@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
+	boot.supportedFilesystems = [ "ntfs" ];
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
