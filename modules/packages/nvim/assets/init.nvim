@@ -244,7 +244,7 @@ let g:coc_global_extensions = [ 'coc-highlight' ]
 call extend(g:coc_global_extensions, [ 'coc-tsserver', 'coc-eslint', 'coc-biome' ])
 
 " > Web Development
-call extend(g:coc_global_extensions, [ 'coc-css', 'coc-html' ])
+call extend(g:coc_global_extensions, [ 'coc-css', 'coc-html', '@yaegassy/coc-volar' ])
 
 " > Structured Data
 call extend(g:coc_global_extensions, [ 'coc-json', 'coc-protobuf', 'coc-yaml' ])
