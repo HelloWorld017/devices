@@ -13,6 +13,10 @@
 		enable32Bit = true;
 	};
 
+	hardware.bluetooth = {
+		enable = true;
+	};
+
 	time.timeZone = "Asia/Seoul";
 	i18n.defaultLocale = "en_US.UTF-8";
 	i18n.extraLocaleSettings = {
@@ -28,6 +32,7 @@
 	};
 
 	programs.noisetorch.enable = true;
+	services.blueman.enable = true;
 	services.gnome.gnome-keyring.enable = true;
 	services.upower.enable = true;
 	services.pipewire = {
