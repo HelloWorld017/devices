@@ -48,7 +48,7 @@ zinit wait lucid light-mode for \
 	blockf \
 		zsh-users/zsh-completions \
 	atload"!_zsh_autosuggest_start" \
-		zsh-users/zsh-autosuggestions
+		HelloWorld017/zsh-autosuggestions
 
 # > History Search
 zinit wait lucid light-mode for \
