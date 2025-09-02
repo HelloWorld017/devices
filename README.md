@@ -7,14 +7,14 @@ A repository containing nix-based configurations which is currently running on m
 * `packages/` - per-application configs
 
 ## Devices
-* `seasalt`
-	* Status: `Draft`
-	* Device: Galaxy Tab S9
-	* Platform: home-manager on Android with custom kernel
 * `akebi`
 	* Status: `Active`
 	* Device: Ryzen 5700X
 	* Platform: NixOS 25.05 on Windows 11 + WSL2
+* `shigureui`
+	* Status: `Active`
+	* Device: ASUS Zenbook S14 (UX5406SA, Intel Lunar Lake 258V)
+	* Platform: NixOS 25.05
 * `yanamianna`
 	* Status: `Active`
 	* Device: Ryzen 5700G
@@ -25,6 +25,10 @@ A repository containing nix-based configurations which is currently running on m
 	* Status: `Deprecated`
 	* Device: Macbook Pro 14 (2021)
 	* Platform: nix-darwin
+* `seasalt`
+	* Status: `Draft`
+	* Device: Galaxy Tab S9
+	* Platform: home-manager on Android with custom kernel
 
 ## Screenshot
 Not Yet
