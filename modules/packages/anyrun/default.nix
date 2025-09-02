@@ -1,27 +1,21 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
 	config = {
-		home-manager.sharedModules = [
-			inputs.anyrun.homeManagerModules.default
-		];
-
 		home.programs.anyrun = {
 			enable = true;
 			config = {
 				x = { fraction = 0.5; };
 				y = { fraction = 0.3; };
 				width = { fraction = 0.3; };
-				plugins =
-					let anyrunPkgs = inputs.anyrun.packages.${pkgs.system};
-					in with anyrunPkgs; [
-						applications
-						dictionary
-						rink
-						shell
-						symbols
-						translate
-						websearch
-					];
+				plugins = [
+					"${pkgs.anyrun}/lib/libapplications.so"
+					"${pkgs.anyrun}/lib/libdictionary.so"
+					"${pkgs.anyrun}/lib/librink.so"
+					"${pkgs.anyrun}/lib/libshell.so"
+					"${pkgs.anyrun}/lib/libsymbols.so"
+					"${pkgs.anyrun}/lib/libtranslate.so"
+					"${pkgs.anyrun}/lib/libwebsearch.so"
+				];
 			};
 
 			extraCss = (builtins.readFile ./assets/style.css);

@@ -62,6 +62,3 @@ export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers color=always {}'"
 export GF_SNAPSHOT_DIRECTORY="$HOME/.git-fuzzy-snapshots"
 zinit ice as"program" pick"bin/git-fuzzy"
 zinit light bigH/git-fuzzy
-
-# The Fuck
-eval $(thefuck --alias)

@@ -48,7 +48,6 @@
 			ripgrep
 			spicetify-cli
 			tealdeer
-			thefuck
 			virtualenv
 			wget
 		];

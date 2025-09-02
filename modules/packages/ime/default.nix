@@ -48,7 +48,7 @@
 				};
 
 				windowrule = [
-					"pseudo, fcitx"
+					"pseudo, class:fcitx"
 				];
 
 				exec-once = [

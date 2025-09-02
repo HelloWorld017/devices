@@ -28,7 +28,7 @@ in {
 			android-tools
 			bat
 			binwalk
-			blender-hip
+			blender
 			btop
 			buildah
 			chromium
@@ -50,15 +50,12 @@ in {
 			kubectl
 			lm_sensors
 			loupe
-			musescore
 			nautilus
 			nodejs
-			obs-studio
 			pkg-config
 			nodePackages.pnpm
 			podman
 			podman-compose
-			prismlauncher
 			protobuf
 			python314
 			pv
@@ -69,7 +66,6 @@ in {
 			telegram-desktop
 			unzip
 			usbutils
-			# verapdf: build error in 1.26.4
 			rollingPkgs.vesktop
 			virtualenv
 			wev

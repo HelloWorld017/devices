@@ -11,4 +11,5 @@
 			# ((import ./seasalt) inputs)
 			((import ./akebi) inputs)
 			((import ./yanamianna) inputs)
+			((import ./shigureui) inputs)
 		]

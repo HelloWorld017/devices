@@ -70,8 +70,8 @@ call plug#begin('~/.vim/plugged')
 	Plug 'nyoom-engineering/oxocarbon.nvim'
 	Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 
-	" fcitx.nvim: Integrate with fcitx
-	Plug 'niuiic/fcitx.nvim'
+	" im-switch.nvim: Integrate with fcitx
+	Plug 'niuiic/im-switch.nvim'
 
 	" Comment.nvim : Commenting / Commenting-out
 	Plug 'numToStr/Comment.nvim'
@@ -373,7 +373,19 @@ lua << EOF
 	vim.notify = require'notify'
 
 	if vim.fn.has('linux') and string.find(vim.env.GTK_IM_MODULE or '', 'fcitx') then
-		require'fcitx'.setup()
+		require'im-switch'.setup({
+			is_active = function(resolve)
+				vim.system({ "fcitx5-remote" }, nil, function(res)
+					resolve(string.find(res.stdout, "1") == nil)
+				end)
+			end,
+			active_input_method = function()
+				vim.system({ "fcitx5-remote", "-o" })
+			end,
+			inactive_input_method = function()
+				vim.system({ "fcitx5-remote", "-c" })
+			end
+		})
 	end
 
 	require'ts_context_commentstring'.setup {

@@ -37,7 +37,6 @@
 			pv
 			ripgrep
 			tealdeer
-			thefuck
 			unzip
 			virtualenv
 			yt-dlp

@@ -21,7 +21,7 @@
 			fonts.fontDir.enable = true;
 			fonts.packages = with pkgs; [
 				(pkgs.callPackage ./aquatico.nix {})
-				(pkgs.callPackage ./geologica.nix {})
+				# (pkgs.callPackage ./geologica.nix {})
 				(pkgs.callPackage ./sarasa-gothic.nix {})
 				(pkgs.callPackage ./metropolis.nix {})
 				(pkgs.callPackage ./nothing5x7.nix {})
