@@ -66,7 +66,7 @@
 					"pbpaste" = "wl-paste";
 				});
 
-			initExtra = (builtins.readFile ./assets/init.zsh);
+			initContent = (builtins.readFile ./assets/init.zsh);
 		};
 	};
 }

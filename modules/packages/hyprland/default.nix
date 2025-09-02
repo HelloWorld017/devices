@@ -105,12 +105,10 @@
 			NIXOS_OZONE_WL = "1";
 		};
 
-		services.xserver = {
-			displayManager = {
-				gdm = {
-					enable = true;
-					wayland = true;
-				};
+		services.displayManager = {
+			gdm = {
+				enable = true;
+				wayland = true;
 			};
 		};
 	};
