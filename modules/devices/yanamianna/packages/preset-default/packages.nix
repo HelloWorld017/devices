@@ -72,6 +72,7 @@ in {
 			# verapdf: build error in 1.26.4
 			rollingPkgs.vesktop
 			virtualenv
+			wakeonlan
 			wev
 			wl-clipboard
 			yt-dlp
