@@ -55,20 +55,6 @@ in {
 				# Picker: Super + Shift + P
 				("${mainMod} Shift, P, exec, " +
 					''wl-copy -p $(hyprpicker -a) && notify-send "Color Picked"'')
-
-				# Switch: Alt + (Shift +) Tab, Alt + (Shift +) Grave
-				("Alt, tab, exec, " +
-					''hyprshell gui --mod-key alt_l --key tab --close mod-key-release '' +
-					''--reverse-key=mod=shift && hyprshell dispatch'')
-				("Alt Shift, tab, exec, " +
-					''hyprshell gui --mod-key alt_l --key tab --close mod-key-release '' +
-					''--reverse-key=mod=shift && hyprshell dispatch -r'')
-				("Alt, grave, exec, " +
-					''hyprshell gui -s --mod-key alt_l --key grave --close mod-key-release '' +
-					''--reverse-key=mod=shift && hyprshell dispatch'')
-				("Alt Shift, grave, exec, " +
-					''hyprshell gui -s --mod-key alt_l --key grave --close mod-key-release '' +
-					''--reverse-key=mod=shift && hyprshell dispatch -r'')
 			];
 
 			binde = lib.flatten [

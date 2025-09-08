@@ -63,11 +63,6 @@
 	};
 
 	home.wayland.windowManager.hyprland.settings = {
-		# monitor = [
-			# "DP-2, preferred, auto, 1.5"
-			# "HDMI-A-1, preferred, auto-left, 1.5"
-		# ];
-
 		device = [
 			{
 				name = "asup1208:00-093a:3011-touchpad";
@@ -85,8 +80,11 @@
 		"image/jpeg" = imageViewer;
 	};
 
-
 	home.programs.anyrun.config.width = { fraction = 0.45; };
+
+	pkgs.hyprland = {
+		wallpaperDirectory = "/home/nenw/wallpapers";
+	};
 
 	system.stateVersion = "25.05";
 }
