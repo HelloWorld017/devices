@@ -3,8 +3,9 @@
 	imports = [
 		./hypridle.nix
 		./hyprlock.nix
-		./hyprswitch.nix
+		./hyprshell.nix
 		./keybinds.nix
+		./wallpaper.nix
 
 		# ./hyprbars.nix
 	];
@@ -83,6 +84,7 @@
 					"rounding 0, floating:0, onworkspace:w[tv1]s[false]"
 					"bordersize 0, floating:0, onworkspace:f[1]s[false]"
 					"rounding 0, floating:0, onworkspace:f[1]s[false]"
+					"float, workspace:10"
 				];
 
 				xwayland = {

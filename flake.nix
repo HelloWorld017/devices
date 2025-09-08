@@ -25,7 +25,7 @@
 		};
 
 		ghostty = { url = "github:ghostty-org/ghostty"; };
-		hyprswitch = {
+		hyprshell = {
 			url = "github:h3rmt/hyprshell/hyprshell-release";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};

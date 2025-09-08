@@ -44,7 +44,9 @@ in {
 			fzf
 			ghostscript
 			gjs
+			gnome-text-editor
 			inetutils
+			jetbrains.rider
 			jq
 			keeweb
 			kubectl
@@ -57,13 +59,18 @@ in {
 			podman
 			podman-compose
 			protobuf
+			pulseaudio
 			python314
 			pv
 			ripgrep
 			smartmontools
+			parsec-bin
 			patchedPkgs.spotify
 			tealdeer
 			telegram-desktop
+			(pkgs.unityhub.override {
+				extraLibs = pkgs: with pkgs; [ openssl_1_1 ];
+			})
 			unzip
 			usbutils
 			rollingPkgs.vesktop
@@ -72,6 +79,10 @@ in {
 			wl-clipboard
 			yt-dlp
 			zip
+		];
+		
+		nixpkgs.config.permittedInsecurePackages = [
+			"openssl-1.1.1w"
 		];
 	};
 }

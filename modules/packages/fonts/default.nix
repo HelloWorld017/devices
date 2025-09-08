@@ -13,7 +13,20 @@
 					};
 				};
 			in {
-				fonts.fontconfig = fontConfig;
+				fonts.fontconfig = fontConfig // {
+					localConf = ''
+						<!-- Prevent ugly fonts are showing for japanese -->
+						<match>
+							<test compare="contains" name="lang">
+								<string>ja</string>
+							</test>
+							<edit mode="prepend" name="family">
+								<string>Pretendard JP</string>
+							</edit>
+						</match>
+					'';
+				};
+
 				home.fonts.fontconfig = fontConfig;
 			}
 		else {})

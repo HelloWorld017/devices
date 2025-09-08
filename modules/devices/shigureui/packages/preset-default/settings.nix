@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
@@ -11,6 +11,10 @@
 	hardware.graphics = {
 		enable = true;
 		enable32Bit = true;
+		extraPackages = with pkgs; [
+			intel-media-driver
+			vpl-gpu-rt
+		];
 	};
 
 	hardware.bluetooth = {
@@ -35,6 +39,10 @@
 	services.blueman.enable = true;
 	services.gnome.gnome-keyring.enable = true;
 	services.upower.enable = true;
+	services.tailscale = {
+		enable = true;
+		useRoutingFeatures = "client";
+	};
 	services.pipewire = {
 		enable = true;
 		alsa.enable = true;
@@ -76,6 +84,9 @@
 		"image/svg+xml" = browser;
 		"image/jpeg" = imageViewer;
 	};
+
+
+	home.programs.anyrun.config.width = { fraction = 0.45; };
 
 	system.stateVersion = "25.05";
 }

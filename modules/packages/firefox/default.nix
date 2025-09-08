@@ -75,6 +75,12 @@ in
 							install_url = "https://addons.mozilla.org/firefox/downloads/latest/violentmonkey/latest.xpi";
 							installation_mode = "force_installed";
 						};
+
+						# Rainy NewTab
+						"rainynewtab@nenw.dev" = {
+							install_url = "https://addons.mozilla.org/firefox/downloads/latest/rainy-newtab/latest.xpi";
+							installation_mode = "force_installed";
+						};
 					};
 
 					Preferences = {

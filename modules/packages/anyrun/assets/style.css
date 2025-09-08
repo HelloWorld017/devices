@@ -1,6 +1,6 @@
 * {
 	all: unset;
-	font-size: 1.3rem;
+	font-size: 1.15rem;
 }
 
 #window,
@@ -46,16 +46,16 @@
 
 list > #plugin {
 	border-radius: 16px;
-	margin: 0 0.3rem;
+	margin: 0.6rem 0.3rem;
+	padding: 0.6rem;
 }
+
 list > #plugin:first-child {
 	margin-top: 0.3rem;
 }
+
 list > #plugin:last-child {
 	margin-bottom: 0.3rem;
-}
-list > #plugin:hover {
-	padding: 0.6rem;
 }
 
 box#main {

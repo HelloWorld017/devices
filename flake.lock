@@ -2,11 +2,11 @@
   "nodes": {
     "crane": {
       "locked": {
-        "lastModified": 1750266157,
-        "narHash": "sha256-tL42YoNg9y30u7zAqtoGDNdTyXTi8EALDeCB13FtbQA=",
+        "lastModified": 1756705356,
+        "narHash": "sha256-dpBFe8SqYKr7W6KN5QOVCr8N76SBKwTslzjw+4BVBVs=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "e37c943371b73ed87faf33f7583860f81f1d5a48",
+        "rev": "305707bbc27d83aa1039378e91d7dd816f4cac10",
         "type": "github"
       },
       "original": {
@@ -146,16 +146,16 @@
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
-          "hyprswitch",
+          "hyprshell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1749398372,
-        "narHash": "sha256-tYBdgS56eXYaWVW3fsnPQ/nFlgWi/Z2Ymhyu21zVM98=",
+        "lastModified": 1756770412,
+        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "9305fe4e5c2a6fcf5ba6a3ff155720fbe4076569",
+        "rev": "4524271976b625a4a605beefd893f270620fd751",
         "type": "github"
       },
       "original": {
@@ -358,16 +358,16 @@
     "home-manager_2": {
       "inputs": {
         "nixpkgs": [
-          "hyprswitch",
+          "hyprshell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1750798083,
-        "narHash": "sha256-DTCCcp6WCFaYXWKFRA6fiI2zlvOLCf5Vwx8+/0R8Wc4=",
+        "lastModified": 1756903364,
+        "narHash": "sha256-vZh/YH2D7oDFek10r0TbGn3qJrqGv69sSP+oF8PFDqQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ff31a4677c1a8ae506aa7e003a3dba08cb203f82",
+        "rev": "6159629d05a0e92bb7fb7211e74106ae1d552401",
         "type": "github"
       },
       "original": {
@@ -376,7 +376,7 @@
         "type": "github"
       }
     },
-    "hyprswitch": {
+    "hyprshell": {
       "inputs": {
         "crane": "crane",
         "flake-parts": "flake-parts",
@@ -386,11 +386,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750983993,
-        "narHash": "sha256-AfOG2MCHRp/p894mJhCRRGTLd+DpWKAp3Epf5dR7S/E=",
+        "lastModified": 1757283614,
+        "narHash": "sha256-7qpe4ovjY7dKfkUMvcCPiyFoFkSfz3e2BK5bh4X+LLI=",
         "owner": "h3rmt",
         "repo": "hyprshell",
-        "rev": "601c7eb1a61854d0d70b257447e9ddc044810855",
+        "rev": "c9b14df6e9355f09f39849fa2c00c0719ae98dd8",
         "type": "github"
       },
       "original": {
@@ -557,7 +557,7 @@
         "figma-linux": "figma-linux",
         "ghostty": "ghostty",
         "home-manager": "home-manager",
-        "hyprswitch": "hyprswitch",
+        "hyprshell": "hyprshell",
         "neovim-nightly": "neovim-nightly",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-rolling": "nixpkgs-rolling",

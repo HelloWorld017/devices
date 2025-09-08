@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
 	config = {
 		home.programs.anyrun = {
@@ -6,7 +6,7 @@
 			config = {
 				x = { fraction = 0.5; };
 				y = { fraction = 0.3; };
-				width = { fraction = 0.3; };
+				width = lib.mkDefault { fraction = 0.3; };
 				plugins = [
 					"${pkgs.anyrun}/lib/libapplications.so"
 					"${pkgs.anyrun}/lib/libdictionary.so"
