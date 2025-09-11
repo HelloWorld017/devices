@@ -46,6 +46,7 @@ in {
 			gjs
 			gnome-text-editor
 			inetutils
+			jetbrains.clion
 			jetbrains.rider
 			jq
 			keeweb
@@ -66,6 +67,7 @@ in {
 			smartmontools
 			parsec-bin
 			patchedPkgs.spotify
+			slack
 			tealdeer
 			telegram-desktop
 			(pkgs.unityhub.override {

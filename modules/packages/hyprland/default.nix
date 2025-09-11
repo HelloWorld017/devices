@@ -72,6 +72,10 @@
 					repeat_delay = 300;
 					follow_mouse = 2;
 					numlock_by_default = true;
+
+					touchpad = {
+						disable_while_typing = false;
+					};
 				};
 
 				workspace = [
