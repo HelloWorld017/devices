@@ -27,6 +27,7 @@ in {
 		home.packages = with pkgs; [
 			android-tools
 			bat
+			better-control
 			binwalk
 			blender
 			btop

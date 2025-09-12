@@ -46,6 +46,12 @@ in with lib; {
 				description = "Home-manager provided fonts";
 			};
 
+			gtk = mkOption {
+				type = attrs;
+				default = {};
+				description = "Home-manager provided gtk settings";
+			};
+
 			wayland = mkOption {
 				type = attrs;
 				default = {};
@@ -74,6 +80,7 @@ in with lib; {
 					stateVersion = "22.05";
 				};
 				fonts = mkAliasDefinitions options.home.fonts;
+				gtk = mkAliasDefinitions options.home.gtk;
 				programs = mkAliasDefinitions options.home.programs;
 				services = mkAliasDefinitions options.home.services;
 				wayland = mkAliasDefinitions options.home.wayland;

@@ -1,11 +1,12 @@
 { pkgs, lib, config, ... }:
 {
 	imports = [
+		./hyprcursor.nix
 		./hypridle.nix
 		./hyprlock.nix
 		./hyprshell.nix
+		./hyprpaper.nix
 		./keybinds.nix
-		./wallpaper.nix
 
 		# ./hyprbars.nix
 	];
@@ -106,6 +107,19 @@
 			hyprpicker
 			slurp
 		];
+
+		home.gtk = {
+			enable = true;
+			theme = {
+				name = "WhiteSur-Dark";
+				package = pkgs.whitesur-gtk-theme;
+			};
+
+			iconTheme = {
+				name = "Colloid";
+				package = pkgs.colloid-icon-theme;
+			};
+		};
 
 		environment.sessionVariables = {
 			NIXOS_OZONE_WL = "1";
