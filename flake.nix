@@ -24,7 +24,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		ghostty = { url = "github:ghostty-org/ghostty"; };
+		ghostty = {
+			url = "github:ghostty-org/ghostty";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		hyprshell = {
 			url = "github:h3rmt/hyprshell/hyprshell-release";
 			inputs.nixpkgs.follows = "nixpkgs";
