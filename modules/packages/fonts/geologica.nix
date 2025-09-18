@@ -5,8 +5,8 @@ let
 in fetchurl {
 	name = "geologica-${version}";
 
-	url = "https://github.com/googlefonts/geologica/blob/685f38d7c9e86b0c8530204c97ddcaf6558dd17b/fonts/variable/Geologica%5BCRSV%2CSHRP%2Cslnt%2Cwght%5D.ttf";
-	sha256 = "sha256-+2z5ciyUlkatE0hFOyaazsiD/N7uW9ZJiVixxTTVSxE=";
+	url = "https://github.com/googlefonts/geologica/raw/685f38d7c9e86b0c8530204c97ddcaf6558dd17b/fonts/variable/Geologica%5BCRSV,SHRP,slnt,wght%5D.ttf";
+	sha256 = "sha256-RVIQcv9DxyGkQVIl1XvlujMlIKNHQA3vWZawSJn0jfs=";
 
 	recursiveHash = true;
 	downloadToTemp = true;
