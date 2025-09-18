@@ -7,6 +7,7 @@
 		./hyprshell.nix
 		./hyprpaper.nix
 		./keybinds.nix
+		./midnightway.nix
 
 		# ./hyprbars.nix
 	];

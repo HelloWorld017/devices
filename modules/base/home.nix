@@ -67,6 +67,12 @@ with lib; {
 				default = {};
 				description = "Home-manager provided wayland settings";
 			};
+
+			lib = mkOption {
+				type = attrs;
+				default = {};
+				description = "Home-manager provided libs";
+			};
 		};
 	};
 
@@ -105,5 +111,7 @@ with lib; {
 				};
 			};
 		};
+
+		home.lib = config.home-manager.users.${config.home.user}.lib;
 	};
 }

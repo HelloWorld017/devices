@@ -84,6 +84,7 @@
 
 	pkgs.hyprland = {
 		wallpaperDirectory = "/home/nenw/wallpapers";
+		midnightway.system.gpuCard = null;
 	};
 
 	system.stateVersion = "25.05";
