@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
@@ -83,7 +83,7 @@
 	home.programs.anyrun.config.width = { fraction = 0.45; };
 
 	pkgs.hyprland = {
-		wallpaperDirectory = "/home/nenw/wallpapers";
+		wallpaperDirectory = "${config.home.path}/wallpapers";
 		midnightway.system.gpuCard = null;
 	};
 

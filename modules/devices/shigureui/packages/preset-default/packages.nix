@@ -33,6 +33,7 @@ in {
 			btop
 			buildah
 			chromium
+			jetbrains.clion
 			cmake
 			dig
 			eza
@@ -48,8 +49,6 @@ in {
 			gjs
 			gnome-text-editor
 			inetutils
-			jetbrains.clion
-			jetbrains.rider
 			jq
 			keeweb
 			kubectl
@@ -65,6 +64,7 @@ in {
 			pulseaudio
 			python314
 			pv
+			jetbrains.rider
 			ripgrep
 			smartmontools
 			parsec-bin
