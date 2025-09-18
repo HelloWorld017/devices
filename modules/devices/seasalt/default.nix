@@ -12,7 +12,6 @@ in {
 			repo.nvim
 			repo.git
 			repo.zsh
-			home-manager.nixosModules.home-manager
 		];
 	};
 }

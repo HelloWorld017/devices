@@ -1,10 +1,11 @@
 {
 	defineDevice = { inputs, system }:
 		let
-			base = import "${self}/modules/base";
-			repo = import "${self}/modules/packages";
 			self = inputs.self;
 			std = inputs.std.lib;
+			kind = if std.string.hasSuffix "darwin" system then "darwin" else "nixos";
+			base = (import "${self}/modules/base") kind;
+			repo = import "${self}/modules/packages";
 			rollingPkgs = import inputs.nixpkgs-rolling {
 				inherit system;
 				config.allowUnfree = true;

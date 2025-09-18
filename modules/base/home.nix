@@ -1,9 +1,19 @@
-{ pkgs, lib, options, inputs, ... }:
-let
-	user = "nenw";
-in with lib; {
+{ pkgs, lib, config, options, ... }:
+with lib; {
 	options = with types; {
 		home = {
+			user = mkOption {
+				type = str;
+				default = "nenw";
+				description = "User name";
+			};
+
+			path = mkOption {
+				type = str;
+				default = if pkgs.stdenv.isDarwin then "/Users/${config.home.user}"
+					else "/home/${config.home.user}";
+			};
+
 			file = mkOption {
 				type = attrs;
 				default = {};
@@ -60,17 +70,13 @@ in with lib; {
 		};
 	};
 
-	config = {
-		imports = let
-			modules = if pkgs.stdenv.isDarwin then "darwinModules" else "nixosModules";
-		in [
-			inputs.home-manager.${modules}.home-manager
-		];
-
+	config = let
+		user = config.home.user;
+	in {
 		programs.zsh.enable = true;
 		users.users.${user} = {
 			name = user;
-			home = if pkgs.stdenv.isDarwin then "/Users/${user}" else "/home/${user}";
+			home = config.home.path;
 			shell = pkgs.zsh;
 		};
 

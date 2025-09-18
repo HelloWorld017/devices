@@ -40,6 +40,7 @@ in {
 			fastmod
 			fd
 			ffmpeg
+			inputs.agenix.packages.${system}.default
 			inputs.figma-linux.packages.${system}.default
 			file
 			fzf
@@ -83,7 +84,7 @@ in {
 			yt-dlp
 			zip
 		];
-		
+
 		nixpkgs.config.permittedInsecurePackages = [
 			"openssl-1.1.1w"
 		];

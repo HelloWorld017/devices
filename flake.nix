@@ -15,6 +15,12 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		agenix = {
+			url ="github:ryantm/agenix";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
+		agenix-template = { url = "github:jhillyerd/agenix-template/1.0.0"; };
 		std = { url = "github:chessai/nix-std"; };
 		wsl = { url = "github:nix-community/NixOS-WSL/main"; };
 
