@@ -1,4 +1,4 @@
-{ darwin, home-manager, ... } @inputs:
+{ darwin, ... } @inputs:
 let
 	device = (import ../utils.nix).defineDevice {
 		inherit inputs;
@@ -22,7 +22,6 @@ in
 				repo.nvim
 				repo.tmux
 				repo.zsh
-				home-manager.darwinModules.home-manager
 			];
 		};
 	}

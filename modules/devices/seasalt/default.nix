@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, ... } @inputs:
+{ nixpkgs, ... } @inputs:
 let
 	device = (import ../utils.nix).defineDevice {
 		inherit inputs;

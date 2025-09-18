@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, ... } @inputs:
+{ nixpkgs, ... } @inputs:
 let
 	device = (import ../utils.nix).defineDevice {
 		inherit inputs;
@@ -13,7 +13,6 @@ in
 				device.base
 				deviceRepo.preset-default
 				deviceRepo.preset-server
-				home-manager.nixosModules.home-manager
 			];
 		};
 	}

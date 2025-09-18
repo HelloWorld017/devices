@@ -1,4 +1,4 @@
-{ pkgs, lib, options, ... }:
+{ pkgs, lib, options, inputs, ... }:
 let
 	user = "nenw";
 in with lib; {
@@ -61,6 +61,12 @@ in with lib; {
 	};
 
 	config = {
+		imports = let
+			modules = if pkgs.stdenv.isDarwin then "darwinModules" else "nixosModules";
+		in [
+			inputs.home-manager.${modules}.home-manager
+		];
+
 		programs.zsh.enable = true;
 		users.users.${user} = {
 			name = user;
