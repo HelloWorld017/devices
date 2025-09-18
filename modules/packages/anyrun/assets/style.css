@@ -17,17 +17,10 @@
 	margin-top: 0.01rem;
 }
 #match.activatable:first-child {
-	margin-top: 0.7rem;
+	margin-top: -0.3rem;
 }
 #match.activatable:last-child {
-	margin-bottom: 0.6rem;
-}
-
-#plugin:hover #match.activatable {
-	border-radius: 10px;
-	padding: 0.3rem;
-	margin-top: 0.01rem;
-	margin-bottom: 0;
+	margin-bottom: -0.3rem;
 }
 
 #match:selected,
