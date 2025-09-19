@@ -62,3 +62,6 @@ export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers color=always {}'"
 export GF_SNAPSHOT_DIRECTORY="$HOME/.git-fuzzy-snapshots"
 zinit ice as"program" pick"bin/git-fuzzy"
 zinit light bigH/git-fuzzy
+
+# Additional Local Non-Tracked Aliases
+[[ -f "$HOME/.zsh_aliases" ]] && source "$HOME/.zsh_aliases"
