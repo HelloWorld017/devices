@@ -65,3 +65,6 @@ zinit light bigH/git-fuzzy
 
 # The Fuck
 eval $(thefuck --alias)
+
+# Additional Local Non-Tracked Aliases
+[[ -f "$HOME/.zsh_aliases" ]] && source "$HOME/.zsh_aliases"
