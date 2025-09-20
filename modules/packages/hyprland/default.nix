@@ -1,6 +1,7 @@
 { pkgs, lib, config, ... }:
 {
 	imports = [
+		./clipboard.nix
 		./hyprcursor.nix
 		./hypridle.nix
 		./hyprlock.nix
