@@ -9,6 +9,7 @@
 	ime = import ./ime;
 	karabiner = import ./karabiner;
 	kitty = import ./kitty;
+	midnightway = import ./midnightway;
 	nvim = import ./nvim;
 	patches = import ./patches;
 	tmux = import ./tmux;

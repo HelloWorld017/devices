@@ -11,6 +11,7 @@ in {
 		repo.git
 		repo.hyprland
 		repo.ime
+		repo.midnightway
 		repo.nvim
 		repo.tmux
 		repo.zsh
