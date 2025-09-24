@@ -24,7 +24,10 @@
 					Config(
 						desktop_actions: false,
 						max_entries: 5,
-						terminal: Some("alacritty")
+						terminal: Some(Terminal(
+							command: "alacritty",
+							args: "-e {}",
+						))
 					)
 				'';
 
