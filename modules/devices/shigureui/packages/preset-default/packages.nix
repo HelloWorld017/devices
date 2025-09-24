@@ -57,6 +57,8 @@ in {
 			loupe
 			nautilus
 			nodejs
+			notion-app-enhanced
+			onlyoffice-bin
 			pkg-config
 			nodePackages.pnpm
 			podman
