@@ -1,17 +1,9 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, ... }:
 {
 	config = {
 		i18n.inputMethod = {
 			enable = true;
 			type = "fcitx5";
-
-			package = lib.mkForce (pkgs.fcitx5-with-addons.override {
-				addons = config.i18n.inputMethod.fcitx5.addons;
-				fcitx5 = pkgs.fcitx5.overrideAttrs(oldAttrs: {
-					buildInputs = oldAttrs.buildInputs ++ [ pkgs.librsvg ];
-				});
-			});
-
 			fcitx5.addons = with pkgs; [
 				fcitx5-gtk
 				fcitx5-mozc
