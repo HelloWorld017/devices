@@ -16,7 +16,11 @@ in
 			};
 
 			home.programs.firefox.profiles.${profile} = {
-				userChrome = (builtins.readFile "${ffultima}/userChrome.css");
+				userChrome = (builtins.readFile "${ffultima}/userChrome.css") + ''
+					:root:not([chromehidden~="toolbar"]){
+						min-width: 20px !important;
+					}
+				'';
 				userContent = (builtins.readFile "${ffultima}/userContent.css");
 				settings = {
 					# color schemes 
@@ -127,7 +131,6 @@ in
 
 					# privacy
 					"browser.send_pings" = false;
-					"dom.event.clipboardevents.enabled" = false;
 					"dom.battery.enabled" = false;
 					"extensions.pocket.enabled" = false;
 					"datareporting.healthreport.uploadEnabled" = false;
