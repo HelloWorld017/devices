@@ -82,15 +82,15 @@
 
 				workspace = [
 					"w[tv1]s[false], gapsout:0, gapsin:0"
-					"f[1]s[false], gapsout:0, gapsin:0"
+					"f[1]s[false], gapsout:6, gapsin:0"
 				];
 
 				windowrule = [
 					"bordersize 0, floating:0, onworkspace:w[tv1]s[false]"
 					"rounding 0, floating:0, onworkspace:w[tv1]s[false]"
-					"bordersize 0, floating:0, onworkspace:f[1]s[false]"
-					"rounding 0, floating:0, onworkspace:f[1]s[false]"
+					"rounding 6, floating:0, onworkspace:f[1]s[false]"
 					"float, workspace:10"
+					"bordercolor rgb(5e81ac) rgb(d8dee9),fullscreen:1"
 				];
 
 				xwayland = {
