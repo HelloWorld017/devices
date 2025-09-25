@@ -26,6 +26,7 @@ in {
 		];
 
 		home.packages = with pkgs; [
+			inputs.agenix.packages.${system}.default
 			android-tools
 			bat
 			better-control
@@ -42,7 +43,6 @@ in {
 			fastmod
 			fd
 			ffmpeg
-			inputs.agenix.packages.${system}.default
 			inputs.figma-linux.packages.${system}.default
 			file
 			fzf
