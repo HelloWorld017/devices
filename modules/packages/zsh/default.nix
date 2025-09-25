@@ -29,7 +29,7 @@
 					fzbranch = "git show-ref --heads | cut -d/ -f3- | fzf --no-preview";
 					fzbranchall = "git show-ref | grep refs/remotes | cut -d/ -f4- | fzf --no-preview";
 					fzremotes = "git show-ref | grep refs/remotes | cut -d/ -f3- | fzf --no-preview";
-					fzproc = "ps ax -o pid,command | fzf --no-preview | cut -d' ' -f1";
+					fzproc = "ps ax -o pid,command | fzf --no-preview | sed 's/^[[:space:]]*//' | cut -d' ' -f1";
 					fzr = "fzrepo";
 					fzrm = "fzremotes";
 					fzb = "fzbranch";
