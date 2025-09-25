@@ -22,7 +22,7 @@
 			extraConfigFiles = {
 				"applications.ron".text = ''
 					Config(
-						desktop_actions: false,
+						desktop_actions: true,
 						max_entries: 5,
 						terminal: Some(Terminal(
 							command: "alacritty",
