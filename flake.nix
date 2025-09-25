@@ -51,6 +51,11 @@
 		};
 
 		nnf = { url = "github:thelegy/nixos-nftables-firewall"; };
+		notion-linux = {
+			url = "github:HelloWorld017/notion-linux-nixos";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		rose-pine-hyprcursor = {
 			url = "github:ndom91/rose-pine-hyprcursor";
 			inputs.nixpkgs.follows = "nixpkgs";

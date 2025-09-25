@@ -57,7 +57,7 @@ in {
 			loupe
 			nautilus
 			nodejs
-			notion-app-enhanced
+			inputs.notion-linux.packages.${system}.default
 			onlyoffice-bin
 			pkg-config
 			nodePackages.pnpm
