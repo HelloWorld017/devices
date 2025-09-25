@@ -7,7 +7,6 @@ in {
 		repo.anyrun
 		repo.firefox
 		repo.fonts
-		repo.ghostty
 		repo.git
 		repo.hyprland
 		repo.ime
@@ -75,9 +74,7 @@ in {
 			slack
 			tealdeer
 			telegram-desktop
-			(pkgs.unityhub.override {
-				extraLibs = pkgs: with pkgs; [ openssl_1_1 ];
-			})
+			unityhub
 			unzip
 			usbutils
 			rollingPkgs.vesktop
@@ -86,10 +83,6 @@ in {
 			wl-clipboard
 			yt-dlp
 			zip
-		];
-
-		nixpkgs.config.permittedInsecurePackages = [
-			"openssl-1.1.1w"
 		];
 	};
 }

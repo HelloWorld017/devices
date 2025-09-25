@@ -136,7 +136,6 @@ in {
 
 		home.programs.neovim = {
 			enable = true;
-			package = inputs.neovim-nightly.packages.${system}.default;
 			extraConfig = builtins.readFile ./assets/init.nvim;
 		};
 
