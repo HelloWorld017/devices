@@ -9,6 +9,7 @@
 		./hyprpaper.nix
 		./keybinds.nix
 		./screenshot.nix
+		./swayosd.nix
 
 		# ./hyprbars.nix
 	];
