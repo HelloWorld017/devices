@@ -62,6 +62,12 @@ with lib; {
 				description = "Home-manager provided gtk settings";
 			};
 
+			qt = mkOption {
+				type = attrs;
+				default = {};
+				description = "Home-manager provided qt settings";
+			};
+
 			wayland = mkOption {
 				type = attrs;
 				default = {};
@@ -100,6 +106,7 @@ with lib; {
 				fonts = mkAliasDefinitions options.home.fonts;
 				gtk = mkAliasDefinitions options.home.gtk;
 				programs = mkAliasDefinitions options.home.programs;
+				qt = mkAliasDefinitions options.home.qt;
 				services = mkAliasDefinitions options.home.services;
 				wayland = mkAliasDefinitions options.home.wayland;
 				xdg = {

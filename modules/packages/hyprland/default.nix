@@ -8,6 +8,7 @@
 		./hyprshell.nix
 		./hyprpaper.nix
 		./keybinds.nix
+		./kvantum.nix
 		./screenshot.nix
 		./swayosd.nix
 	];
@@ -120,6 +121,17 @@
 				name = "Colloid";
 				package = pkgs.colloid-icon-theme;
 			};
+		};
+
+		home.qt = {
+			enable = true;
+			platformTheme.name = "qtct";
+			style.name = "kvantum";
+		};
+
+		home.kvantum = {
+			name = "Utterly-Nord-Solid";
+			package = (pkgs.callPackage ./kvantum-utterly-nord.nix {});
 		};
 
 		environment.sessionVariables = {
