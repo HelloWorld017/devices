@@ -67,6 +67,7 @@ in {
 			python314
 			pv
 			jetbrains.rider
+			ripdrag
 			ripgrep
 			smartmontools
 			parsec-bin

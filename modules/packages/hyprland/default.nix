@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, system, ... }:
 {
 	imports = [
 		./clipboard.nix
@@ -8,6 +8,7 @@
 		./hyprshell.nix
 		./hyprpaper.nix
 		./keybinds.nix
+		./screenshot.nix
 
 		# ./hyprbars.nix
 	];
@@ -91,6 +92,7 @@
 					"rounding 6, floating:0, onworkspace:f[1]s[false]"
 					"float, workspace:10"
 					"bordercolor rgb(5e81ac) rgb(d8dee9),fullscreen:1"
+					"pin, class:^(it.catboy.ripdrag)$"
 				];
 
 				xwayland = {
@@ -104,9 +106,8 @@
 		};
 
 		home.packages = with pkgs; [
-			grim
 			hyprpicker
-			slurp
+			inputs.quickshell.packages.${system}.default
 		];
 
 		home.gtk = {

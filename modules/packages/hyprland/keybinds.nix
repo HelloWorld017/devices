@@ -51,9 +51,10 @@ in {
 				"${mainMod} Ctrl, Q, exec, loginctl lock-session"
 
 				# Screenshot: Super + Shift + S
-				("${mainMod} Shift, S, exec, " +
-					''grim -g "$(slurp -b 000000a0 -c ffffff30 -w 1)" - | wl-copy && '' +
-					''notify-send "Screenshot Taken"'')
+				"${mainMod} Shift, S, exec, ~/.config/hypr/scripts/screenshot.sh"
+
+				# Screenrecord : Super + Shift + R
+				"${mainMod} Shift, R, exec, ~/.config/hypr/scripts/screenrecord.sh"
 
 				# Picker: Super + Shift + P
 				("${mainMod} Shift, P, exec, " +

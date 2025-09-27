@@ -51,6 +51,11 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		quickshell = {
+			url = "github:quickshell-mirror/quickshell";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		rose-pine-hyprcursor = {
 			url = "github:ndom91/rose-pine-hyprcursor";
 			inputs.nixpkgs.follows = "nixpkgs";
