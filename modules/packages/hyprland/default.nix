@@ -10,8 +10,6 @@
 		./keybinds.nix
 		./screenshot.nix
 		./swayosd.nix
-
-		# ./hyprbars.nix
 	];
 
 	options = with lib.types; {

@@ -58,6 +58,8 @@ in {
 			nodejs
 			inputs.notion-linux.packages.${system}.default
 			onlyoffice-bin
+			parsec-bin
+			pinta
 			pkg-config
 			nodePackages.pnpm
 			podman
@@ -69,10 +71,9 @@ in {
 			jetbrains.rider
 			ripdrag
 			ripgrep
-			smartmontools
-			parsec-bin
-			patchedPkgs.spotify
 			slack
+			smartmontools
+			patchedPkgs.spotify
 			tealdeer
 			telegram-desktop
 			unityhub
