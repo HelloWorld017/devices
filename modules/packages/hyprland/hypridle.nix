@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
 	config = {
 		home.services.hypridle = {
@@ -6,6 +6,11 @@
 			settings = {
 				general = {
 					lock_cmd = "pidof hyprlock || hyprlock";
+					before_sleep_cmd = let
+						wallpaperRoll = if config.pkgs.hyprland.wallpaperDirectory != null then
+							" && ~/.config/hypr/scripts/wallpaper_roll.sh"
+						else "";
+					in "loginctl lock-session ${wallpaperRoll}";
 					after_sleep_cmd = "hyprctl dispatch dpms on";
 					ignore_dbus_inhibit = false;
 				};
