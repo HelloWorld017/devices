@@ -8,9 +8,8 @@ in {
 		repo.firefox
 		repo.fonts
 		repo.git
-		repo.hyprland
+		repo.shell
 		repo.ime
-		repo.midnightway
 		repo.nvim
 		repo.tmux
 		repo.zsh

@@ -7,7 +7,7 @@
 				general = {
 					lock_cmd = "pidof hyprlock || hyprlock";
 					before_sleep_cmd = let
-						wallpaperRoll = if config.pkgs.hyprland.wallpaperDirectory != null then
+						wallpaperRoll = if config.pkgs.shell.wallpaper.directory != null then
 							" && ~/.config/hypr/scripts/wallpaper_roll.sh"
 						else "";
 					in "loginctl lock-session ${wallpaperRoll}";

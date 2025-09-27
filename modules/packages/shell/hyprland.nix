@@ -1,20 +1,7 @@
-{ pkgs, lib, config, inputs, system, ... }:
+{ pkgs, lib, config, ... }:
 {
-	imports = [
-		./clipboard.nix
-		./hyprcursor.nix
-		./hypridle.nix
-		./hyprlock.nix
-		./hyprshell.nix
-		./hyprpaper.nix
-		./keybinds.nix
-		./kvantum.nix
-		./screenshot.nix
-		./swayosd.nix
-	];
-
 	options = with lib.types; {
-		pkgs.hyprland = {
+		pkgs.shell.hyprland = {
 			scale = lib.mkOption {
 				type = float;
 				default = 1.5;
@@ -65,9 +52,9 @@
 
 					"QT_AUTO_SCREEN_SCALE_FACTOR,1"
 					"QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-					"GDK_SCALE,${asString config.pkgs.hyprland.scale}"
-					"XCURSOR_SIZE,${asIntString (16 * config.pkgs.hyprland.scale)}"
-					"HYPRCURSOR_SIZE,${asIntString (16 * config.pkgs.hyprland.scale)}"
+					"GDK_SCALE,${asString config.pkgs.shell.hyprland.scale}"
+					"XCURSOR_SIZE,${asIntString (16 * config.pkgs.shell.hyprland.scale)}"
+					"HYPRCURSOR_SIZE,${asIntString (16 * config.pkgs.shell.hyprland.scale)}"
 				];
 
 				input = {
@@ -108,36 +95,7 @@
 
 		home.packages = with pkgs; [
 			hyprpicker
-			inputs.quickshell.packages.${system}.default
 		];
-
-		home.gtk = {
-			enable = true;
-			theme = {
-				name = "WhiteSur-Dark";
-				package = pkgs.whitesur-gtk-theme;
-			};
-
-			iconTheme = {
-				name = "Colloid";
-				package = pkgs.colloid-icon-theme;
-			};
-		};
-
-		home.qt = {
-			enable = true;
-			platformTheme.name = "qtct";
-			style.name = "kvantum";
-		};
-
-		home.kvantum = {
-			name = "Utterly-Nord-Solid";
-			package = (pkgs.callPackage ./kvantum-utterly-nord.nix {});
-		};
-
-		environment.sessionVariables = {
-			NIXOS_OZONE_WL = "1";
-		};
 
 		services.displayManager = {
 			gdm = {

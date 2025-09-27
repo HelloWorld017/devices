@@ -82,8 +82,8 @@
 
 	home.programs.anyrun.config.width = { fraction = 0.45; };
 
-	pkgs.hyprland = {
-		wallpaperDirectory = "${config.home.path}/wallpapers";
+	pkgs.shell = {
+		wallpaper.directory = "${config.home.path}/wallpapers";
 		midnightway.system.gpuCard = null;
 	};
 

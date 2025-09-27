@@ -1,7 +1,7 @@
 { lib, config, inputs, system, ... }:
 {
 	options = with lib.types; {
-		pkgs.hyprland.midnightway = {
+		pkgs.shell.midnightway = {
 			system = {
 				gpuCard = lib.mkOption {
 					type = nullOr str;
@@ -44,7 +44,7 @@
 				weather_api = config.age.secrets.openweatherapi-secret.path;
 			};
 			content = let
-				opts = config.pkgs.hyprland.midnightway;
+				opts = config.pkgs.shell.midnightway;
 			in builtins.toJSON {
 				locale = "ko-KR";
 				bar = {

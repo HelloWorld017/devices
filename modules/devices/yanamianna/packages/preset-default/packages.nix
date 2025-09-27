@@ -9,7 +9,7 @@ in {
 		repo.fonts
 		repo.ghostty
 		repo.git
-		repo.hyprland
+		repo.shell
 		repo.ime
 		repo.nvim
 		repo.tmux

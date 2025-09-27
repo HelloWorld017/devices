@@ -5,13 +5,12 @@
 	fonts = import ./fonts;
 	ghostty = import ./ghostty;
 	git = import ./git;
-	hyprland = import ./hyprland;
 	ime = import ./ime;
 	karabiner = import ./karabiner;
 	kitty = import ./kitty;
-	midnightway = import ./midnightway;
 	nvim = import ./nvim;
 	patches = import ./patches;
+	shell = import ./shell;
 	tmux = import ./tmux;
 	wsl = import ./wsl;
 	zsh = import ./zsh;

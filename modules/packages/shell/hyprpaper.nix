@@ -1,8 +1,8 @@
 { lib, config, ... }:
 {
 	options = with lib.types; {
-		pkgs.hyprland = {
-			wallpaperDirectory = lib.mkOption {
+		pkgs.shell.wallpaper = {
+			directory = lib.mkOption {
 				type = nullOr str;
 				description = "Directory of wallpapers";
 				default = null;
@@ -12,7 +12,7 @@
 
 	config =
 		let
-			wallpaperDirectory = config.pkgs.hyprland.wallpaperDirectory;
+			wallpaperDirectory = config.pkgs.shell.wallpaper.directory;
 		in lib.mkIf (wallpaperDirectory != null) {
 			home.configFile."hypr/scripts/wallpaper_roll.sh" = {
 				text = ''

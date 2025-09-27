@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
 	options = with lib.types; {
-		home.kvantum = {
+		pkgs.shell.kvantum = {
 			name = lib.mkOption {
 				type = nullOr str;
 				default = null;
@@ -15,8 +15,9 @@
 	};
 
 	config = let
-		themeName = config.home.kvantum.name;
-		theme = config.home.kvantum.package;
+		cfg = config.pkgs.shell.kvantum;
+		themeName = cfg.name;
+		theme = cfg.package;
 	in {
 		home.configFile."Kvantum/${themeName}" = lib.mkIf (themeName != null && theme != null) {
 			source = "${theme}/share/Kvantum/${themeName}";
