@@ -1,4 +1,4 @@
-{ pkgs, rollingPkgs, repo, inputs, system, ... }:
+{ pkgs, repo, inputs, system, ... }:
 let
 	patchedPkgs = (repo.patches pkgs);
 in {
@@ -35,6 +35,7 @@ in {
 			chromium
 			jetbrains.clion
 			cmake
+			curlie
 			dig
 			eza
 			fastfetch
@@ -43,6 +44,7 @@ in {
 			ffmpeg
 			inputs.figma-linux.packages.${system}.default
 			file
+			file-roller
 			fzf
 			ghostscript
 			gjs
@@ -70,6 +72,7 @@ in {
 			jetbrains.rider
 			ripdrag
 			ripgrep
+			rquickshare
 			slack
 			smartmontools
 			patchedPkgs.spotify
@@ -78,7 +81,7 @@ in {
 			unityhub
 			unzip
 			usbutils
-			rollingPkgs.vesktop
+			vesktop
 			virtualenv
 			wev
 			wl-clipboard
