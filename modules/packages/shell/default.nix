@@ -10,6 +10,7 @@
 		./hyprpaper.nix
 		./keybinds.nix
 		./midnightway.nix
+		./plymouth.nix
 		./screenshot.nix
 		./swayosd.nix
 		./themes.nix
