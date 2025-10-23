@@ -1,4 +1,4 @@
-{ inputs, system, ... }:
+{ pkgs, ... }:
 {
 	imports = [
 		./clipboard.nix
@@ -17,8 +17,8 @@
 	];
 
 	config = {
-		home.packages = [
-			inputs.quickshell.packages.${system}.default
+		home.packages = with pkgs; [
+			quickshell
 		];
 
 		environment.sessionVariables = {

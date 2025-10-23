@@ -35,11 +35,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
-		hyprshell = {
-			url = "github:h3rmt/hyprshell/hyprshell-release";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-
 		midnightway = {
 			url = "github:HelloWorld017/midnightway";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -48,11 +43,6 @@
 		nnf = { url = "github:thelegy/nixos-nftables-firewall"; };
 		notion-linux = {
 			url = "github:HelloWorld017/notion-linux-nixos";
-			inputs.nixpkgs.follows = "nixpkgs";
-		};
-
-		quickshell = {
-			url = "github:quickshell-mirror/quickshell";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
