@@ -25,10 +25,6 @@ A repository containing nix-based configurations which is currently running on m
 	* Status: `Deprecated`
 	* Device: Macbook Pro 14 (2021)
 	* Platform: nix-darwin
-* `seasalt`
-	* Status: `Draft`
-	* Device: Galaxy Tab S9
-	* Platform: home-manager on Android with custom kernel
 
 ## Screenshot
 Not Yet
