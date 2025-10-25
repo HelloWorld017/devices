@@ -1,4 +1,4 @@
-{ pkgs, rollingPkgs, repo, inputs, system, ... }:
+{ pkgs, repo, inputs, system, ... }:
 let
 	patchedPkgs = (repo.patches pkgs);
 in {
@@ -70,7 +70,7 @@ in {
 			unzip
 			usbutils
 			# verapdf: build error in 1.26.4
-			rollingPkgs.vesktop
+			vesktop
 			virtualenv
 			wakeonlan
 			wev

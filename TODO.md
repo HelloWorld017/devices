@@ -1,7 +1,7 @@
 ## TODO
 ### Common
 * [ ] change tab to space
-* [ ] split nixpkgs per-device (+ rolling), as update period differs
+* [v] split nixpkgs per-device (+ rolling), as update period differs
 
 ### `devices/yanamianna`
 * [ ] rewrite an alternative for nixos-nftables-firewall

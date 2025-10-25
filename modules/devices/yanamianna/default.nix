@@ -1,4 +1,4 @@
-{ nixpkgs, ... } @inputs:
+{ nixpkgs-20251020, ... } @inputs:
 let
 	device = (import ../utils.nix).defineDevice {
 		inherit inputs;
@@ -7,7 +7,7 @@ let
 	deviceRepo = import ./packages;
 in
 	{
-		nixosConfigurations."nenw-yanamianna" = nixpkgs.lib.nixosSystem {
+		nixosConfigurations."nenw-yanamianna" = nixpkgs-20251020.lib.nixosSystem {
 			inherit (device) system specialArgs;
 			modules = [
 				device.base

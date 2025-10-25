@@ -6,7 +6,7 @@
 			kind = if std.string.hasSuffix "darwin" system then "darwin" else "nixos";
 			base = (import "${self}/modules/base") kind;
 			repo = import "${self}/modules/packages";
-			rollingPkgs = import inputs.nixpkgs-rolling {
+			latestPkgs = import inputs.nixpkgs-latest {
 				inherit system;
 				config.allowUnfree = true;
 			};
@@ -14,7 +14,7 @@
 			inherit base repo system;
 
 			specialArgs = {
-				inherit inputs system std rollingPkgs repo;
+				inherit inputs system std latestPkgs repo;
 			};
 		};
 }
