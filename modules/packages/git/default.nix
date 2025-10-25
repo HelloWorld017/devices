@@ -1,11 +1,11 @@
-{ config, options, lib, pkgs, ... }:
+{  pkgs, ... }:
 {
 	config = {
 		home.programs.git = {
 			enable = true;
-			userName = "nenw";
-			userEmail = "khi@nenw.dev";
-			extraConfig = {
+			settings = {
+				user.name = "nenw";
+				user.email = "khi@nenw.dev";
 				alias.cmps = "!f() { git checkout \"$1\" && git merge - && git push && git checkout -; }; f";
 				alias.cpmps = "!f() { git checkout \"$1\" && git pull --rebase && git merge - && git push && git checkout -; }; f";
 				alias.bundlebranch = "!f() { git bundle create \"$2\" \"$1\" ^$(git merge-base \"$1\" \"master\"); }; f";
