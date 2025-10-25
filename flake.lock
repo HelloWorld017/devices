@@ -488,26 +488,6 @@
         "type": "github"
       }
     },
-    "quickshell": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1758273351,
-        "narHash": "sha256-wOv1guIi9THD1NjOtBU2Xh/Avg9xv7nIjsfFSkr1NeQ=",
-        "owner": "quickshell-mirror",
-        "repo": "quickshell",
-        "rev": "e9a574d919a89602d2868621576b2ccae54a5cb0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "quickshell-mirror",
-        "repo": "quickshell",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -521,7 +501,6 @@
         "nixpkgs-rolling": "nixpkgs-rolling",
         "nnf": "nnf",
         "notion-linux": "notion-linux",
-        "quickshell": "quickshell",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "std": "std",
         "wsl": "wsl"
