@@ -21,7 +21,13 @@
 			enable = true;
 			settings = {
 				general = {
+					gaps_out = 12;
+					border_size = 3;
 					resize_on_border = true;
+					"col.inactive_border" = "rgba(ffffff30)";
+					"col.active_border" = "rgba(ffffffa0)";
+					"col.nogroup_border" = "rgba(ffffff30)";
+					"col.nogroup_border_active" = "rgba(ffffffa0)";
 				};
 
 				decoration = {
@@ -29,9 +35,10 @@
 
 					shadow = {
 						enabled = true;
-						range = 4;
-						render_power = 3;
-						color = "rgba(1a1a1aee)";
+						range = 8;
+						render_power = 2;
+						color = "rgba(00000040)";
+						color_inactive = "rgba(00000000)";
 					};
 
 					blur = {
@@ -39,6 +46,20 @@
 						size = 12;
 						passes = 1;
 						vibrancy = 0.1696;
+					};
+				};
+
+				group = {
+					groupbar = {
+						render_titles = false;
+						rounding = 4;
+						indicator_height = 3;
+						"col.active" = "rgba(ffffffa0)";
+						"col.inactive" = "rgba(ffffff30)";
+						"col.locked_active" = "rgba(303030ff)";
+						"col.locked_inactive" = "rgba(30303080)";
+						gaps_in = 16;
+						gaps_out = 8;
 					};
 				};
 

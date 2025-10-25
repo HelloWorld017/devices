@@ -12,4 +12,6 @@
 
 ### `package/shell`
 * [ ] add sddm and theme (SilentSDDM)
-* [ ] make fullscreen (zoom) style more noticable
+* [v] make fullscreen (zoom) style more noticable
+* [ ] make border 6px transparent white / shrink gap for 6px
+* [v] update group style
