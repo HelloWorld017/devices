@@ -15,5 +15,15 @@
 			to = "all";
 			allowedUDPPorts = [ 41641 ];
 		};
+
+		pkgs.server = {
+			firewall.rules.tailscale = {
+				from = "all";
+				to = "all";
+				allowedUDPPorts = [ 41641 ];
+			};
+
+			firewall.ignoredTables = ["tailscale"];
+		};
 	};
 }
