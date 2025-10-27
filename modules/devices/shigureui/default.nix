@@ -4,14 +4,15 @@ let
 		inherit inputs;
 		system = "x86_64-linux";
 	};
-	deviceRepo = import ./packages;
 in
 	{
 		nixosConfigurations."nenw-shigureui" = nixpkgs-20251020.lib.nixosSystem {
 			inherit (device) system specialArgs;
 			modules = [
 				device.base
-				deviceRepo.preset-default
+				./hardware.nix
+				./packages.nix
+				./settings.nix
 			];
 		};
 	}
