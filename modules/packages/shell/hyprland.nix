@@ -82,6 +82,7 @@
 					repeat_rate = 40;
 					repeat_delay = 300;
 					follow_mouse = 2;
+					float_switch_override_focus = 0;
 					numlock_by_default = true;
 
 					touchpad = {
