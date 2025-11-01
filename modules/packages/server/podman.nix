@@ -25,7 +25,7 @@
 	config = let
 		opts = config.pkgs.server.podman;
 	in {
-		systemd.services = lib.mapAttrs (name: value: {
+		systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "service-${name}" {
 			enable = value.enable;
 			after = [ "network-online.target" "podman.service" ];
 			wants = [ "network-online.target" "podman.service" ];
