@@ -257,7 +257,7 @@ lua << EOF
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
 	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "None" })
 
-	if vim.fn.has('wsl') then
+	if vim.fn.has('wsl') == 1 then
 		vim.g.clipboard = "win32yank"
 	end
 
