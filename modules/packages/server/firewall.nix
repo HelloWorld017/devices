@@ -38,7 +38,7 @@
 		};
 	};
 
-	config = { 
+	config = {
 		pkgs.server.firewall.zone = {
 			all = {};
 			lo = { interfaces = [ "lo" ]; };
