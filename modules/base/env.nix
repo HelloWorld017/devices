@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ lib, config, ... }:
 with lib; {
 	options = with types; {
 		env = mkOption {
