@@ -22,7 +22,10 @@
 		};
 	};
 
-	config = {
+	config = let
+		opts = config.pkgs.server.acme;
+		secrets = config.age.secrets;
+	in {
 		age.secrets."cloudflare-dns-secret" = {
 			file = "${inputs.self}/secrets/cloudflare-dns-secret.age";
 		};
@@ -34,19 +37,19 @@
 		security.acme = {
 			acceptTerms = true;
 			preliminarySelfsigned = true;
-			defaults.email = config.pkgs.server.acme.email;
-			certs = lib.genAttrs config.pkgs.server.acme.domainNames (domain: {
+			defaults.email = opts.email;
+			certs = lib.genAttrs opts.domainNames (domain: {
 				name = domain;
 				value = {
 					dnsProvider = "cloudflare";
 					dnsResolver = "1.1.1.1:53";
 					credentialFiles = {
-						CLOUDFLARE_DNS_API_TOKEN_FILE = config.age.secrets.cloudflare-dns-secret.path;
+						CLOUDFLARE_DNS_API_TOKEN_FILE = secrets.cloudflare-dns-secret.path;
 					};
 					dnsPropagationCheck = true;
 					extraDomainNames = [ ("*." + domain) ];
 					renewInterval = "weekly";
-					reloadServices = [ "nginx" ] ++ config.pkgs.server.acme.reloadedServices;
+					reloadServices = [ "nginx" ] ++ opts.reloadedServices;
 				};
 			}) // {
 				"localhost" = {

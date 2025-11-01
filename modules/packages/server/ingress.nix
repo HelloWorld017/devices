@@ -10,7 +10,9 @@
 		};
 	};
 
-	config = {
+	config = let
+		opts = config.pkgs.server.ingress;
+	in {
 		# Service
 		services.nginx = {
 			enable = true;
@@ -39,14 +41,13 @@
 						};
 					})
 					(removeAttrs value ["proxyPort" "acmeHost"])
-				]) config.pkgs.server.ingress.rules
+				]) opts.rules
 			);
 		};
 
 		# Firewall
 		pkgs.server.firewall.rules.ingress = {
-			from = "all";
-			to = [ "out" ];
+			from = [ "all" ];
 			allowedTCPPorts = [ 80 443 ];
 		};
 	};

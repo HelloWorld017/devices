@@ -10,6 +10,7 @@
 	kitty = import ./kitty;
 	nvim = import ./nvim;
 	patches = import ./patches;
+	server = import ./server;
 	shell = import ./shell;
 	tmux = import ./tmux;
 	wsl = import ./wsl;

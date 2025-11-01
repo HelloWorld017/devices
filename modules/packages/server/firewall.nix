@@ -1,4 +1,4 @@
-{ inputs, lib, config, ... }:
+{ inputs, lib, config, pkgs, ... }:
 {
 	imports = [
 		inputs.nnf.nixosModules.default
@@ -6,16 +6,26 @@
 
 	options = with lib.types; {
 		pkgs.server.firewall = {
-			uplinkInterface = lib.mkOption {
-				type = str;
-				default = "enp4s0";
+			localAddresses = lib.mkOption {
+				type = listOf str;
+				default = [];
+				description = "ip addresses for internal network";
+			};
+
+			uplinkInterfaces = lib.mkOption {
+				type = listOf str;
+				default = [ "enp4s0" ];
 				description = "network interface name for uplink";
+			};
+
+			extraZones = lib.mkOption {
+				type = listOf attrs;
+				default = [];
 			};
 
 			rules = lib.mkOption {
 				type = attrs;
 				default = {};
-				description = "firewall rules";
 			};
 
 			ignoredTables = lib.mkOption {
@@ -26,50 +36,46 @@
 		};
 	};
 
-	config = {
+	config = let
+		opts = config.pkgs.server.firewall;
+	in {
 		networking.nftables.enable = true;
-		networking.nftables.chains = let
-			internalRule = {
-				after = lib.mkForce ["veryEarly"];
-				before = ["conntrack" "early"];
-				rules = lib.singleton ''
-					iifname { lo } accept
-					iifname { podman* } accept
-					iifname { tailscale* } accept
-				'';
-			};
-		in {
-			input.internal = internalRule;
-			forward.internal = internalRule;
-		};
-
 		networking.nftables.firewall = {
 			enable = true;
 			localZoneName = "out";
 
 			# Zones
 			zones = {
-				uplink = { interfaces = [ "enp4s0" ]; };
+				uplink = { interfaces = opts.uplinkInterfaces; };
+				lo = { interfaces = [ "lo" ]; };
 				podman = { interfaces = [ "podman*" ]; };
+				tailscale = { interfaces = [ "tailscale*" ]; };
 				local = {
 					parent = "uplink";
-					ipv4Addresses = [ "192.168.25.0/24" ];
+					ipv4Addresses = [ opts.localAddresses ];
 				};
-			};
+			} // opts.extraZones;
 
 			# Snippets
 			# > Use lean snippets
 			snippets = {
 				nnf-common.enable = false;
-				nnf-default-stopRuleset.enable = true;
 
+				nnf-default-stopRuleset.enable = true;
 				nnf-conntrack.enable = true;
 				nnf-drop.enable = true;
 				nnf-icmp.enable = true;
+				nnf-loopback.enable = true;
 			};
 
 			# FIXME nftable flushes podman rules
-			rules = config.yanamianna.firewallRules;
+			rules = opts.firewallRules ++ [
+				{
+					from = [ "podman" ];
+					to = "all";
+
+				}
+			];
 		};
 	};
 }
