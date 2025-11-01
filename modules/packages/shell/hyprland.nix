@@ -61,6 +61,10 @@
 						gaps_in = 16;
 						gaps_out = 8;
 					};
+
+
+					"col.border_inactive" = "rgba(ffffff30)";
+					"col.border_active" = "rgba(ffffffa0)";
 				};
 
 				env = let
