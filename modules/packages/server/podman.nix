@@ -56,5 +56,15 @@
 				dns_enabled = true;
 			};
 		};
+
+		pkgs.server.firewall.zones = {
+			podman = { interfaces = [ "podman*" ]; };
+		};
+
+		pkgs.server.firewall.rules.podman = {
+			from = [ "podman" ];
+			to = [ "all" ];
+			verdict = "accept";
+		};
 	};
 }

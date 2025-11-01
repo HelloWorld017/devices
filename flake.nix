@@ -42,7 +42,6 @@
 			inputs.nixpkgs.follows = "nixpkgs-base";
 		};
 
-		nnf = { url = "github:thelegy/nixos-nftables-firewall"; };
 		notion-linux = {
 			url = "github:HelloWorld017/notion-linux-nixos";
 			inputs.nixpkgs.follows = "nixpkgs-base";
