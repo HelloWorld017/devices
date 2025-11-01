@@ -9,21 +9,18 @@
 			port = 41641;
 		};
 
-		# Firewall
-		yanamianna.firewallRules.tailscale = {
-			from = "all";
-			to = "all";
-			allowedUDPPorts = [ 41641 ];
-		};
-
 		pkgs.server = {
+			# Firewall
 			firewall.rules.tailscale = {
-				from = "all";
-				to = "all";
+				from = [ "all" ];
 				allowedUDPPorts = [ 41641 ];
 			};
 
-			firewall.ignoredTables = ["tailscale"];
+			firewall.rules.tailscale-exit-node = {
+				from = [ "tailscale" ];
+				to = [ "uplink" "tailscale" ];
+				verdict = "accept";
+			};
 		};
 	};
 }

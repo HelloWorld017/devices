@@ -13,11 +13,12 @@
 			};
 		};
 
-		# Firewall
-		yanamianna.firewallRules.ssh = {
-			from = [ "local" ];
-			to = [ "out" ];
-			allowedTCPPorts = [ 37089 ];
+		pkgs.server = {
+			# Firewall
+			firewall.rules.ssh = {
+				from = [ "local" ];
+				allowedTCPPorts = [ 37089 ];
+			};
 		};
 	};
 }

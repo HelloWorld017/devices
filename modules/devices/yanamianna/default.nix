@@ -4,15 +4,16 @@ let
 		inherit inputs;
 		system = "x86_64-linux";
 	};
-	deviceRepo = import ./packages;
 in
 	{
 		nixosConfigurations."nenw-yanamianna" = nixpkgs-20251020.lib.nixosSystem {
 			inherit (device) system specialArgs;
 			modules = [
 				device.base
-				deviceRepo.preset-default
-				deviceRepo.preset-server
+				./hardware.nix
+				./packages.nix
+				./services.nix
+				./settings.nix
 			];
 		};
 	}
