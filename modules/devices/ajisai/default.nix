@@ -10,6 +10,7 @@ in
 			inherit (device) system specialArgs;
 			modules = [
 				device.base
+				./hardware.nix
 				./packages.nix
 				./services.nix
 				./settings.nix

@@ -1,8 +1,16 @@
 { pkgs, lib, inputs, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.efi = {
+		canTouchEfiVariables = true;
+		efiSysMountPoint = "/boot/efi";
+	};
+
+	boot.loader.grub = {
+		enable = true;
+		efiSupport = true;
+		device = "nodev";
+	};
 
 	networking.hostName = "nenw-ajisai";
 	systemd.network.enable = true;
