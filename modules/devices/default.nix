@@ -1,4 +1,4 @@
-{ ... }@inputs: 
+{ ... }@inputs:
 	let
 		recursiveMerge = with builtins; zipAttrsWith(key: values:
 			if tail values == [] then head values
@@ -8,8 +8,8 @@
 	in
 		recursiveMerge [
 			# ((import ./iceflake) inputs)
-			# ((import ./seasalt) inputs)
+			((import ./ajisai) inputs)
 			((import ./akebi) inputs)
-			((import ./yanamianna) inputs)
 			((import ./shigureui) inputs)
+			((import ./yanamianna) inputs)
 		]
