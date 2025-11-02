@@ -2,6 +2,11 @@
 {
 	options = with lib.types; {
 		pkgs.server.podman = {
+			enable = lib.mkOption {
+				type = bool;
+				default = true;
+			};
+
 			services = lib.mkOption {
 				type = attrsOf (submodule ({ name, ... }: {
 					options = {
@@ -24,7 +29,7 @@
 
 	config = let
 		opts = config.pkgs.server.podman;
-	in {
+	in lib.mkIf opts.enable {
 		systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "service-${name}" {
 			enable = value.enable;
 			after = [ "network-online.target" "podman.service" ];

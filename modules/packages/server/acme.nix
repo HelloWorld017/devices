@@ -2,6 +2,11 @@
 {
 	options = with lib.types; {
 		pkgs.server.acme = {
+			enable = lib.mkOption {
+				type = bool;
+				default = true;
+			};
+
 			email = lib.mkOption {
 				type = str;
 				default = "khi@nenw.dev";
@@ -25,7 +30,7 @@
 	config = let
 		opts = config.pkgs.server.acme;
 		secrets = config.age.secrets;
-	in {
+	in lib.mkIf opts.enable {
 		age.secrets."cloudflare-dns-secret" = {
 			file = "${inputs.self}/secrets/cloudflare-dns-secret.age";
 		};

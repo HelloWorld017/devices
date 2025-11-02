@@ -2,6 +2,11 @@
 {
 	options = with lib; with types; {
 		pkgs.server.firewall = {
+			enable = lib.mkOption {
+				type = bool;
+				default = true;
+			};
+
 			zones = mkOption {
 				type = attrsOf (submodule {
 					options = {
@@ -38,13 +43,14 @@
 		};
 	};
 
-	config = {
+	config = let
+		opts = config.pkgs.server.firewall;
+	in lib.mkIf opts.enable ({
 		pkgs.server.firewall.zone = {
 			all = {};
 			lo = { interfaces = [ "lo" ]; };
 		};
 	} ++ (with lib; let
-		opts = config.pkgs.server.firewall;
 		zones = mapAttrs (name: zone: with zone; {
 			name = name;
 			ingressExpression = flatten [
@@ -243,5 +249,5 @@
 				${toChain dnatZoneChains}
 			'';
 		};
-	});
+	}));
 }

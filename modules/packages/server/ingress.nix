@@ -2,6 +2,11 @@
 {
 	options = with lib.types; {
 		pkgs.server.ingress = {
+			enable = lib.mkOption {
+				type = bool;
+				default = true;
+			};
+
 			rules = lib.mkOption {
 				type = attrs;
 				default = {};
@@ -12,7 +17,7 @@
 
 	config = let
 		opts = config.pkgs.server.ingress;
-	in {
+	in lib.mkIf opts.enable {
 		# Service
 		services.nginx = {
 			enable = true;
