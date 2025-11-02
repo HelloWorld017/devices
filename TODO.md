@@ -4,8 +4,8 @@
 * [v] split nixpkgs per-device (+ rolling), as update period differs
 
 ### `devices/yanamianna`
-* [ ] rewrite an alternative for nixos-nftables-firewall
-* [ ] moves firewall, ingress, podman to common packages
+* [v] rewrite an alternative for nixos-nftables-firewall
+* [v] moves firewall, ingress, podman to common packages
 
 ### `packages/anyrun`
 * [ ] add anyrun nix-run plugin
@@ -13,5 +13,5 @@
 ### `package/shell`
 * [ ] add sddm and theme (SilentSDDM)
 * [v] make fullscreen (zoom) style more noticable
-* [ ] make border 6px transparent white / shrink gap for 6px
+* [v] make border 6px transparent white / shrink gap for 6px
 * [v] update group style
