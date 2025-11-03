@@ -15,11 +15,6 @@
 		efiInstallAsRemovable = true;
 	};
 
-	swapDevices = [ {
-		device = "/var/lib/swapfile";
-		size = 4 * 1024;
-	} ];
-
 	networking.hostName = "nenw-ajisai";
 	systemd.network.enable = true;
 
