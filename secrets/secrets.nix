@@ -1,5 +1,6 @@
 let
 	keys = import ../keys.nix;
 in {
-	"openweatherapi-secret.age".publicKeys = [ keys.user-nenw-shigureui ];
+	"cloudflare-dns-secret.age".publicKeys = keys.all;
+	"openweatherapi-secret.age".publicKeys = keys.all;
 }

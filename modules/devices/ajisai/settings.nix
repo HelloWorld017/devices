@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.loader.efi = {
@@ -40,7 +40,7 @@
 		];
 		packages = [];
 		openssh.authorizedKeys.keys =
-			lib.attrValues (import "${inputs.self}/keys.nix");
+			(import "${inputs.self}/keys.nix").all;
 	};
 
 	system.stateVersion = "24.11";

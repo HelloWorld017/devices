@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, config, ... }:
+{ inputs, pkgs, config, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
@@ -61,7 +61,7 @@
 		];
 		packages = [];
 		openssh.authorizedKeys.keys =
-			lib.attrValues (import "${inputs.self}/keys.nix");
+			(import "${inputs.self}/keys.nix").all;
 	};
 
 	home.wayland.windowManager.hyprland.settings = {
