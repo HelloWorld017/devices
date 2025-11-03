@@ -35,4 +35,4 @@ A repository containing nix-based configurations which is currently running on m
 	* Platform: nix-darwin
 
 ## Screenshot
-Not Yet
+<img width="2880" height="1800" alt="image" src="https://github.com/user-attachments/assets/2e006509-34a0-42c7-ac17-3088144899ba" />
