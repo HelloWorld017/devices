@@ -2,14 +2,17 @@
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.loader.efi = {
-		canTouchEfiVariables = true;
+		canTouchEfiVariables = false;
 		efiSysMountPoint = "/boot/efi";
 	};
 
 	boot.loader.grub = {
 		enable = true;
 		efiSupport = true;
-		device = "nodev";
+
+		# ConoHa VPS (v2) does not support UEFI!
+		device = "/dev/vda";
+		efiInstallAsRemovable = true;
 	};
 
 	networking.hostName = "nenw-ajisai";

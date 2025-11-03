@@ -46,11 +46,11 @@
 	config = let
 		opts = config.pkgs.server.firewall;
 	in lib.mkIf opts.enable ({
-		pkgs.server.firewall.zone = {
+		pkgs.server.firewall.zones = {
 			all = {};
 			lo = { interfaces = [ "lo" ]; };
 		};
-	} ++ (with lib; let
+	} // (with lib; let
 		zones = mapAttrs (name: zone: with zone; {
 			name = name;
 			ingressExpression = flatten [
