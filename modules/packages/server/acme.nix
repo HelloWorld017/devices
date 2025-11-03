@@ -41,7 +41,6 @@
 
 		security.acme = {
 			acceptTerms = true;
-			preliminarySelfsigned = true;
 			defaults.email = opts.email;
 			certs = lib.genAttrs opts.domainNames (domain: {
 				name = domain;

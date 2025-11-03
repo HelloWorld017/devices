@@ -174,7 +174,7 @@
 				(name: rule: (map
 					(zone: toRuleChains {
 						chain = "dnat-zone-${zone}";
-						prefix = "";
+						prefix = "meta l4proto";
 						portExpression = "ct original proto-dst";
 					} rule)
 					rule.from
