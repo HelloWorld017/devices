@@ -16,7 +16,7 @@
 	};
 
 	networking.hostName = "nenw-ajisai";
-	systemd.network.enable = true;
+	networking.useNetworkd = true;
 
 	time.timeZone = "Asia/Seoul";
 	i18n.defaultLocale = "en_US.UTF-8";

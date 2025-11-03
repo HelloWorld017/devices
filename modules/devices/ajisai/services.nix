@@ -7,10 +7,10 @@
 	];
 
 	config = {
-		pkgs.server.acme.enable = false;
-		pkgs.server.ingress.enable = false;
+		pkgs.server.acme.enable = true;
+		pkgs.server.ingress.enable = true;
 		pkgs.server.podman.enable = false;
-		pkgs.server.firewall.enable = false;
+		pkgs.server.firewall.enable = true;
 		pkgs.server.firewall.zones = {
 			uplink = { interfaces = [ "eno0" ]; };
 			podman = { interfaces = [ "podman*" ]; };
