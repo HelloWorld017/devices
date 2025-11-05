@@ -12,7 +12,7 @@
 		pkgs.server.podman.enable = false;
 		pkgs.server.firewall.enable = true;
 		pkgs.server.firewall.zones = {
-			uplink = { interfaces = [ "eno0" ]; };
+			uplink = { interfaces = [ "ens3" ]; };
 			podman = { interfaces = [ "podman*" ]; };
 			tailscale = { interfaces = [ "tailscale*" ]; };
 		};
