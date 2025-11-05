@@ -199,6 +199,7 @@
 				chain input {
 					type filter hook input priority -10; policy drop;
 
+					iifname lo accept
 					ct state vmap {
 						invalid : drop,
 						established : accept,
