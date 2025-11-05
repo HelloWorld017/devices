@@ -7,7 +7,6 @@
 		);
 	in
 		recursiveMerge [
-			# ((import ./iceflake) inputs)
 			((import ./ajisai) inputs)
 			((import ./akebi) inputs)
 			((import ./shigureui) inputs)
