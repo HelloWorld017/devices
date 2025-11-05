@@ -5,6 +5,7 @@ in {
 	imports = [
 		repo.alacritty
 		repo.anyrun
+		repo.fastfetch
 		repo.firefox
 		repo.fonts
 		repo.git
@@ -38,7 +39,6 @@ in {
 			curlie
 			dig
 			eza
-			fastfetch
 			fastmod
 			fd
 			ffmpeg

@@ -5,6 +5,7 @@ in {
 	imports = [
 		repo.alacritty
 		repo.anyrun
+		repo.fastfetch
 		repo.firefox
 		repo.fonts
 		repo.ghostty
@@ -35,7 +36,6 @@ in {
 			cmake
 			dig
 			eza
-			fastfetch
 			fastmod
 			fd
 			ffmpeg

@@ -1,6 +1,7 @@
 {
 	alacritty = import ./alacritty;
 	anyrun = import ./anyrun;
+	fastfetch = import ./fastfetch;
 	firefox = import ./firefox;
 	fonts = import ./fonts;
 	ghostty = import ./ghostty;

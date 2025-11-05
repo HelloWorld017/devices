@@ -1,6 +1,7 @@
 { pkgs, repo, inputs, system, ... }:
 {
 	imports = [
+		repo.fastfetch
 		repo.git
 		repo.nvim
 		repo.tmux
@@ -25,7 +26,6 @@
 			curlie
 			dig
 			eza
-			fastfetch
 			fastmod
 			fd
 			ffmpeg

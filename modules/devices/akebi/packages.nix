@@ -1,6 +1,7 @@
 { pkgs, repo, ... }:
 {
 	imports = [
+		repo.fastfetch
 		repo.git
 		repo.nvim
 		repo.tmux
@@ -23,7 +24,6 @@
 			cmake
 			dig
 			eza
-			fastfetch
 			fastmod
 			fd
 			ffmpeg
