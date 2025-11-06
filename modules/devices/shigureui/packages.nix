@@ -56,6 +56,7 @@ in {
 			lm_sensors
 			loupe
 			nautilus
+			net-tools
 			nodejs
 			inputs.notion-linux.packages.${system}.default
 			onlyoffice-bin

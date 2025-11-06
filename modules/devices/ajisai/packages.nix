@@ -34,6 +34,7 @@
 			inetutils
 			jq
 			kubectl
+			net-tools
 			nodejs
 			pkg-config
 			nodePackages.pnpm

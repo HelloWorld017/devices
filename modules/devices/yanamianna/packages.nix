@@ -52,6 +52,7 @@ in {
 			loupe
 			musescore
 			nautilus
+			net-tools
 			nodejs
 			obs-studio
 			pkg-config

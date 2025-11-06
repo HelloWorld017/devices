@@ -31,6 +31,7 @@
 			fzf
 			inetutils
 			jq
+			net-tools
 			nodejs
 			nodePackages.pnpm
 			pkg-config
