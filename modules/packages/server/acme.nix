@@ -43,25 +43,16 @@
 			acceptTerms = true;
 			defaults.email = opts.email;
 			certs = lib.genAttrs opts.domainNames (domain: {
-				name = domain;
-				value = {
-					dnsProvider = "cloudflare";
-					dnsResolver = "1.1.1.1:53";
-					credentialFiles = {
-						CLOUDFLARE_DNS_API_TOKEN_FILE = secrets.cloudflare-dns-secret.path;
-					};
-					dnsPropagationCheck = true;
-					extraDomainNames = [ ("*." + domain) ];
-					renewInterval = "weekly";
-					reloadServices = [ "nginx" ] ++ opts.reloadedServices;
+				dnsProvider = "cloudflare";
+				dnsResolver = "1.1.1.1:53";
+				credentialFiles = {
+					CLOUDFLARE_DNS_API_TOKEN_FILE = secrets.cloudflare-dns-secret.path;
 				};
-			}) // {
-				"localhost" = {
-					server = "https://127.0.0.1/acme-failing";
-					webroot = "/var/lib/acme/.challenges-failing";
-					renewInterval = "yearly";
-				};
-			};
+				dnsPropagationCheck = true;
+				extraDomainNames = [ ("*." + domain) ];
+				renewInterval = "weekly";
+				reloadServices = [ "nginx" ] ++ opts.reloadedServices;
+			});
 
 		};
 

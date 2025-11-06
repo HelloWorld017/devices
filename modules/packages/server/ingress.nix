@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 {
 	options = with lib.types; {
 		pkgs.server.ingress = {
@@ -17,6 +17,23 @@
 
 	config = let
 		opts = config.pkgs.server.ingress;
+		selfSignedCert = (pkgs.runCommand
+			"self-signed-cert"
+			{ nativeBuildInputs = [ pkgs.openssl ]; }
+			''
+				mkdir -p $out
+				openssl req -x509 -nodes \
+					-newkey rsa:4096 \
+					-keyout $out/privkey.pem \
+					-out $out/fullchain.pem \
+					-days 36500 \
+					-subj "/CN=localhost" \
+					-addext "subjectAltName = DNS:localhost,IP:127.0.0.1"
+
+				chmod 644 $out/fullchain.pem
+				chmod 600 $out/privkey.pem
+			''
+		);
 	in lib.mkIf opts.enable {
 		# Service
 		services.nginx = {
@@ -30,7 +47,8 @@
 				"localhost" = {
 					default = true;
 					forceSSL = true;
-					useACMEHost = "localhost";
+					sslCertificate = "${selfSignedCert}/fullchain.pem";
+					sslCertificateKey = "${selfSignedCert}/privkey.pem";
 					locations."/".extraConfig = ''
 						return 404;
 					'';
