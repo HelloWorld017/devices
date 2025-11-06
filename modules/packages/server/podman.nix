@@ -68,6 +68,11 @@
 
 		pkgs.server.firewall.rules.podman = {
 			from = [ "podman" ];
+			allowedUDPPorts = [ 53 ];
+		};
+
+		pkgs.server.firewall.rules.podman-forward = {
+			from = [ "podman" ];
 			to = [ "all" ];
 			verdict = "accept";
 		};

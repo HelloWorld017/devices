@@ -224,6 +224,7 @@
 				chain forward {
 					type filter hook forward priority -10; policy drop;
 
+					iifname lo accept
 					ct state vmap {
 						invalid : drop,
 						established : accept,
