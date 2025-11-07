@@ -1,15 +1,33 @@
 { config, lib, pkgs, ... }:
 {
 	options = with lib; with types; {
-		pkgs.server.firewall = {
-			enable = lib.mkOption {
+		pkgs.server.firewall = let
+			ports = listOf (either port (submodule {
+				options = {
+					from = mkOption { type = port; };
+					to = mkOption { type = port; };
+				};
+			}));
+		in {
+			enable = mkOption {
 				type = bool;
 				default = true;
 			};
 
-			zones = mkOption {
+			sets = mkOption {
 				type = attrsOf (submodule {
 					options = {
+						type = mkOption { type = str; };
+						flags = mkOption { type = listOf str; default = []; };
+						elements = mkOption { type = listOf str; default = []; };
+					};
+				});
+			};
+
+			zones = mkOption {
+				type = attrsOf (submodule ({ config, ... }: {
+					options = {
+						assertions = mkOption { type = listOf attrs; internal = true; };
 						parent = mkOption { type = nullOr str; default = null; };
 						interfaces = mkOption { type = listOf str; default = []; };
 						ipv4Addresses = mkOption { type = listOf str; default = []; };
@@ -17,17 +35,24 @@
 						ingressExpression = mkOption { type = listOf str; default = []; };
 						egressExpression = mkOption { type = listOf str; default = []; };
 					};
-				});
-			};
 
-			rules = let
-				ports = listOf (either port (submodule {
-					options = {
-						from = mkOption { type = port; };
-						to = mkOption { type = port; };
+					config = {
+						assertions = [
+							{
+								assertion = (config.ipv4Addresses == [] || config.ipv6Addresses == []);
+								message = "A single firewall zone cannot contain both ipv4Addresses and ipv6Addresses.";
+							}
+						];
 					};
 				}));
-			in mkOption {
+			};
+
+			zoneAliases = mkOption {
+				type = attrsOf (listOf str);
+				default = {};
+			};
+
+			rules = mkOption {
 				type = attrsOf (submodule {
 					options = {
 						from = mkOption { type = listOf str; default = []; };
@@ -39,6 +64,7 @@
 						verdict = mkOption { type = nullOr (enum ["accept" "drop" "reject"]); default = null; };
 					};
 				});
+				default = {};
 			};
 		};
 	};
@@ -51,6 +77,12 @@
 			lo = { interfaces = [ "lo" ]; };
 		};
 	} // (with lib; let
+		expandZones = names: unique (concatMap (name:
+			if hasAttr name opts.zones then [ name ]
+			else if hasAttr name opts.zoneAliases then (expandZones opts.zoneAliases.${name})
+			else throw "Firewall rule references unknown zone or alias: ${name}"
+		) names);
+
 		zones = mapAttrs (name: zone: with zone; {
 			name = name;
 			ingressExpression = flatten [
@@ -68,6 +100,19 @@
 				(optional (length ipv4Addresses >= 1) "ip daddr { ${concatStringsSep ", " ipv4Addresses} }")
 			];
 		}) opts.zones;
+
+		rules = mapAttrs (name: rule: rule // (with rule; {
+			from = expandZones from;
+			to = expandZones to;
+		})) opts.rules;
+
+		sets = mapAttrsToList (name: set: ''
+			set ${name} {
+				type ${set.type};
+				${optionalString (length set.flags >= 1) "flags ${concatStringsSep ", " set.flags};"}
+				elements = { ${concatStringsSep ", " set.elements} };
+			}
+		'') opts.sets;
 
 		toPorts = ports:
 			"{ ${concatMapStringsSep ", " (port:
@@ -115,7 +160,7 @@
 
 		inputRules = filterAttrs
 			(name: rule: (length rule.from) >= 1 && (length rule.to) == 0)
-			opts.rules;
+			rules;
 
 		inputAllowChain = mapAttrsToList
 			(name: zone: "${toZoneIngress name} jump input-zone-${name}")
@@ -140,7 +185,7 @@
 
 		forwardRules = filterAttrs
 			(name: rule: (length rule.from) >= 1 && (length rule.to) >= 1)
-			opts.rules;
+			rules;
 
 		forwardAllowChain = flatten (mapAttrsToList
 			(name: rule: (map
@@ -190,6 +235,8 @@
 		networking.nftables.tables.firewall = {
 			family = "inet";
 			content = ''
+				${concatLines sets}
+
 				chain rpfilter {
 					type filter hook prerouting priority mangle + 10; policy drop;
 					meta nfproto ipv4 udp sport . udp dport { 67 . 68, 68 . 67 } accept comment "accept DHCPv4 client/server"
@@ -216,7 +263,7 @@
 
 					icmp type echo-request limit rate 2/second accept comment "allow ping"
 					icmpv6 type != { nd-redirect, 139 } accept comment "accept ICMPv6 messages"
-					ip6 daddr fe80::/64 udp dport 546 accept comment "accpe DHCPv6 client"
+					ip6 daddr fe80::/64 udp dport 546 accept comment "accept DHCPv6 client"
 				}
 
 				${toChain inputZoneChains}
