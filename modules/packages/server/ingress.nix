@@ -12,6 +12,11 @@
 				default = {};
 				description = "virtual host rules for ingress";
 			};
+
+			zones = lib.mkOption {
+				type = listOf str;
+				default = [ "all" ];
+			};
 		};
 	};
 
@@ -70,7 +75,7 @@
 
 		# Firewall
 		pkgs.server.firewall.rules.ingress = {
-			from = [ "all" ];
+			from = opts.zones;
 			allowedTCPPorts = [ 80 443 ];
 		};
 	};

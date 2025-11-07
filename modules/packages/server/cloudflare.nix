@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 {
 	options = {
-		pkgs.server.cloudflare = with lib.types; {
+		pkgs.server.firewall.cloudflare = with lib.types; {
 			enable = lib.mkOption {
 				type = bool;
 				default = false;
@@ -15,7 +15,7 @@
 	};
 
 	config = let
-		opts = config.pkgs.server.cloudflare;
+		opts = config.pkgs.server.firewall.cloudflare;
 		fetchIPs = url: lib.filter (s: s != "") (
 			lib.splitString "\n" (builtins.readFile (pkgs.fetchurl url))
 		);
