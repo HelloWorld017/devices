@@ -1,7 +1,6 @@
 # Default Options
 initial-command = "tmux new -A -s default"
 command = "tmux new"
-copy-on-select = clipboard
 scrollback-limit = 67108864
 
 # Color & Theme
