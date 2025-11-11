@@ -19,5 +19,14 @@
 		if options.services ? "nix-daemon" then {
 			services.nix-daemon.enable = true;
 		} else {}
+	)
+	// (
+		{
+			home.configFile = {
+				"nixpkgs/config.nix".text = ''
+					{ allowUnfree = true; }
+				'';
+			};
+		}
 	);
 }
