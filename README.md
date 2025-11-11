@@ -8,7 +8,7 @@ A repository containing nix-based configurations which is currently running on m
 
 ## Devices
 * `ajisai`
-	* Status: `Pending`
+	* Status: `Active`
 	* Device: ConoHa VPS (2 vCPU)
 	* Platform: NixOS
 * `akebi`
