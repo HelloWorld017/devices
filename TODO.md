@@ -3,9 +3,13 @@
 * [ ] change tab to space
 * [v] split nixpkgs per-device (+ rolling), as update period differs
 
+### `devices/shigureui`
+* [ ] use wayland for keeweb
+
 ### `devices/yanamianna`
 * [v] rewrite an alternative for nixos-nftables-firewall
 * [v] moves firewall, ingress, podman to common packages
+* [ ] remove shell components
 
 ### `packages/anyrun`
 * [ ] add anyrun nix-run plugin
