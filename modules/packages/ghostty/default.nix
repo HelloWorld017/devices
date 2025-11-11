@@ -1,7 +1,7 @@
-{ inputs, system, ... }:
+{ pkgs, ... }:
 {
 	config = {
-		home.packages = [ inputs.ghostty.packages.${system}.default ];
+		home.packages = with pkgs; [ ghostty ];
 		home.configFile."ghostty/config".text =
 			builtins.readFile ./assets/ghostty_config;
 	};

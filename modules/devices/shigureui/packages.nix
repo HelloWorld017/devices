@@ -8,6 +8,7 @@ in {
 		repo.fastfetch
 		repo.firefox
 		repo.fonts
+		repo.ghostty
 		repo.git
 		repo.shell
 		repo.ime

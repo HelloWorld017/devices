@@ -32,11 +32,6 @@
 			inputs.nixpkgs.follows = "nixpkgs-base";
 		};
 
-		ghostty = {
-			url = "github:ghostty-org/ghostty";
-			inputs.nixpkgs.follows = "nixpkgs-base";
-		};
-
 		midnightway = {
 			url = "github:HelloWorld017/midnightway";
 			inputs.nixpkgs.follows = "nixpkgs-base";
