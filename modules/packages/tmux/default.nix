@@ -1,7 +1,12 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
 	config = {
+		home.configFile."tmux/tmux-power.tmux" = {
+			source = ./assets/tmux-power.tmux;
+			executable = true;
+		};
+
 		home.programs.tmux = {
 			enable = true;
 			escapeTime = 5;
@@ -28,23 +33,19 @@
 
 				# Automatically re-number windows
 				set -g renumber-windows on
-			'';
 
-			plugins = with pkgs.tmuxPlugins; [
-				{
-					plugin = power-theme;
-					extraConfig = ''
-						# Config powerline
-						set -g @tmux_power_theme 'moon'
-						set -g @tmux_power_user_icon ' '
-						set -g @tmux_power_session_icon '  '
-						set -g @tmux_power_time_icon '  '
-						set -g @tmux_power_date_icon '  ' # '  '
-						set -g @tmux_power_left_arrow_icon '​'
-						set -g @tmux_power_right_arrow_icon '​'
-					'';
-				}
-			];
+				# Config powerline
+				set -g @tmux_power_theme 'custom'
+				set -g @tmux_power_tc '#0084ff' # '#0066ff'
+				set -g @tmux_power_user_icon ' '
+				set -g @tmux_power_session_icon '  '
+				set -g @tmux_power_time_icon '  '
+				set -g @tmux_power_date_icon '  ' # '  '
+				set -g @tmux_power_left_arrow_icon ''
+				set -g @tmux_power_right_arrow_icon ''
+
+				run-shell "~/.config/tmux/tmux-power.tmux"
+			'';
 		};
 	};
 }
