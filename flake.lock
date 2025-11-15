@@ -278,11 +278,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1758218051,
-        "narHash": "sha256-WmIQ0grBXnsJTYaDOZlA5Nti5MhrGCtkeaIdUI0WSsw=",
+        "lastModified": 1763046032,
+        "narHash": "sha256-OS7ndhXKO4OhzMiUiONG/Uxa7unuzoXQ83a7e9azH6s=",
         "owner": "HelloWorld017",
         "repo": "midnightway",
-        "rev": "91cab12a61e4efd8b82bdf2448b8886ec1746cdf",
+        "rev": "c1f0f1faf9d8adb79a3e9ce57163b9724778c711",
         "type": "github"
       },
       "original": {
