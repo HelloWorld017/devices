@@ -142,7 +142,7 @@ if [[ $prefix_highlight_pos == 'R' || $prefix_highlight_pos == 'LR' ]]; then
     RS="#{prefix_highlight}$RS"
 fi
 tmux_set @status-right-full "$RS"
-tmux_set status-right "#{?#{e|<:#{window_width},100},,#{@status-right-full}}"
+tmux_set status-right "#{?#{e|<:#{window_width},100},,#{T:@status-right-full}}"
 
 # Window status format
 tmux_set window-status-format         "#[fg=$G2,bg=$G0]$larrow#[fg=$T0,bg=$G2] #I:#W#F #[fg=$G2,bg=$G0]$rarrow"
