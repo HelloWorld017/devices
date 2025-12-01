@@ -76,6 +76,10 @@ in {
 				# Resize: Super + RMB
 				"${mainMod}, mouse:273, resizewindow"
 			];
+
+			gesture = [
+				"3, horizontal, workspace"
+			];
 		};
 	};
 }
