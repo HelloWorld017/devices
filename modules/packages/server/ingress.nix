@@ -68,9 +68,20 @@
 							proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
 						};
 					})
-					(removeAttrs value ["proxyPort" "acmeHost"])
+					(removeAttrs value ["proxyPort" "acmeHost" "tailscale"])
 				]) opts.rules
 			);
+
+			tailscaleAuth = let
+				tailscaleEnabledRules = lib.flatten (
+					lib.mapAttrsToList
+						(name: rule: lib.optional (rule ? "tailscale" && rule.tailscale) name)
+						opts.rules
+				);
+			in {
+				enable = (lib.length tailscaleEnabledRules) > 0;
+				virtualHosts = tailscaleEnabledRules;
+			};
 		};
 
 		# Firewall
