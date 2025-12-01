@@ -31,7 +31,7 @@ in {
 			bat
 			better-control
 			binwalk
-			blender
+			latestPkgs.blender
 			btop
 			buildah
 			chromium
@@ -51,6 +51,7 @@ in {
 			ghostscript
 			gjs
 			gnome-text-editor
+			gnumake
 			inetutils
 			jq
 			keeweb
