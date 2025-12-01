@@ -59,6 +59,9 @@ in {
 				# Picker: Super + Shift + P
 				("${mainMod} Shift, P, exec, " +
 					''wl-copy -p $(hyprpicker -a) && notify-send "Color Picked"'')
+
+				# DPMS: Super + BrightnessUp
+				"${mainMod}, XF86MonBrightnessUp, dpms, toggle"
 			];
 
 			binde = lib.flatten [
