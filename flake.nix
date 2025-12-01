@@ -37,6 +37,11 @@
 			inputs.nixpkgs.follows = "nixpkgs-base";
 		};
 
+		nix-index-database = {
+			url = "github:nix-community/nix-index-database";
+			inputs.nixpkgs.follows = "nixpkgs-latest";
+		};
+
 		notion-linux = {
 			url = "github:HelloWorld017/notion-linux-nixos";
 			inputs.nixpkgs.follows = "nixpkgs-base";

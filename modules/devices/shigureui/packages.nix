@@ -1,4 +1,4 @@
-{ pkgs, repo, inputs, system, ... }:
+{ pkgs, repo, inputs, system, latestPkgs, ... }:
 let
 	patchedPkgs = (repo.patches pkgs);
 in {
@@ -37,6 +37,7 @@ in {
 			chromium
 			jetbrains.clion
 			cmake
+			inputs.nix-index-database.packages.${system}.comma-with-db
 			curlie
 			dig
 			eza
