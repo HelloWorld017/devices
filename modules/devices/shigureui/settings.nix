@@ -21,6 +21,8 @@
 		enable = true;
 	};
 
+	hardware.enableRedistributableFirmware = true;
+
 	time.timeZone = "Asia/Seoul";
 	i18n.defaultLocale = "en_US.UTF-8";
 	i18n.extraLocaleSettings = {
