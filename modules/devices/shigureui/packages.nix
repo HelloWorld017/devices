@@ -89,7 +89,7 @@ in {
 			virtualenv
 			wev
 			wl-clipboard
-			yt-dlp
+			latestPkgs.yt-dlp
 			zip
 		];
 	};
