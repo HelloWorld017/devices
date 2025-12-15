@@ -25,6 +25,9 @@ in {
 				# Zoom: Super + Z
 				"${mainMod}, Z, fullscreen, 1"
 
+				# Float: Super + F
+				"${mainMod}, F, togglefloating"
+
 				# Workspace: Super + Num / Super + (Shift +) Tab / Super + Scroll
 				(mkNum mainMod "workspace" (lib.range 1 10))
 				"${mainMod}, tab, workspace, m+1"
