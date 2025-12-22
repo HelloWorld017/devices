@@ -39,6 +39,7 @@
 			ripgrep
 			tealdeer
 			unzip
+			uv
 			virtualenv
 			latestPkgs.yt-dlp
 			zip

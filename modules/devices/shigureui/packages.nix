@@ -85,6 +85,7 @@ in {
 			unityhub
 			unzip
 			usbutils
+			uv
 			vesktop
 			virtualenv
 			wev
