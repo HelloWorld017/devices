@@ -33,8 +33,11 @@
 			jq
 			net-tools
 			nodejs
+			latestPkgs.opencode
 			nodePackages.pnpm
 			pkg-config
+			podman
+			podman-compose
 			pv
 			ripgrep
 			tealdeer
