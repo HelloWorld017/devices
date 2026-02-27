@@ -3,18 +3,12 @@
 	config = {
 		pkgs.server = {
 			# Service
-			podman.services.wireray.enable = false;
+			podman.services.wireray.enable = true;
 
 			# Ingress
 			ingress.rules."test.nabi.moe" = {
 				acmeHost = "nabi.moe";
 				locations."/" = {
-					extraConfig = ''
-						return 404;
-					'';
-				};
-
-				locations."/livechat" = {
 					proxyPass = "http://127.0.0.1:20619";
 					extraConfig = ''
 						client_max_body_size 0;
@@ -26,6 +20,7 @@
 						keepalive_timeout 3600s;
 
 						gzip off;
+						access_log off;
 					'';
 				};
 			};

@@ -60,7 +60,7 @@
 				};
 			} // (
 				lib.mapAttrs (name: value: lib.mkMerge [
-					{ forceSSL = true; }
+					{ http2 = true; forceSSL = true; }
 					(lib.mkIf (value ? "acmeHost") { useACMEHost = value.acmeHost; })
 					(lib.mkIf (!(value ? "acmeHost")) { enableACME = true; })
 					(lib.mkIf (value ? "proxyPort") {
