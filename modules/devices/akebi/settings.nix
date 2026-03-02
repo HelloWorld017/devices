@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
 	wsl.defaultUser = "nenw";
 
@@ -10,6 +10,8 @@
 		group = "nenw";
 		extraGroups = [];
 		packages = [];
+		openssh.authorizedKeys.keys =
+			(import "${inputs.self}/keys.nix").all;
 	};
 
 	users.groups.nenw = {};
@@ -24,6 +26,17 @@
 
 		defaultNetwork.settings = {
 			dns_enabled = true;
+		};
+	};
+
+	services.openssh = {
+		enable = true;
+		ports = [ 37089 ];
+		settings = {
+			PasswordAuthentication = false;
+			UseDns = true;
+			X11Forwarding = false;
+			PermitRootLogin = "no";
 		};
 	};
 

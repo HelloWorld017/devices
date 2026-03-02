@@ -39,6 +39,7 @@
 			podman
 			podman-compose
 			pv
+			python314
 			ripgrep
 			tealdeer
 			unzip
