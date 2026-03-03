@@ -53,13 +53,14 @@
 	};
 	services.udev.extraRules = ''
 		# Rule for mediatek
-		ATTRS{idVendor}=="0e8d", ENV{ID_MM_DEVICE_IGNORE}="1"
+		SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
 	'';
 
 	users.users.nenw = {
 		isNormalUser = true;
 		description = "nenw*";
 		extraGroups = [
+			# "dialout"
 			"audio"
 			"docker"
 			"networkmanager"
