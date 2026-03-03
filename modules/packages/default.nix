@@ -9,6 +9,7 @@
 	ime = import ./ime;
 	karabiner = import ./karabiner;
 	kitty = import ./kitty;
+	nix-ld = import ./nix-ld;
 	nvim = import ./nvim;
 	patches = import ./patches;
 	server = import ./server;

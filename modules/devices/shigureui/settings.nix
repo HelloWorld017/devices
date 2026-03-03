@@ -51,6 +51,10 @@
 		alsa.support32Bit = true;
 		pulse.enable = true;
 	};
+	services.udev.extraRules = ''
+		# Rule for mediatek
+		ATTRS{idVendor}=="0e8d", ENV{ID_MM_DEVICE_IGNORE}="1"
+	'';
 
 	users.users.nenw = {
 		isNormalUser = true;

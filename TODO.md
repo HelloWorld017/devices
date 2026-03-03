@@ -5,6 +5,7 @@
 
 ### `devices/shigureui`
 * [ ] use wayland for keeweb
+	* might migrate from keeweb to keepassxc
 
 ### `devices/yanamianna`
 * [v] rewrite an alternative for nixos-nftables-firewall

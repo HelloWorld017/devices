@@ -37,6 +37,12 @@
 			inputs.nixpkgs.follows = "nixpkgs-base";
 		};
 
+		nix-alien = {
+			url = "github:thiagokokada/nix-alien";
+			inputs.nixpkgs.follows = "nixpkgs-latest";
+			inputs.nix-index-database.follows = "nix-index-database";
+		};
+
 		nix-index-database = {
 			url = "github:nix-community/nix-index-database";
 			inputs.nixpkgs.follows = "nixpkgs-latest";

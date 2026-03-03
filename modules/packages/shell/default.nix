@@ -2,6 +2,7 @@
 {
 	imports = [
 		./clipboard.nix
+		./crystaldock.nix
 		./hyprcursor.nix
 		./hypridle.nix
 		./hyprland.nix

@@ -12,6 +12,7 @@ in {
 		repo.git
 		repo.shell
 		repo.ime
+		repo.nix-ld
 		repo.nvim
 		repo.tmux
 		repo.zsh
@@ -60,6 +61,7 @@ in {
 			loupe
 			nautilus
 			net-tools
+			inputs.nix-alien.packages.${system}.nix-alien
 			nodejs
 			inputs.notion-linux.packages.${system}.default
 			onlyoffice-bin
