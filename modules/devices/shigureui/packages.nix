@@ -14,6 +14,7 @@ in {
 		repo.ime
 		repo.nix-ld
 		repo.nvim
+		repo.opencode
 		repo.tmux
 		repo.zsh
 	];
@@ -65,7 +66,6 @@ in {
 			nodejs
 			inputs.notion-linux.packages.${system}.default
 			onlyoffice-bin
-			latestPkgs.opencode
 			parsec-bin
 			pinta
 			pkg-config

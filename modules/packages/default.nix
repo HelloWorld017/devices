@@ -11,6 +11,7 @@
 	kitty = import ./kitty;
 	nix-ld = import ./nix-ld;
 	nvim = import ./nvim;
+	opencode = import ./opencode;
 	patches = import ./patches;
 	server = import ./server;
 	shell = import ./shell;

@@ -4,6 +4,7 @@
 		repo.fastfetch
 		repo.git
 		repo.nvim
+		repo.opencode
 		repo.tmux
 		repo.wsl
 		repo.zsh
@@ -33,7 +34,6 @@
 			jq
 			net-tools
 			nodejs
-			latestPkgs.opencode
 			nodePackages.pnpm
 			pkg-config
 			podman
