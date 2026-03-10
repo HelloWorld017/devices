@@ -400,11 +400,11 @@
     },
     "nixpkgs-latest": {
       "locked": {
-        "lastModified": 1772704124,
-        "narHash": "sha256-thXluFpTTSJDwkJXInd22dx+h9QyjlkcNlbd4bQf0aE=",
+        "lastModified": 1770537093,
+        "narHash": "sha256-pF1quXG5wsgtyuPOHcLfYg/ft/QMr8NnX0i6tW2187s=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "289c8a834fbf87af1f01cb78f479537ef5219a0b",
+        "rev": "fef9403a3e4d31b0a23f0bacebbec52c248fbb51",
         "type": "github"
       },
       "original": {
@@ -436,27 +436,6 @@
         "type": "github"
       }
     },
-    "opencode": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-latest"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772780199,
-        "narHash": "sha256-Z1AzwJ3sXltFkyQW+y0np6a2GX1J3CvOtXioW5xPcSc=",
-        "owner": "anomalyco",
-        "repo": "opencode",
-        "rev": "6b99b3e3ec5a1cefd876c41daa37ed101ae8d444",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anomalyco",
-        "ref": "beta",
-        "repo": "opencode",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -471,7 +450,6 @@
         "nixpkgs-base": "nixpkgs-base",
         "nixpkgs-latest": "nixpkgs-latest",
         "notion-linux": "notion-linux",
-        "opencode": "opencode",
         "rose-pine-hyprcursor": "rose-pine-hyprcursor",
         "std": "std",
         "wsl": "wsl"

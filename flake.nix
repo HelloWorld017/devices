@@ -53,11 +53,6 @@
 			inputs.nixpkgs.follows = "nixpkgs-base";
 		};
 
-		opencode = {
-			url = "github:anomalyco/opencode/beta";
-			inputs.nixpkgs.follows = "nixpkgs-latest";
-		};
-
 		rose-pine-hyprcursor = {
 			url = "github:ndom91/rose-pine-hyprcursor";
 			inputs.nixpkgs.follows = "nixpkgs-base";
