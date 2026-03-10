@@ -1,4 +1,4 @@
-{ pkgs, latestPkgs, ... }:
+{ pkgs, inputs, system, ... }:
 
 let
 	tuiSettings = {
@@ -9,7 +9,7 @@ let
 in {
 	config = {
 		home.packages = [
-			latestPkgs.opencode
+			inputs.opencode.packages.${system}.default
 		];
 
 		home.configFile = {
