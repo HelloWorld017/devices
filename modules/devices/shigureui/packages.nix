@@ -72,6 +72,7 @@ in {
 			nodePackages.pnpm
 			podman
 			podman-compose
+			praat
 			protobuf
 			pulseaudio
 			python314
