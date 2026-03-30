@@ -1,3 +1,5 @@
+![shigureui-nixos](https://images.nenw.dev/image/754df2ff-fa3f-4c49-aa47-9f12e7bc25ad.png)
+
 # `devices`
 A repository containing nix-based configurations which is currently running on my devices.
 
