@@ -41,7 +41,9 @@
 			pv
 			python314
 			ripgrep
+			ruff
 			tealdeer
+			ty
 			unzip
 			uv
 			virtualenv
