@@ -20,6 +20,8 @@
 			home.packages = with pkgs; [
 				(callPackage ./win32yank.nix {})
 			];
+
+			env.PATH = [ "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/" ];
 		}
 
 		(lib.mkIf config.pkgs.wsl.nvidia.enable {
