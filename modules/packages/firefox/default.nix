@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ latestPkgs, ... }:
 let
 	profile = "dev-edition-default";
 	lock-false = { Value = false; Status = "locked"; };
@@ -12,7 +12,7 @@ in
 		config = {
 			home.programs.firefox = {
 				enable = true;
-				package = pkgs.firefox-devedition;
+				package = latestPkgs.firefox-devedition;
 				languagePacks = [ "en-US" "ja" "ko" ];
 				profiles.${profile} = {
 					id = 0;
