@@ -1,5 +1,7 @@
 { pkgs, config, ... }:
 {
+	constants.device = "ajisai";
+
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.loader.efi = {
 		canTouchEfiVariables = false;
@@ -15,7 +17,6 @@
 		efiInstallAsRemovable = true;
 	};
 
-	networking.hostName = "nenw-ajisai";
 	networking.useNetworkd = true;
 
 	time.timeZone = "Asia/Seoul";
@@ -32,7 +33,7 @@
 		LC_TIME = "ko_KR.UTF-8";
 	};
 
-	users.users.${config.home.user} = {
+	users.users.${config.constants.user} = {
 		extraGroups = [
 			"wheel"
 		];

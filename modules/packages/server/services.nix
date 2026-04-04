@@ -18,12 +18,12 @@
 			Type = "oneshot";
 			RemainAfterExit = true;
 
-			User = config.home.user;
+			User = config.constants.user;
 			Group = "users";
 
 			ExecStartPre = [
 				"+${pkgs.coreutils}/bin/mkdir -p /srv"
-				"+${pkgs.coreutils}/bin/chown ${config.home.user}:users /srv"
+				"+${pkgs.coreutils}/bin/chown ${config.constants.user}:users /srv"
 			];
 		};
 	};

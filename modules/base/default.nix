@@ -13,6 +13,7 @@ kind:
 		];
 	in modules ++ [
 		./brew.nix
+		./constants.nix
 		./env.nix
 		./home.nix
 		./nix.nix

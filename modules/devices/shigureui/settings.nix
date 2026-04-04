@@ -1,11 +1,12 @@
 { pkgs, config, ... }:
 {
+	constants.device = "shigureui";
+
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	networking.hostName = "nenw-shigureui";
 	networking.networkmanager.enable = true;
 
 	hardware.graphics = {
@@ -56,7 +57,7 @@
 		SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
 	'';
 
-	users.users.${config.home.user} = {
+	users.users.${config.constants.user} = {
 		extraGroups = [
 			# "dialout"
 			"audio"

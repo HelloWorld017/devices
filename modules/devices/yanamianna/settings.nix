@@ -1,11 +1,12 @@
 { pkgs, config, ... }:
 {
+	constants.device = "yanamianna";
+
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	networking.hostName = "nenw-yanamianna";
 	networking.networkmanager.enable = true;
 
 	hardware.graphics = {
@@ -37,7 +38,7 @@
 		pulse.enable = true;
 	};
 
-	users.users.${config.home.user} = {
+	users.users.${config.constants.user} = {
 		extraGroups = [
 			"audio"
 			"docker"

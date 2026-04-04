@@ -2,12 +2,6 @@
 with lib; {
 	options = with types; {
 		home = {
-			user = mkOption {
-				type = str;
-				default = "nenw";
-				description = "User name";
-			};
-
 			description = mkOption {
 				type = str;
 				default = "nenw*";
@@ -16,8 +10,8 @@ with lib; {
 
 			path = mkOption {
 				type = str;
-				default = if pkgs.stdenv.isDarwin then "/Users/${config.home.user}"
-					else "/home/${config.home.user}";
+				default = if pkgs.stdenv.isDarwin then "/Users/${config.constants.user}"
+					else "/home/${config.constants.user}";
 			};
 
 			file = mkOption {
@@ -89,7 +83,7 @@ with lib; {
 	};
 
 	config = let
-		user = config.home.user;
+		user = config.constants.user;
 	in {
 		programs.zsh.enable = true;
 		users.groups.${user} = {};
@@ -131,6 +125,6 @@ with lib; {
 			};
 		};
 
-		home.lib = config.home-manager.users.${config.home.user}.lib;
+		home.lib = config.home-manager.users.${user}.lib;
 	};
 }

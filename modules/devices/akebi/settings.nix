@@ -1,13 +1,13 @@
 { config, ... }:
 {
-	networking.hostName = "nenw-akebi";
+	constants.device = "akebi";
 
-	users.users.${config.home.user} = {
+	users.users.${config.constants.user} = {
 		group = "nenw";
 		extraGroups = [ "users" ];
 	};
 
-	wsl.defaultUser = config.home.user;
+	wsl.defaultUser = config.constants.user;
 
 	virtualisation.podman = {
 		enable = true;

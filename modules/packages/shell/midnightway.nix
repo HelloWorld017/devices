@@ -39,7 +39,7 @@
 		};
 
 		age-template.files."midnightway-config.json" = {
-			owner = config.home.user;
+			owner = config.constants.user;
 			vars = {
 				weather_api = config.age.secrets.openweatherapi-secret.path;
 			};
