@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
@@ -37,16 +37,13 @@
 		pulse.enable = true;
 	};
 
-	users.users.nenw = {
-		isNormalUser = true;
-		description = "nenw*";
+	users.users.${config.home.user} = {
 		extraGroups = [
 			"audio"
 			"docker"
 			"networkmanager"
 			"wheel"
 		];
-		packages = [];
 	};
 
 	home.wayland.windowManager.hyprland.settings = {

@@ -1,4 +1,4 @@
-{ inputs, pkgs, config, ... }:
+{ pkgs, config, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.supportedFilesystems = [ "ntfs" ];
@@ -56,9 +56,7 @@
 		SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
 	'';
 
-	users.users.nenw = {
-		isNormalUser = true;
-		description = "nenw*";
+	users.users.${config.home.user} = {
 		extraGroups = [
 			# "dialout"
 			"audio"
@@ -66,9 +64,6 @@
 			"networkmanager"
 			"wheel"
 		];
-		packages = [];
-		openssh.authorizedKeys.keys =
-			(import "${inputs.self}/keys.nix").all;
 	};
 
 	home.wayland.windowManager.hyprland.settings = {

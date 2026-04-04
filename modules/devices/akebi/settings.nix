@@ -1,20 +1,13 @@
-{ inputs, ... }:
+{ config, ... }:
 {
-	wsl.defaultUser = "nenw";
-
 	networking.hostName = "nenw-akebi";
 
-	users.users.nenw = {
-		isNormalUser = true;
-		description = "nenw*";
+	users.users.${config.home.user} = {
 		group = "nenw";
-		extraGroups = [];
-		packages = [];
-		openssh.authorizedKeys.keys =
-			(import "${inputs.self}/keys.nix").all;
+		extraGroups = [ "users" ];
 	};
 
-	users.groups.nenw = {};
+	wsl.defaultUser = config.home.user;
 
 	virtualisation.podman = {
 		enable = true;

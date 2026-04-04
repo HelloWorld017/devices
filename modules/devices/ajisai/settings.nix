@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, config, ... }:
 {
 	boot.kernelPackages = pkgs.linuxPackages_latest;
 	boot.loader.efi = {
@@ -32,15 +32,10 @@
 		LC_TIME = "ko_KR.UTF-8";
 	};
 
-	users.users.nenw = {
-		isNormalUser = true;
-		description = "nenw*";
+	users.users.${config.home.user} = {
 		extraGroups = [
 			"wheel"
 		];
-		packages = [];
-		openssh.authorizedKeys.keys =
-			(import "${inputs.self}/keys.nix").all;
 	};
 
 	system.stateVersion = "24.11";

@@ -8,6 +8,12 @@ with lib; {
 				description = "User name";
 			};
 
+			description = mkOption {
+				type = str;
+				default = "nenw*";
+				description = "User description";
+			};
+
 			path = mkOption {
 				type = str;
 				default = if pkgs.stdenv.isDarwin then "/Users/${config.home.user}"
@@ -86,10 +92,16 @@ with lib; {
 		user = config.home.user;
 	in {
 		programs.zsh.enable = true;
+		users.groups.${user} = {};
 		users.users.${user} = {
 			name = user;
 			home = config.home.path;
 			shell = pkgs.zsh;
+			extraGroups = [ user ];
+			isNormalUser = true;
+			description = config.home.description;
+			openssh.authorizedKeys.keys =
+				(import "${inputs.self}/keys.nix").all;
 		};
 
 		# Initialize Home
