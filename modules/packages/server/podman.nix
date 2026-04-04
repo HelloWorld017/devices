@@ -17,7 +17,7 @@
 						path = lib.mkOption {
 							type = str;
 							description = "path of the directory containing podman-compose.yml";
-							default = "/srv/${name}";
+							default = "/srv/${config.constants.device}-${name}";
 						};
 					};
 				}));
