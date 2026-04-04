@@ -5,5 +5,6 @@
 		./firewall.nix
 		./ingress.nix
 		./podman.nix
+		./services.nix
 	];
 }
