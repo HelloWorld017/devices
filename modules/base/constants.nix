@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
 	options = with lib; with types; {
-		constants = mkOption {
+		constants = {
 			device = mkOption {
 				type = str;
 			};
@@ -11,11 +11,15 @@
 				default = "nenw";
 				description = "User name";
 			};
+
+			host = mkOption {
+				type = str;
+				default = "${config.constants.user}-${config.constants.device}";
+			};
 		};
 	};
 
 	config = {
-		constants.host = "${config.constants.user}-${config.constants.device}";
 		networking.hostName = config.constants.host;
 	};
 }

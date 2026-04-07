@@ -1,4 +1,4 @@
-{ pkgs, lib, config, options, ... }:
+{ inputs, pkgs, lib, config, options, ... }:
 with lib; {
 	options = with types; {
 		home = {
