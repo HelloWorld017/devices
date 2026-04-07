@@ -1,8 +1,7 @@
 { latestPkgs, ... }:
 let
 	profile = "dev-edition-default";
-	lock-false = { Value = false; Status = "locked"; };
-	lock-true = { Value = true; Status = "locked"; };
+	lock = val: { Value = val; Status = "locked"; };
 in
 	{
 		imports = [
@@ -18,11 +17,6 @@ in
 					id = 0;
 					name = profile;
 					isDefault = true;
-
-					settings = {
-						"general.autoScroll" = true;
-						"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-					};
 				};
 
 				policies = {
@@ -84,23 +78,31 @@ in
 					};
 
 					Preferences = {
-						"browser.contentblocking.category" = { Value = "strict"; Status = "locked"; };
-						"browser.newtabpage.activity-stream.feeds.section.topstories" = lock-false;
-						"browser.newtabpage.activity-stream.feeds.snippets" = lock-false;
-						"browser.newtabpage.activity-stream.section.highlights.includePocket" = lock-false;
-						"browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = lock-false;
-						"browser.newtabpage.activity-stream.section.highlights.includeDownloads" = lock-false;
-						"browser.newtabpage.activity-stream.section.highlights.includeVisited" = lock-false;
-						"browser.newtabpage.activity-stream.showSponsored" = lock-false;
-						"browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
-						"browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
-						"browser.search.suggest.enabled" = lock-false;
-						"browser.search.suggest.enabled.private" = lock-false;
-						"browser.topsites.contile.enabled" = lock-false;
-						"browser.urlbar.suggest.searches" = lock-false;
-						"browser.urlbar.showSearchSuggestionsFirst" = lock-false;
-						"extensions.pocket.enabled" = lock-false;
-						"extensions.screenshots.disabled" = lock-true;
+						"apz.overscroll.enabled" = lock true;
+						"browser.contentblocking.category" = lock "strict";
+						"browser.newtabpage.activity-stream.feeds.section.topstories" = lock false;
+						"browser.newtabpage.activity-stream.feeds.snippets" = lock false;
+						"browser.newtabpage.activity-stream.section.highlights.includePocket" = lock false;
+						"browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = lock false;
+						"browser.newtabpage.activity-stream.section.highlights.includeDownloads" = lock false;
+						"browser.newtabpage.activity-stream.section.highlights.includeVisited" = lock false;
+						"browser.newtabpage.activity-stream.showSponsored" = lock false;
+						"browser.newtabpage.activity-stream.system.showSponsored" = lock false;
+						"browser.newtabpage.activity-stream.showSponsoredTopSites" = lock false;
+						"browser.search.suggest.enabled" = lock false;
+						"browser.search.suggest.enabled.private" = lock false;
+						"browser.send_pings" = lock false;
+						"browser.startup.homepage" = lock "moz-extension://59260583-619a-4d28-8d33-a36e7018055f/index.html";
+						"browser.topsites.contile.enabled" = lock false;
+						"browser.urlbar.suggest.searches" = lock false;
+						"browser.urlbar.showSearchSuggestionsFirst" = lock false;
+						"datareporting.healthreport.uploadEnabled" = lock false;
+						"extensions.pocket.enabled" = lock false;
+						"extensions.screenshots.disabled" = lock true;
+						"general.autoScroll" = lock true;
+						"general.smoothScroll" = lock true;
+						"general.smoothScroll.msdPhysics.enabled" = lock true;
+						"toolkit.legacyUserProfileCustomizations.stylesheets" = lock true;
 					};
 				};
 			};
