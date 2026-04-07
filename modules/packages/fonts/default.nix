@@ -13,6 +13,7 @@
 					};
 				};
 			in {
+				fonts.enableDefaultPackages = false;
 				fonts.fontconfig = fontConfig // {
 					localConf = ''
 						<!-- Prevent ugly fonts are showing for japanese -->
