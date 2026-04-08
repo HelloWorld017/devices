@@ -6,6 +6,7 @@
 		nixpkgs-base = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 		nixpkgs-latest = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 		nixpkgs-20251020 = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
+		nixpkgs-20260408 = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";

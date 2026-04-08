@@ -12,7 +12,7 @@ in
 				device.base
 				./hardware.nix
 				./packages.nix
-				./services.nix
+				# ./services.nix
 				./settings.nix
 			];
 		};

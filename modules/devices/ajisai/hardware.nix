@@ -10,22 +10,22 @@
 
   boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5b115343-1902-4365-9032-f18f910c87bb";
+    { device = "/dev/disk/by-uuid/ba94ca87-6d54-49d9-9fe6-7be14b2c2e81";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/2CB6-F0DF";
+    { device = "/dev/disk/by-uuid/D92E-EE76";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/1912249f-392a-425c-9b62-cf5792024498"; }
+    [ { device = "/dev/disk/by-uuid/506652c5-cf95-4042-9cd4-74e5b4792cb5"; }
     ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
