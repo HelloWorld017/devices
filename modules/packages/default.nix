@@ -12,6 +12,7 @@
 	nix-ld = import ./nix-ld;
 	nvim = import ./nvim;
 	opencode = import ./opencode;
+	openssh = import ./openssh;
 	patches = import ./patches;
 	server = import ./server;
 	shell = import ./shell;

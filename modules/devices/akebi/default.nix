@@ -11,6 +11,7 @@ in
 			modules = [
 				device.base
 				./packages.nix
+				./services.nix
 				./settings.nix
 			];
 		};
