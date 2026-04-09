@@ -48,7 +48,7 @@
 				+ (lib.strings.join "\n" (
 					[]
 					++ (lib.optional opts.languages.python ''
-						call extend(g:coc_global_extensions, [ 'coc-ruff', 'coc-ty' ])
+						call extend(g:coc_global_extensions, [ '@yaegassy/coc-ruff', '@yaegassy/coc-ty' ])
 					'')
 					++ (lib.optional opts.languages.elixir ''
 						call extend(g:coc_global_extensions, [ 'coc-elixir' ])
