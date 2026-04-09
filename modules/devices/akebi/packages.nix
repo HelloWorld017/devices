@@ -41,9 +41,7 @@
 			pv
 			python314
 			ripgrep
-			latestPkgs.ruff
 			tealdeer
-			latestPkgs.ty
 			unzip
 			uv
 			virtualenv

@@ -249,9 +249,6 @@ call extend(g:coc_global_extensions, [ 'coc-css', 'coc-html', '@yaegassy/coc-vol
 " > Structured Data
 call extend(g:coc_global_extensions, [ 'coc-json', 'coc-protobuf', 'coc-yaml' ])
 
-" > Others
-call extend(g:coc_global_extensions, [ 'coc-elixir', 'coc-python', 'coc-rust-analyzer' ])
-
 " Other Configs
 lua << EOF
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
