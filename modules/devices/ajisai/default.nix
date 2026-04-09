@@ -10,9 +10,10 @@ in
 			inherit (device) system specialArgs;
 			modules = [
 				device.base
+				(device.private "ajisai-network.nix")
 				./hardware.nix
 				./packages.nix
-				# ./services.nix
+				./services.nix
 				./settings.nix
 			];
 		};

@@ -12,7 +12,7 @@
 		enable = true;
 		efiSupport = true;
 
-		# ConoHa VPS (v2) does not support UEFI!
+		# ConoHa VPS does not support UEFI!
 		device = "/dev/vda";
 		efiInstallAsRemovable = true;
 	};

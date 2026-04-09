@@ -22,6 +22,7 @@
 			binwalk
 			btop
 			buildah
+			ethtool
 			cmake
 			curlie
 			dig
@@ -44,6 +45,7 @@
 			pv
 			ripgrep
 			smartmontools
+			tcpdump
 			tealdeer
 			unzip
 			virtualenv
