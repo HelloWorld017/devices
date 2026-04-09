@@ -1,5 +1,4 @@
-kind:
-{ pkgs, inputs, ... }:
+{ kind, inputs, ... }:
 {
 	imports = let
 		modulesPath = if kind == "darwin" then "darwinModules" else "nixosModules";

@@ -4,7 +4,7 @@
 			self = inputs.self;
 			std = inputs.std.lib;
 			kind = if std.string.hasSuffix "darwin" system then "darwin" else "nixos";
-			base = (import "${self}/modules/base") kind;
+			base = import "${self}/modules/base";
 			repo = import "${self}/modules/packages";
 			latestPkgs = import inputs.nixpkgs-latest {
 				inherit system;
@@ -21,7 +21,7 @@
 			inherit base private repo system;
 
 			specialArgs = {
-				inherit inputs latestPkgs private repo secret system std;
+				inherit inputs kind latestPkgs private repo secret system std;
 			};
 		};
 }
