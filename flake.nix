@@ -2,6 +2,10 @@
 	description = "nenw's Flake";
 
 	inputs = {
+		# For restricted users:
+		# > use self.submodules = false;
+		self.submodules = true;
+
 		# Core Inputs
 		nixpkgs-base = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 		nixpkgs-latest = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };

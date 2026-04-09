@@ -1,4 +1,4 @@
-{ pkgs, repo, latestPkgs, ... }:
+{ pkgs, repo, latestPkgs, inputs, ... }:
 {
 	imports = [
 		repo.fastfetch
@@ -19,6 +19,7 @@
 		];
 
 		home.packages = with pkgs; [
+			inputs.agenix.packages.${system}.default
 			bat
 			binwalk
 			btop
