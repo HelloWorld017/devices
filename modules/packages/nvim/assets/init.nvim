@@ -5,77 +5,77 @@ filetype off
 " Auto Installation
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
-	silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Start Plugging
 call plug#begin('~/.vim/plugged')
 
-	" coc.nvim: LSP Integration
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " coc.nvim: LSP Integration
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-	" fugitive.vim: Git Integration
-	Plug 'tpope/vim-fugitive'
+  " fugitive.vim: Git Integration
+  Plug 'tpope/vim-fugitive'
 
-	" fzf.vim: Fuzzy Finder
-	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-	Plug 'junegunn/fzf.vim'
+  " fzf.vim: Fuzzy Finder
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'junegunn/fzf.vim'
 
-	" nvim-tree.lua: File explorer
-	Plug 'kyazdani42/nvim-web-devicons'
-	Plug 'kyazdani42/nvim-tree.lua'
+  " nvim-tree.lua: File explorer
+  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'kyazdani42/nvim-tree.lua'
 
-	" airline.vim: Status Line
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+  " airline.vim: Status Line
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
 
-	" barbar.nvim: Buffer Line
-	Plug 'romgrk/barbar.nvim'
+  " barbar.nvim: Buffer Line
+  Plug 'romgrk/barbar.nvim'
 
-	" vim-visual-multi.vim: Multiple Cursors
-	Plug 'mg979/vim-visual-multi'
+  " vim-visual-multi.vim: Multiple Cursors
+  Plug 'mg979/vim-visual-multi'
 
-	" surround.vim: Handle parentheses and more surroundings
-	Plug 'tpope/vim-surround'
+  " surround.vim: Handle parentheses and more surroundings
+  Plug 'tpope/vim-surround'
 
-	" peekaboo.vim: Show register contents
-	" > Max height issue: junegunn/vim-peekaboo#74
-	" Plug 'junegunn/vim-peekaboo'
+  " peekaboo.vim: Show register contents
+  " > Max height issue: junegunn/vim-peekaboo#74
+  " Plug 'junegunn/vim-peekaboo'
 
-	" registers.nvim: Show register contents (alternative)
-	Plug 'tversteeg/registers.nvim'
+  " registers.nvim: Show register contents (alternative)
+  Plug 'tversteeg/registers.nvim'
 
-	" leap.nvim: Easy leap between chars
-	Plug 'ggandor/leap.nvim'
-	Plug 'ggandor/flit.nvim'
+  " leap.nvim: Easy leap between chars
+  Plug 'ggandor/leap.nvim'
+  Plug 'ggandor/flit.nvim'
 
-	" nix.vim: Nix Syntax Highlighting
-	Plug 'LnL7/vim-nix'
+  " nix.vim: Nix Syntax Highlighting
+  Plug 'LnL7/vim-nix'
 
-	" dashboard.lua: Show dashboard
-	Plug 'glepnir/dashboard-nvim'
+  " dashboard.lua: Show dashboard
+  Plug 'glepnir/dashboard-nvim'
 
-	" ctrlxa.vim: Superpowers ctrl-X, ctrl-A
-	Plug 'Konfekt/vim-CtrlXA'
+  " ctrlxa.vim: Superpowers ctrl-X, ctrl-A
+  Plug 'Konfekt/vim-CtrlXA'
 
-	" nvim-notify: Changes notification UI
-	Plug 'rcarriga/nvim-notify'
+  " nvim-notify: Changes notification UI
+  Plug 'rcarriga/nvim-notify'
 
-	" nvim-treesitter: Add syntax highlighting
-	Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " nvim-treesitter: Add syntax highlighting
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-	" Colorschemes
-	Plug 'sonph/onehalf', { 'rtp': 'vim' }
-	Plug 'nyoom-engineering/oxocarbon.nvim'
-	Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+  " Colorschemes
+  Plug 'sonph/onehalf', { 'rtp': 'vim' }
+  Plug 'nyoom-engineering/oxocarbon.nvim'
+  Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 
-	" im-switch.nvim: Integrate with fcitx
-	Plug 'niuiic/im-switch.nvim'
+  " im-switch.nvim: Integrate with fcitx
+  Plug 'niuiic/im-switch.nvim'
 
-	" Comment.nvim : Commenting / Commenting-out
-	Plug 'numToStr/Comment.nvim'
-	Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+  " Comment.nvim : Commenting / Commenting-out
+  Plug 'numToStr/Comment.nvim'
+  Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 call plug#end()
 
 " Editor Configuration
@@ -119,9 +119,9 @@ set background=dark
 set number
 
 augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
-	autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
 augroup END
 
 " Key Map
@@ -172,17 +172,17 @@ nmap <leader>bq <Cmd>BufferClose<CR>
 " > Autocomplete
 " >> Ctrl-G to Autocomplete
 inoremap <silent><expr> <C-G>
-	\ coc#pum#visible()
-		\ ? coc#pum#stop()
-		\ : coc#refresh()
+  \ coc#pum#visible()
+    \ ? coc#pum#stop()
+    \ : coc#refresh()
 
 " >> Tab to Autocomplete
 inoremap <silent><expr> <TAB>
-	\ coc#pum#visible()
-		\ ? coc#pum#next(1)
-		\ : CheckBackspace()
-			\ ? "\<Tab>"
-			\ : coc#refresh()
+  \ coc#pum#visible()
+    \ ? coc#pum#next(1)
+    \ : CheckBackspace()
+      \ ? "\<Tab>"
+      \ : coc#refresh()
 
 " > Commenting
 " >> C to commenting
@@ -190,13 +190,13 @@ nmap <silent> cc gcc<CR>
 vmap <silent> C gb<CR>
 
 inoremap <silent><expr> <S-TAB>
-	\ coc#pum#visible()
-		\ ? coc#pum#prev(1)
-		\ : "\<C-h>"
+  \ coc#pum#visible()
+    \ ? coc#pum#prev(1)
+    \ : "\<C-h>"
 
 function! CheckBackspace() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " > Clipboard Management
@@ -219,10 +219,10 @@ command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
 
 " > :Indent
 function! s:IndentConfiguration(size, style)
-	exec "set tabstop=" . a:size
-	exec "set softtabstop=" . a:size
-	exec "set shiftwidth=" . a:size
-	exec "set " . (a:style == "space" ? "" : "no") . "expandtab"
+  exec "set tabstop=" . a:size
+  exec "set softtabstop=" . a:size
+  exec "set shiftwidth=" . a:size
+  exec "set " . (a:style == "space" ? "" : "no") . "expandtab"
 endfunction
 
 command -nargs=+ Indent call s:IndentConfiguration(<f-args>)
@@ -251,152 +251,152 @@ call extend(g:coc_global_extensions, [ 'coc-json', 'coc-protobuf', 'coc-yaml' ])
 
 " Other Configs
 lua << EOF
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
-	vim.api.nvim_set_hl(0, "FloatBorder", { bg = "None" })
+  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
+  vim.api.nvim_set_hl(0, "FloatBorder", { bg = "None" })
 
-	if vim.fn.has('wsl') == 1 then
-		vim.g.clipboard = "win32yank"
-	end
+  if vim.fn.has('wsl') == 1 then
+    vim.g.clipboard = "win32yank"
+  end
 
-	require'nvim-tree'.setup {
-		sort_by = 'case_sensitive',
-		disable_netrw = true,
-		hijack_netrw = true,
-		sync_root_with_cwd = true,
+  require'nvim-tree'.setup {
+    sort_by = 'case_sensitive',
+    disable_netrw = true,
+    hijack_netrw = true,
+    sync_root_with_cwd = true,
 
-		actions = {
-			open_file = {
-				resize_window = true
-			}
-		},
+    actions = {
+      open_file = {
+        resize_window = true
+      }
+    },
 
-		view = {
-			number = true,
-			relativenumber = true,
-			float = {
-				enable = true,
-				open_win_config = {
-					border = 'rounded',
-					relative = 'editor',
-					width = 80,
-					row = 1,
-					col = 2
-				}
-			}
-		},
+    view = {
+      number = true,
+      relativenumber = true,
+      float = {
+        enable = true,
+        open_win_config = {
+          border = 'rounded',
+          relative = 'editor',
+          width = 80,
+          row = 1,
+          col = 2
+        }
+      }
+    },
 
-		update_focused_file = {
-			enable = true
-		}
-	}
+    update_focused_file = {
+      enable = true
+    }
+  }
 
-	require'leap'.setup {
-		-- Do not use "s" for label
-		safe_labels = {
-			'f', 'n', 'u', 't', '/', 'S',
-			'F', 'N', 'L', 'H', 'M', 'U', 'G', 'T', '?', 'Z'
-		}
-	}
+  require'leap'.setup {
+    -- Do not use "s" for label
+    safe_labels = {
+      'f', 'n', 'u', 't', '/', 'S',
+      'F', 'N', 'L', 'H', 'M', 'U', 'G', 'T', '?', 'Z'
+    }
+  }
 
-	require'registers'.setup {
-		window = {
-			border = 'rounded',
-			transparency = 0
-		}
-	}
+  require'registers'.setup {
+    window = {
+      border = 'rounded',
+      transparency = 0
+    }
+  }
 
-	require'dashboard'.setup {
-		theme = 'hyper',
-		config = {
-			packages = { enable = false },
-			project = { enable = false },
-			shortcut = {
-				{ desc = 'Finder', icon = ' ', key = 'p', action = 'GFiles' },
-				{ desc = 'Tree', icon = ' ', key = 'o', action = 'NvimTreeToggle' }
-			},
-			footer = {
-				'',
-				'ネヌ* エディタ r23'
-			}
-		},
-		preview = {
-			command = 'cat',
-			file_path = vim.fn.stdpath('config') .. '/header.txt',
-			file_width = 80,
-			file_height = 12
-		}
-	}
+  require'dashboard'.setup {
+    theme = 'hyper',
+    config = {
+      packages = { enable = false },
+      project = { enable = false },
+      shortcut = {
+        { desc = 'Finder', icon = ' ', key = 'p', action = 'GFiles' },
+        { desc = 'Tree', icon = ' ', key = 'o', action = 'NvimTreeToggle' }
+      },
+      footer = {
+        '',
+        'ネヌ* エディタ r23'
+      }
+    },
+    preview = {
+      command = 'cat',
+      file_path = vim.fn.stdpath('config') .. '/header.txt',
+      file_width = 80,
+      file_height = 12
+    }
+  }
 
-	require'bufferline'.setup()
+  require'bufferline'.setup()
 
-	require'nvim-treesitter.configs'.setup {
-		auto_install = true,
-		ensure_installed = {
-			'bash',
-			'css',
-			'diff',
-			'elixir',
-			'dockerfile',
-			'git_rebase',
-			'gitignore',
-			'glsl',
-			'go',
-			'graphql',
-			'java',
-			'javascript',
-			'json',
-			'lua',
-			'markdown',
-			'nix',
-			'python',
-			'rust',
-			'scala',
-			'styled',
-			'svelte',
-			'typescript',
-			'tsx',
-			'vim',
-			'vue',
-			'xml',
-			'yaml'
-		},
-		highlight = {
-			enable = true,
-			additional_vim_regex_highlighting = false
-		}
-	}
+  require'nvim-treesitter.configs'.setup {
+    auto_install = true,
+    ensure_installed = {
+      'bash',
+      'css',
+      'diff',
+      'elixir',
+      'dockerfile',
+      'git_rebase',
+      'gitignore',
+      'glsl',
+      'go',
+      'graphql',
+      'java',
+      'javascript',
+      'json',
+      'lua',
+      'markdown',
+      'nix',
+      'python',
+      'rust',
+      'scala',
+      'styled',
+      'svelte',
+      'typescript',
+      'tsx',
+      'vim',
+      'vue',
+      'xml',
+      'yaml'
+    },
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false
+    }
+  }
 
-	require'notify'.setup {
-		max_width = 80,
-		render = 'wrapped-compact'
-	}
+  require'notify'.setup {
+    max_width = 80,
+    render = 'wrapped-compact'
+  }
 
-	vim.notify = require'notify'
+  vim.notify = require'notify'
 
-	if vim.fn.has('linux') and string.find(vim.env.GTK_IM_MODULE or '', 'fcitx') then
-		require'im-switch'.setup({
-			is_active = function(resolve)
-				vim.system({ "fcitx5-remote" }, nil, function(res)
-					resolve(string.find(res.stdout, "1") == nil)
-				end)
-			end,
-			active_input_method = function()
-				vim.system({ "fcitx5-remote", "-o" })
-			end,
-			inactive_input_method = function()
-				vim.system({ "fcitx5-remote", "-c" })
-			end
-		})
-	end
+  if vim.fn.has('linux') and string.find(vim.env.GTK_IM_MODULE or '', 'fcitx') then
+    require'im-switch'.setup({
+      is_active = function(resolve)
+        vim.system({ "fcitx5-remote" }, nil, function(res)
+          resolve(string.find(res.stdout, "1") == nil)
+        end)
+      end,
+      active_input_method = function()
+        vim.system({ "fcitx5-remote", "-o" })
+      end,
+      inactive_input_method = function()
+        vim.system({ "fcitx5-remote", "-c" })
+      end
+    })
+  end
 
-	require'ts_context_commentstring'.setup {
-		enable_autocmd = false
-	}
+  require'ts_context_commentstring'.setup {
+    enable_autocmd = false
+  }
 
-	require'Comment'.setup {
-		pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
-	}
+  require'Comment'.setup {
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
+  }
 
-	-- require'flit'.setup()
+  -- require'flit'.setup()
 EOF
 

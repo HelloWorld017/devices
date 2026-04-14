@@ -1,6 +1,6 @@
 {
-	imports = [
-		./packages.nix
-		./settings.nix
-	];
+  imports = [
+    ./packages.nix
+    ./settings.nix
+  ];
 }

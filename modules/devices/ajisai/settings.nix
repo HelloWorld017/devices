@@ -1,43 +1,43 @@
 { pkgs, config, ... }:
 {
-	constants.device = "ajisai";
+  constants.device = "ajisai";
 
-	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.loader.efi = {
-		canTouchEfiVariables = false;
-		efiSysMountPoint = "/boot/efi";
-	};
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.loader.efi = {
+    canTouchEfiVariables = false;
+    efiSysMountPoint = "/boot/efi";
+  };
 
-	boot.loader.grub = {
-		enable = true;
-		efiSupport = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
 
-		# ConoHa VPS does not support UEFI!
-		device = "/dev/vda";
-		efiInstallAsRemovable = true;
-	};
+    # ConoHa VPS does not support UEFI!
+    device = "/dev/vda";
+    efiInstallAsRemovable = true;
+  };
 
-	networking.useNetworkd = true;
+  networking.useNetworkd = true;
 
-	time.timeZone = "Asia/Seoul";
-	i18n.defaultLocale = "en_US.UTF-8";
-	i18n.extraLocaleSettings = {
-		LC_ADDRESS = "ko_KR.UTF-8";
-		LC_IDENTIFICATION = "ko_KR.UTF-8";
-		LC_MEASUREMENT = "ko_KR.UTF-8";
-		LC_MONETARY = "ko_KR.UTF-8";
-		LC_NAME = "ko_KR.UTF-8";
-		LC_NUMERIC = "ko_KR.UTF-8";
-		LC_PAPER = "ko_KR.UTF-8";
-		LC_TELEPHONE = "ko_KR.UTF-8";
-		LC_TIME = "ko_KR.UTF-8";
-	};
+  time.timeZone = "Asia/Seoul";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ko_KR.UTF-8";
+    LC_IDENTIFICATION = "ko_KR.UTF-8";
+    LC_MEASUREMENT = "ko_KR.UTF-8";
+    LC_MONETARY = "ko_KR.UTF-8";
+    LC_NAME = "ko_KR.UTF-8";
+    LC_NUMERIC = "ko_KR.UTF-8";
+    LC_PAPER = "ko_KR.UTF-8";
+    LC_TELEPHONE = "ko_KR.UTF-8";
+    LC_TIME = "ko_KR.UTF-8";
+  };
 
-	users.users.${config.constants.user} = {
-		extraGroups = [
-			"wheel"
-		];
-	};
+  users.users.${config.constants.user} = {
+    extraGroups = [
+      "wheel"
+    ];
+  };
 
-	system.stateVersion = "24.11";
+  system.stateVersion = "24.11";
 }

@@ -1,53 +1,53 @@
 { pkgs, repo, latestPkgs, inputs, ... }:
 {
-	imports = [
-		repo.fastfetch
-		repo.git
-		repo.nvim
-		repo.opencode
-		repo.tmux
-		repo.wsl
-		repo.zsh
-	];
+  imports = [
+    repo.fastfetch
+    repo.git
+    repo.nvim
+    repo.opencode
+    repo.tmux
+    repo.wsl
+    repo.zsh
+  ];
 
-	config = {
-		environment.systemPackages = with pkgs; [
-			clang_19
-			coreutils
-			git
-			wget
-		];
+  config = {
+    environment.systemPackages = with pkgs; [
+      clang_19
+      coreutils
+      git
+      wget
+    ];
 
-		home.packages = with pkgs; [
-			inputs.agenix.packages.${system}.default
-			bat
-			binwalk
-			btop
-			cmake
-			dig
-			eza
-			fastmod
-			fd
-			ffmpeg
-			file
-			fzf
-			inetutils
-			jq
-			net-tools
-			nodejs
-			nodePackages.pnpm
-			pkg-config
-			podman
-			podman-compose
-			pv
-			python314
-			ripgrep
-			tealdeer
-			unzip
-			uv
-			virtualenv
-			latestPkgs.yt-dlp
-			zip
-		];
-	};
+    home.packages = with pkgs; [
+      inputs.agenix.packages.${system}.default
+      bat
+      binwalk
+      btop
+      cmake
+      dig
+      eza
+      fastmod
+      fd
+      ffmpeg
+      file
+      fzf
+      inetutils
+      jq
+      net-tools
+      nodejs
+      nodePackages.pnpm
+      pkg-config
+      podman
+      podman-compose
+      pv
+      python314
+      ripgrep
+      tealdeer
+      unzip
+      uv
+      virtualenv
+      latestPkgs.yt-dlp
+      zip
+    ];
+  };
 }

@@ -1,29 +1,29 @@
 { pkgs, ... }:
 {
-	imports = [
-		./clipboard.nix
-		./crystaldock.nix
-		./hyprcursor.nix
-		./hypridle.nix
-		./hyprland.nix
-		./hyprlock.nix
-		./hyprshell.nix
-		./hyprpaper.nix
-		./keybinds.nix
-		./midnightway.nix
-		./plymouth.nix
-		./screenshot.nix
-		./swayosd.nix
-		./themes.nix
-	];
+  imports = [
+    ./clipboard.nix
+    ./crystaldock.nix
+    ./hyprcursor.nix
+    ./hypridle.nix
+    ./hyprland.nix
+    ./hyprlock.nix
+    ./hyprshell.nix
+    ./hyprpaper.nix
+    ./keybinds.nix
+    ./midnightway.nix
+    ./plymouth.nix
+    ./screenshot.nix
+    ./swayosd.nix
+    ./themes.nix
+  ];
 
-	config = {
-		home.packages = with pkgs; [
-			quickshell
-		];
+  config = {
+    home.packages = with pkgs; [
+      quickshell
+    ];
 
-		environment.sessionVariables = {
-			NIXOS_OZONE_WL = "1";
-		};
-	};
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+    };
+  };
 }

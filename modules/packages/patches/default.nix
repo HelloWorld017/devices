@@ -1,3 +1,3 @@
 super: {
-	spotify = (import ./spotify.nix super);
+  spotify = (import ./spotify.nix super);
 }

@@ -1,10 +1,10 @@
 {
-	imports = [
-		./acme.nix
-		./cloudflare.nix
-		./firewall.nix
-		./ingress.nix
-		./podman.nix
-		./services.nix
-	];
+  imports = [
+    ./acme.nix
+    ./cloudflare.nix
+    ./firewall.nix
+    ./ingress.nix
+    ./podman.nix
+    ./services.nix
+  ];
 }

@@ -1,93 +1,93 @@
 { pkgs, lib, config, ... }:
 {
-	options = with lib.types; {
-		pkgs.server.ingress = {
-			enable = lib.mkOption {
-				type = bool;
-				default = true;
-			};
+  options = with lib.types; {
+    pkgs.server.ingress = {
+      enable = lib.mkOption {
+        type = bool;
+        default = true;
+      };
 
-			rules = lib.mkOption {
-				type = attrs;
-				default = {};
-				description = "virtual host rules for ingress";
-			};
+      rules = lib.mkOption {
+        type = attrs;
+        default = {};
+        description = "virtual host rules for ingress";
+      };
 
-			zones = lib.mkOption {
-				type = listOf str;
-				default = [ "all" ];
-			};
-		};
-	};
+      zones = lib.mkOption {
+        type = listOf str;
+        default = [ "all" ];
+      };
+    };
+  };
 
-	config = let
-		opts = config.pkgs.server.ingress;
-		selfSignedCert = (pkgs.runCommand
-			"self-signed-cert"
-			{ nativeBuildInputs = [ pkgs.openssl ]; }
-			''
-				mkdir -p $out
-				openssl req -x509 -nodes \
-					-newkey rsa:4096 \
-					-keyout $out/privkey.pem \
-					-out $out/fullchain.pem \
-					-days 36500 \
-					-subj "/CN=localhost" \
-					-addext "subjectAltName = DNS:localhost,IP:127.0.0.1"
+  config = let
+    opts = config.pkgs.server.ingress;
+    selfSignedCert = (pkgs.runCommand
+      "self-signed-cert"
+      { nativeBuildInputs = [ pkgs.openssl ]; }
+      ''
+        mkdir -p $out
+        openssl req -x509 -nodes \
+          -newkey rsa:4096 \
+          -keyout $out/privkey.pem \
+          -out $out/fullchain.pem \
+          -days 36500 \
+          -subj "/CN=localhost" \
+          -addext "subjectAltName = DNS:localhost,IP:127.0.0.1"
 
-				chmod 644 $out/fullchain.pem
-				chmod 600 $out/privkey.pem
-			''
-		);
-	in lib.mkIf opts.enable {
-		# Service
-		services.nginx = {
-			enable = true;
-			recommendedGzipSettings = true;
-			recommendedOptimisation = true;
-			recommendedProxySettings = true;
-			recommendedTlsSettings = true;
+        chmod 644 $out/fullchain.pem
+        chmod 600 $out/privkey.pem
+      ''
+    );
+  in lib.mkIf opts.enable {
+    # Service
+    services.nginx = {
+      enable = true;
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
 
-			virtualHosts = {
-				"localhost" = {
-					default = true;
-					forceSSL = true;
-					sslCertificate = "${selfSignedCert}/fullchain.pem";
-					sslCertificateKey = "${selfSignedCert}/privkey.pem";
-					locations."/".extraConfig = ''
-						return 404;
-					'';
-				};
-			} // (
-				lib.mapAttrs (name: value: lib.mkMerge [
-					{ http2 = true; forceSSL = true; }
-					(lib.mkIf (value ? "acmeHost") { useACMEHost = value.acmeHost; })
-					(lib.mkIf (!(value ? "acmeHost")) { enableACME = true; })
-					(lib.mkIf (value ? "proxyPort") {
-						locations."/" = {
-							proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
-						};
-					})
-					(removeAttrs value ["proxyPort" "acmeHost" "tailscale"])
-				]) opts.rules
-			);
+      virtualHosts = {
+        "localhost" = {
+          default = true;
+          forceSSL = true;
+          sslCertificate = "${selfSignedCert}/fullchain.pem";
+          sslCertificateKey = "${selfSignedCert}/privkey.pem";
+          locations."/".extraConfig = ''
+            return 404;
+          '';
+        };
+      } // (
+        lib.mapAttrs (name: value: lib.mkMerge [
+          { http2 = true; forceSSL = true; }
+          (lib.mkIf (value ? "acmeHost") { useACMEHost = value.acmeHost; })
+          (lib.mkIf (!(value ? "acmeHost")) { enableACME = true; })
+          (lib.mkIf (value ? "proxyPort") {
+            locations."/" = {
+              proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
+            };
+          })
+          (removeAttrs value ["proxyPort" "acmeHost" "tailscale"])
+        ]) opts.rules
+      );
 
-			tailscaleAuth = let
-				tailscaleEnabledRules = lib.flatten (
-					lib.mapAttrsToList
-						(name: rule: lib.optional (rule ? "tailscale" && rule.tailscale) name)
-						opts.rules
-				);
-			in {
-				enable = (lib.length tailscaleEnabledRules) > 0;
-				virtualHosts = tailscaleEnabledRules;
-			};
-		};
+      tailscaleAuth = let
+        tailscaleEnabledRules = lib.flatten (
+          lib.mapAttrsToList
+            (name: rule: lib.optional (rule ? "tailscale" && rule.tailscale) name)
+            opts.rules
+        );
+      in {
+        enable = (lib.length tailscaleEnabledRules) > 0;
+        virtualHosts = tailscaleEnabledRules;
+      };
+    };
 
-		# Firewall
-		pkgs.server.firewall.rules.ingress = {
-			from = opts.zones;
-			allowedTCPPorts = [ 80 443 ];
-		};
-	};
+    # Firewall
+    pkgs.server.firewall.rules.ingress = {
+      from = opts.zones;
+      allowedTCPPorts = [ 80 443 ];
+    };
+  };
 }

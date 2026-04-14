@@ -1,6 +1,6 @@
 { repo, ... }:
 {
-	imports = [
-		repo.openssh
-	];
+  imports = [
+    repo.openssh
+  ];
 }

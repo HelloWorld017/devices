@@ -11,18 +11,18 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
 
 # Fix home key
-bindkey "^[[H"	beginning-of-line
-bindkey "^[[F"	end-of-line
-bindkey "^[[3~"	delete-char
+bindkey "^[[H"  beginning-of-line
+bindkey "^[[F"  end-of-line
+bindkey "^[[3~" delete-char
 
 # Start zinit
 declare -A ZINIT
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-	print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-	command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-	command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
-		print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-		print -P "%F{160}▓▒░ The clone has failed.%f%b"
+  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.zinit/bin" && \
+    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+    print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
 source "$HOME/.zinit/bin/zinit.zsh"
@@ -43,16 +43,16 @@ zinit light jeffreytse/zsh-vi-mode
 
 # > Autocompletion, Suggestions, Syntax Highlight
 zinit wait lucid light-mode for \
-	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-		zdharma-continuum/fast-syntax-highlighting \
-	blockf \
-		zsh-users/zsh-completions \
-	atload"!_zsh_autosuggest_start" \
-		HelloWorld017/zsh-autosuggestions
+  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
+    zdharma-continuum/fast-syntax-highlighting \
+  blockf \
+    zsh-users/zsh-completions \
+  atload"!_zsh_autosuggest_start" \
+    HelloWorld017/zsh-autosuggestions
 
 # > History Search
 zinit wait lucid light-mode for \
-	zdharma-continuum/history-search-multi-word
+  zdharma-continuum/history-search-multi-word
 
 # Fuzzy Finder
 export FZF_DEFAULT_COMMAND='fd --type f'

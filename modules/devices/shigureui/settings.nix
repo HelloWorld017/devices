@@ -1,96 +1,96 @@
 { pkgs, config, ... }:
 {
-	constants.device = "shigureui";
+  constants.device = "shigureui";
 
-	boot.kernelPackages = pkgs.linuxPackages_latest;
-	boot.supportedFilesystems = [ "ntfs" ];
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.supportedFilesystems = [ "ntfs" ];
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-	networking.networkmanager.enable = true;
+  networking.networkmanager.enable = true;
 
-	hardware.graphics = {
-		enable = true;
-		enable32Bit = true;
-		extraPackages = with pkgs; [
-			intel-media-driver
-			vpl-gpu-rt
-		];
-	};
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+    ];
+  };
 
-	hardware.bluetooth = {
-		enable = true;
-	};
+  hardware.bluetooth = {
+    enable = true;
+  };
 
-	hardware.enableRedistributableFirmware = true;
+  hardware.enableRedistributableFirmware = true;
 
-	time.timeZone = "Asia/Seoul";
-	i18n.defaultLocale = "en_US.UTF-8";
-	i18n.extraLocaleSettings = {
-		LC_ADDRESS = "ko_KR.UTF-8";
-		LC_IDENTIFICATION = "ko_KR.UTF-8";
-		LC_MEASUREMENT = "ko_KR.UTF-8";
-		LC_MONETARY = "ko_KR.UTF-8";
-		LC_NAME = "ko_KR.UTF-8";
-		LC_NUMERIC = "ko_KR.UTF-8";
-		LC_PAPER = "ko_KR.UTF-8";
-		LC_TELEPHONE = "ko_KR.UTF-8";
-		LC_TIME = "ko_KR.UTF-8";
-	};
+  time.timeZone = "Asia/Seoul";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ko_KR.UTF-8";
+    LC_IDENTIFICATION = "ko_KR.UTF-8";
+    LC_MEASUREMENT = "ko_KR.UTF-8";
+    LC_MONETARY = "ko_KR.UTF-8";
+    LC_NAME = "ko_KR.UTF-8";
+    LC_NUMERIC = "ko_KR.UTF-8";
+    LC_PAPER = "ko_KR.UTF-8";
+    LC_TELEPHONE = "ko_KR.UTF-8";
+    LC_TIME = "ko_KR.UTF-8";
+  };
 
-	programs.noisetorch.enable = true;
-	services.blueman.enable = true;
-	services.gnome.gnome-keyring.enable = true;
-	services.upower.enable = true;
-	services.tailscale = {
-		enable = true;
-		useRoutingFeatures = "client";
-	};
-	services.pipewire = {
-		enable = true;
-		alsa.enable = true;
-		alsa.support32Bit = true;
-		pulse.enable = true;
-	};
-	services.udev.extraRules = ''
-		# Rule for mediatek
-		SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
-	'';
+  programs.noisetorch.enable = true;
+  services.blueman.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  services.upower.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+  services.udev.extraRules = ''
+    # Rule for mediatek
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
+  '';
 
-	users.users.${config.constants.user} = {
-		extraGroups = [
-			# "dialout"
-			"audio"
-			"docker"
-			"networkmanager"
-			"wheel"
-		];
-	};
+  users.users.${config.constants.user} = {
+    extraGroups = [
+      # "dialout"
+      "audio"
+      "docker"
+      "networkmanager"
+      "wheel"
+    ];
+  };
 
-	home.wayland.windowManager.hyprland.settings = {
-		device = [
-			{
-				name = "asup1208:00-093a:3011-touchpad";
-				natural_scroll = true;
-			}
-		];
-	};
+  home.wayland.windowManager.hyprland.settings = {
+    device = [
+      {
+        name = "asup1208:00-093a:3011-touchpad";
+        natural_scroll = true;
+      }
+    ];
+  };
 
-	home.defaultApplications = let
-		browser = [ "firefox.desktop" ];
-		imageViewer = [ "org.gnome.Loupe.dekstop" ];
-	in {
-		"application/pdf" = browser;
-		"image/svg+xml" = browser;
-		"image/jpeg" = imageViewer;
-	};
+  home.defaultApplications = let
+    browser = [ "firefox.desktop" ];
+    imageViewer = [ "org.gnome.Loupe.dekstop" ];
+  in {
+    "application/pdf" = browser;
+    "image/svg+xml" = browser;
+    "image/jpeg" = imageViewer;
+  };
 
-	home.programs.anyrun.config.width = { fraction = 0.45; };
+  home.programs.anyrun.config.width = { fraction = 0.45; };
 
-	pkgs.shell = {
-		wallpaper.directory = "${config.home.path}/wallpapers";
-		midnightway.system.gpuCard = null;
-	};
+  pkgs.shell = {
+    wallpaper.directory = "${config.home.path}/wallpapers";
+    midnightway.system.gpuCard = null;
+  };
 
-	system.stateVersion = "25.05";
+  system.stateVersion = "25.05";
 }

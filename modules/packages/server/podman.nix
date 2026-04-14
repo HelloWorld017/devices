@@ -1,80 +1,80 @@
 { lib, pkgs, config, ... }:
 {
-	options = with lib.types; {
-		pkgs.server.podman = {
-			enable = lib.mkOption {
-				type = bool;
-				default = true;
-			};
+  options = with lib.types; {
+    pkgs.server.podman = {
+      enable = lib.mkOption {
+        type = bool;
+        default = true;
+      };
 
-			services = lib.mkOption {
-				type = attrsOf (submodule ({ name, ... }: {
-					options = {
-						enable = lib.mkOption {
-							type = bool;
-						};
+      services = lib.mkOption {
+        type = attrsOf (submodule ({ name, ... }: {
+          options = {
+            enable = lib.mkOption {
+              type = bool;
+            };
 
-						path = lib.mkOption {
-							type = str;
-							description = "path of the directory containing podman-compose.yml";
-							default = "/srv/${config.constants.device}-${name}";
-						};
-					};
-				}));
-				default = {};
-				description = "systemd services for podman";
-			};
-		};
-	};
+            path = lib.mkOption {
+              type = str;
+              description = "path of the directory containing podman-compose.yml";
+              default = "/srv/${config.constants.device}-${name}";
+            };
+          };
+        }));
+        default = {};
+        description = "systemd services for podman";
+      };
+    };
+  };
 
-	config = let
-		opts = config.pkgs.server.podman;
-	in lib.mkIf opts.enable {
-		systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "service-${name}" {
-			enable = value.enable;
-			after = [ "network-online.target" "podman.service" ];
-			wants = [ "network-online.target" "podman.service" ];
-			wantedBy = [ "multi-user.target" ];
-			description = "Podman container service: ${name}";
-			path = with pkgs; [podman podman-compose];
-			serviceConfig = {
-				Type = "oneshot";
-				RemainAfterExit = "yes";
-				WorkingDirectory = value.path;
-				ExecStartPre = ''${pkgs.coreutils}/bin/sleep 1'';
-				ExecStart = ''/bin/sh -c "podman compose up -d"'';
-				ExecStop = ''/bin/sh -c "podman compose down"'';
-			};
-		}) opts.services;
+  config = let
+    opts = config.pkgs.server.podman;
+  in lib.mkIf opts.enable {
+    systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "service-${name}" {
+      enable = value.enable;
+      after = [ "network-online.target" "podman.service" ];
+      wants = [ "network-online.target" "podman.service" ];
+      wantedBy = [ "multi-user.target" ];
+      description = "Podman container service: ${name}";
+      path = with pkgs; [podman podman-compose];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = "yes";
+        WorkingDirectory = value.path;
+        ExecStartPre = ''${pkgs.coreutils}/bin/sleep 1'';
+        ExecStart = ''/bin/sh -c "podman compose up -d"'';
+        ExecStop = ''/bin/sh -c "podman compose down"'';
+      };
+    }) opts.services;
 
-		virtualisation.podman = {
-			enable = true;
+    virtualisation.podman = {
+      enable = true;
 
-			# Prune unused images periodically
-			autoPrune = {
-				enable = true;
-				dates = "weekly";
-				flags = ["--all"];
-			};
+      # Prune unused images periodically
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+        flags = ["--all"];
+      };
 
-			defaultNetwork.settings = {
-				dns_enabled = true;
-			};
-		};
+      defaultNetwork.settings = {
+        dns_enabled = true;
+      };
+    };
 
-		pkgs.server.firewall.zones = {
-			podman = { interfaces = [ "podman*" ]; };
-		};
+    pkgs.server.firewall.zones = {
+      podman = { interfaces = [ "podman*" ]; };
+    };
 
-		pkgs.server.firewall.rules.podman = {
-			from = [ "podman" ];
-			allowedUDPPorts = [ 53 ];
-		};
+    pkgs.server.firewall.rules.podman = {
+      from = [ "podman" ];
+      allowedUDPPorts = [ 53 ];
+    };
 
-		pkgs.server.firewall.rules.podman-forward = {
-			from = [ "podman" ];
-			to = [ "all" ];
-			verdict = "accept";
-		};
-	};
+    pkgs.server.firewall.rules.podman-forward = {
+      from = [ "podman" ];
+      to = [ "all" ];
+      verdict = "accept";
+    };
+  };
 }

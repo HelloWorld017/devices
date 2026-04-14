@@ -1,15 +1,15 @@
 { ... }:
 {
-	config = {
-		pkgs.server = {
-			# Service
-			podman.services.opencloud.enable = true;
+  config = {
+    pkgs.server = {
+      # Service
+      podman.services.opencloud.enable = true;
 
-			# Ingress
-			ingress.rules."cloud.nenw.dev" = {
-				acmeHost = "nenw.dev";
-				proxyPort = 20618;
-			};
-		};
-	};
+      # Ingress
+      ingress.rules."cloud.nenw.dev" = {
+        acmeHost = "nenw.dev";
+        proxyPort = 20618;
+      };
+    };
+  };
 }

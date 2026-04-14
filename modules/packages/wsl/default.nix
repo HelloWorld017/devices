@@ -1,42 +1,42 @@
 { pkgs, inputs, lib, config, ... }:
 {
-	imports = [
-		inputs.wsl.nixosModules.default
-	];
+  imports = [
+    inputs.wsl.nixosModules.default
+  ];
 
-	options = with lib.types; {
-		pkgs.wsl = {
-			nvidia.enable = lib.mkOption {
-				type = bool;
-				default = false;
-			};
-		};
-	};
+  options = with lib.types; {
+    pkgs.wsl = {
+      nvidia.enable = lib.mkOption {
+        type = bool;
+        default = false;
+      };
+    };
+  };
 
-	config = lib.mkMerge [
-		{
-			wsl.enable = true;
+  config = lib.mkMerge [
+    {
+      wsl.enable = true;
 
-			home.packages = with pkgs; [
-				(callPackage ./win32yank.nix {})
-			];
+      home.packages = with pkgs; [
+        (callPackage ./win32yank.nix {})
+      ];
 
-			env.PATH = [ "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/" ];
-		}
+      env.PATH = [ "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/" ];
+    }
 
-		(lib.mkIf config.pkgs.wsl.nvidia.enable {
-			environment.systemPackages = with pkgs; [
-				cudatoolkit
-			];
+    (lib.mkIf config.pkgs.wsl.nvidia.enable {
+      environment.systemPackages = with pkgs; [
+        cudatoolkit
+      ];
 
-			environment.sessionVariables = {
-				CUDA_PATH = "${pkgs.cudatoolkit}";
-				LD_LIBRARY_PATH = [ "/usr/lib/wsl/lib" ];
-			};
+      environment.sessionVariables = {
+        CUDA_PATH = "${pkgs.cudatoolkit}";
+        LD_LIBRARY_PATH = [ "/usr/lib/wsl/lib" ];
+      };
 
-			hardware.nvidia.open = true;
-			services.xserver.videoDrivers = ["nvidia"];
-			wsl.useWindowsDriver = true;
-		})
-	];
+      hardware.nvidia.open = true;
+      services.xserver.videoDrivers = ["nvidia"];
+      wsl.useWindowsDriver = true;
+    })
+  ];
 }
