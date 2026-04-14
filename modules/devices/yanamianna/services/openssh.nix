@@ -5,7 +5,7 @@
 		pkgs.server = {
 			# Firewall
 			firewall.rules.ssh = {
-				from = [ "local" ];
+				from = [ "local" "tailscale" ];
 				allowedTCPPorts = [ 37089 ];
 			};
 		};

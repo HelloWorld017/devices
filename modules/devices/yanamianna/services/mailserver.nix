@@ -18,7 +18,7 @@
 			};
 
 			# Acme
-			acme.reloadServices = [ "service-mailserver" ];
+			acme.reloadedServices = [ "service-mailserver" ];
 		};
 	};
 }
