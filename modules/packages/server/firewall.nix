@@ -22,6 +22,7 @@
 						elements = mkOption { type = listOf str; default = []; };
 					};
 				});
+				default = {};
 			};
 
 			zones = mkOption {
