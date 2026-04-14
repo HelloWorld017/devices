@@ -8,7 +8,9 @@ let
 		"user-nenw-ajisai" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEicn7yNmNDwaQdawpSeQTqKbirakurD7RZsGe+RlS4w";
 		"user-nenw-akebi" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWzjPz2+WzZd4IjSoeaSSSvXizSObmCxg+KMp+/V/jG";
 		"user-nenw-shigureui" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDkd7Fk7lI0Sdh5i0U2vI1AUTlQo+pVKghxLW4vJ17/D";
-		"user-nenw-pix8pro" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIowL7VW/0NPnoTh/pRggJhIlCVYzAibjyn0GZL6LHET";
+		"user-nenw-yanamianna" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWoH/3Ptb5sLPhLUvMw5CZdTIRPP5zpi6dytqIAj9RS";
+
+		"user-nenw-mobile-pix8pro" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIowL7VW/0NPnoTh/pRggJhIlCVYzAibjyn0GZL6LHET";
 	};
 in (
 	{ "all" = builtins.attrValues keys; } // keys
