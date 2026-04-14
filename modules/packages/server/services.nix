@@ -4,7 +4,7 @@
 		pkgs.server.services = {
 			enable = lib.mkOption {
 				type = bool;
-				default = true;
+				default = false;
 			};
 		};
 	};

@@ -28,16 +28,6 @@
 		LC_TIME = "ko_KR.UTF-8";
 	};
 
-	programs.noisetorch.enable = true;
-	services.gnome.gnome-keyring.enable = true;
-	services.upower.enable = true;
-	services.pipewire = {
-		enable = true;
-		alsa.enable = true;
-		alsa.support32Bit = true;
-		pulse.enable = true;
-	};
-
 	users.users.${config.constants.user} = {
 		extraGroups = [
 			"audio"
@@ -45,22 +35,6 @@
 			"networkmanager"
 			"wheel"
 		];
-	};
-
-	home.wayland.windowManager.hyprland.settings = {
-		monitor = [
-			"DP-2, preferred, auto, 1.5"
-			"HDMI-A-1, preferred, auto-left, 1.5"
-		];
-	};
-
-	home.defaultApplications = let
-		browser = [ "firefox.desktop" ];
-		imageViewer = [ "org.gnome.Loupe.dekstop" ];
-	in {
-		"application/pdf" = browser;
-		"image/svg+xml" = browser;
-		"image/jpeg" = imageViewer;
 	};
 
 	system.stateVersion = "24.11";
