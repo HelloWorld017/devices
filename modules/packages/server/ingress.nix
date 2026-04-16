@@ -51,6 +51,18 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
+      appendHttpConfig = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (name: value: 
+          if (value ? httpConfig && value.httpConfig != "") then
+            ''
+              # Rules for ${name}
+              ${value.httpConfig}
+            ''
+          else 
+            ""
+        ) opts.rules
+      );
+
       virtualHosts = {
         "localhost" = {
           default = true;
@@ -71,7 +83,7 @@
               proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
             };
           })
-          (removeAttrs value ["proxyPort" "acmeHost" "tailscale"])
+          (removeAttrs value ["proxyPort" "acmeHost" "tailscale" "httpConfig"])
         ]) opts.rules
       );
 
