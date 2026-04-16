@@ -36,6 +36,7 @@
       net-tools
       nftables
       nodejs
+      ouch
       nodePackages.pnpm
       pkg-config
       podman

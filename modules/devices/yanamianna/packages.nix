@@ -37,6 +37,7 @@
       lm_sensors
       net-tools
       nodejs
+      ouch
       pkg-config
       nodePackages.pnpm
       podman

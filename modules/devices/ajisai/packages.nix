@@ -37,6 +37,7 @@
       kubectl
       net-tools
       nodejs
+      ouch
       pkg-config
       nodePackages.pnpm
       podman
