@@ -7,7 +7,7 @@
     pkgs.server.services = {
       enable = mkOption {
         type = bool;
-        default = false;
+        default = true;
       };
     };
   };
@@ -23,7 +23,7 @@
       path = with pkgs; [ git openssh ];
 
       script = ''
-        if [ ! -d "$TARGET_DIR" ]; then
+        if [ ! -d "/srv/.git" ]; then
           export GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=accept-new"
           git clone "git@github.com:HelloWorld017/services.git" /srv
         fi

@@ -105,8 +105,8 @@
               { source_labels = ["__journal_priority_keyword"]; target_label = "level"; }
               {
                 action = "drop";
-                source_labels = ["__journal__systemd_unit"];
-                regex = ".*observability.*";
+                source_labels = ["__journal__systemd_unit" "__journal_container_name" ];
+                regex = ".*(victoria|prometheus|alloy|observability).*";
               }
             ];
           };
