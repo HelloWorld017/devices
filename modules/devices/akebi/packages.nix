@@ -8,6 +8,7 @@
     repo.tmux
     repo.wsl
     repo.zsh
+    "${inputs.self}/modules/packages/server/observability.nix"
   ];
 
   config = {

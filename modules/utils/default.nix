@@ -15,5 +15,6 @@ in {
     { inherit recursiveMerge; }
     (import ./device.nix args)
     (import ./private.nix args)
+    (import ./river.nix args)
   ];
 }
