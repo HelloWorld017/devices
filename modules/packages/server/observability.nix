@@ -37,6 +37,10 @@
     };
   };
 
+  imports = [
+    "${self}/modules/contrib/prometheus-podman-exporter"
+  ];
+
   config = let
     inherit (self.lib.river) blockset block expr render;
     opts = config.pkgs.server.observability;
@@ -119,7 +123,8 @@
 
     services.alloy.enable = true;
     services.alloy.configPath = pkgs.writeText "alloy.conf" (render opts.config);
-    users.users.alloy.extraGroups = [ "systemd-journal" ];
+    services.prometheus.exporters.smartctl.enable = opts.smartctl;
+    services.prometheus.exporters.podman.enable = opts.podman;
   };
 }
 
