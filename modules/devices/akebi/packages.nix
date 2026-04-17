@@ -34,6 +34,7 @@
       inetutils
       jq
       net-tools
+      nftables
       nodejs
       nodePackages.pnpm
       pkg-config
@@ -41,6 +42,7 @@
       podman-compose
       pv
       python314
+      qemu_kvm
       ripgrep
       tealdeer
       unzip

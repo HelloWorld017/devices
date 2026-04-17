@@ -4,7 +4,7 @@
 
   users.users.${config.constants.user} = {
     group = "nenw";
-    extraGroups = [ "users" ];
+    extraGroups = [ "users" "libvirtd" ];
   };
 
   wsl.defaultUser = config.constants.user;
@@ -21,6 +21,8 @@
       dns_enabled = true;
     };
   };
+
+  virtualisation.libvirtd.enable = true;
 
   pkgs.wsl.nvidia.enable = true;
 
