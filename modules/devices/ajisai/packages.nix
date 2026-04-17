@@ -1,4 +1,4 @@
-{ pkgs, repo, inputs, system, ... }:
+{ pkgs, latestPkgs, repo, inputs, system, ... }:
 {
   imports = [
     repo.fastfetch
@@ -49,7 +49,7 @@
       tealdeer
       unzip
       virtualenv
-      yt-dlp
+      latestPkgs.yt-dlp
       zip
     ];
   };
