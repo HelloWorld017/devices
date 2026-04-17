@@ -2,7 +2,8 @@
 {
   imports = [
     repo.server
-    ./services/opencloud.nix
+    # ./services/e2email.nix
+    ./services/observability.nix
     ./services/openssh.nix
     ./services/tailscale.nix
     ./services/wireray.nix

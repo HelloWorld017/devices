@@ -103,6 +103,11 @@
               { source_labels = ["__journal__hostname"]; target_label = "host"; }
               { source_labels = ["__journal__systemd_unit"]; target_label = "unit"; }
               { source_labels = ["__journal_priority_keyword"]; target_label = "level"; }
+              {
+                action = "drop";
+                source_labels = ["__journal__systemd_unit"];
+                regex = ".*observability.*";
+              }
             ];
           };
         };
