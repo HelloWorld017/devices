@@ -44,6 +44,7 @@
   config = let
     inherit (self.lib.river) blockset block expr render;
     opts = config.pkgs.server.observability;
+    hostname = config.constants.host;
   in lib.mkIf opts.enable {
     pkgs.server.observability.config = lib.mkMerge [
       {
@@ -70,7 +71,7 @@
             targets = [
               {
                 __address__ = "127.0.0.1:9882";
-                instance = expr ''env("HOSTNAME")'';
+                instance = hostname;
               }
             ];
             forward_to = [ (expr "prometheus.remote_write.remote.receiver") ];
@@ -81,7 +82,7 @@
             targets = [
               {
                 __address__ = "127.0.0.1:9633";
-                instance = expr ''env("HOSTNAME")'';
+                instance = hostname;
               }
             ];
             forward_to = [ (expr "prometheus.remote_write.remote.receiver") ];
