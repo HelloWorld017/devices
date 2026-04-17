@@ -64,6 +64,8 @@
     };
   };
 
-  outputs = { ... }@inputs:
-    (import ./modules/devices) inputs;
+  outputs = { ... }@inputs: {
+    inherit (import ./modules/utils inputs) lib;
+    inherit (import ./modules/devices inputs) nixosConfigurations darwinConfigurations;
+  };
 }

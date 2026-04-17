@@ -1,6 +1,6 @@
-{ pkgs, config, utils, ... }:
+{ pkgs, config, self, ... }:
 {
-  imports = [ (utils.private "ajisai-network.nix") ];
+  imports = [ (self.lib.private "ajisai-network.nix") ];
 
   constants.device = "ajisai";
 

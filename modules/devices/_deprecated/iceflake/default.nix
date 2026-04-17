@@ -1,6 +1,6 @@
-{ darwin, ... } @inputs:
+{ self, darwin, ... } @inputs:
 let
-  device = (import ../utils.nix).defineDevice {
+  device = self.lib.defineDevice {
     inherit inputs;
     system = "aarch64-darwin";
   };

@@ -1,7 +1,6 @@
-{ nixpkgs-20251020, ... } @inputs:
+{ self, nixpkgs-20251020, ... }:
 let
-  device = (import ../utils.nix).defineDevice {
-    inherit inputs;
+  device = self.lib.defineDevice {
     system = "x86_64-linux";
   };
 in

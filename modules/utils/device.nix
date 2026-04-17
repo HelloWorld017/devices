@@ -1,7 +1,7 @@
+{ self, inputs, ... }:
 {
-  defineDevice = { inputs, system }:
+  defineDevice = { system }:
     let
-      self = inputs.self;
       std = inputs.std.lib;
       kind = if std.string.hasSuffix "darwin" system then "darwin" else "nixos";
       base = import "${self}/modules/base";
@@ -14,7 +14,7 @@
       inherit base repo system;
 
       specialArgs = {
-        inherit inputs kind latestPkgs repo system std;
+        inherit inputs kind latestPkgs repo system std self;
       };
     };
 }

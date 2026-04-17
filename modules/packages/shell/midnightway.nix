@@ -1,4 +1,4 @@
-{ lib, config, inputs, utils, system, ... }:
+{ lib, config, inputs, self, system, ... }:
 {
   options = with lib.types; {
     pkgs.shell.midnightway = {
@@ -35,7 +35,7 @@
     in (mkOutOfStoreSymlink secretPath);
 
     age.secrets."openweatherapi-secret" = {
-      file = utils.secret "openweatherapi-secret.age";
+      file = self.lib.secret "openweatherapi-secret.age";
     };
 
     age-template.files."midnightway-config.json" = {

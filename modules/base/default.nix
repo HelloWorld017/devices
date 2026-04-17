@@ -11,7 +11,6 @@
       inputs.agenix-template.nixosModules.default
     ];
   in modules ++ [
-    ./utils
     ./brew.nix
     ./constants.nix
     ./env.nix
