@@ -10,18 +10,11 @@
         inherit system;
         config.allowUnfree = true;
       };
-      privatePath = fileName: "${self}/private/${fileName}";
-      secret = fileName: privatePath "secrets/${fileName}";
-      private = fileName:
-        let targetPath = privatePath fileName;
-        in if builtins.pathExists targetPath
-          then { imports = [ targetPath ]; }
-          else { warnings = [ "Private module not loaded: ${fileName}" ]; };
     in {
-      inherit base private repo system;
+      inherit base repo system;
 
       specialArgs = {
-        inherit inputs kind latestPkgs private repo secret system std;
+        inherit inputs kind latestPkgs repo system std;
       };
     };
 }

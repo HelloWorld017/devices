@@ -1,5 +1,7 @@
-{ pkgs, config, ... }:
+{ pkgs, config, utils, ... }:
 {
+  imports = [ (utils.private "ajisai-network.nix") ];
+
   constants.device = "ajisai";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;

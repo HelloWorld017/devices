@@ -1,4 +1,4 @@
-{ lib, config, secret, ... }:
+{ lib, config, utils, ... }:
 {
   options = with lib.types; {
     pkgs.server.acme = {
@@ -32,7 +32,7 @@
     secrets = config.age.secrets;
   in lib.mkIf opts.enable {
     age.secrets."cloudflare-dns-secret" = {
-      file = secret "cloudflare-dns-secret.age";
+      file = utils.secret "cloudflare-dns-secret.age";
     };
 
     users.users.nginx = {
