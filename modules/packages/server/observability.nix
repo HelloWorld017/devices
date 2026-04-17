@@ -68,23 +68,19 @@
           };
 
           podman = lib.mkIf opts.podman {
-            targets = [
-              {
-                __address__ = "127.0.0.1:9882";
-                instance = hostname;
-              }
-            ];
+            targets = [{
+              __address__ = "127.0.0.1:9882";
+              instance = hostname;
+            }];
             forward_to = [ (expr "prometheus.remote_write.remote.receiver") ];
             job_name = "podman";
           };
 
           smartctl = lib.mkIf opts.smartctl {
-            targets = [
-              {
-                __address__ = "127.0.0.1:9633";
-                instance = hostname;
-              }
-            ];
+            targets = [{
+              __address__ = "127.0.0.1:9633";
+              instance = hostname;
+            }];
             forward_to = [ (expr "prometheus.remote_write.remote.receiver") ];
             job_name = "smartctl";
           };
