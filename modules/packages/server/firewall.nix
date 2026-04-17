@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 {
-  options = with lib; with types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) attrs attrsOf bool either enum listOf nullOr port str submodule;
+  in {
     pkgs.server.firewall = let
       ports = listOf (either port (submodule {
         options = {
@@ -71,41 +74,53 @@
   };
 
   config = let
+    inherit (lib) concatLines concatMap concatMapAttrsStringSep concatMapStringsSep concatStringsSep
+      filterAttrs flatten groupBy hasAttr join length map mapAttrs mapAttrsToList optional
+      optionalString optionals unique;
+
     opts = config.pkgs.server.firewall;
   in lib.mkIf opts.enable ({
     pkgs.server.firewall.zones = {
       all = {};
       lo = { interfaces = [ "lo" ]; };
     };
-  } // (with lib; let
+  } // (let
     expandZones = names: unique (concatMap (name:
       if hasAttr name opts.zones then [ name ]
       else if hasAttr name opts.zoneAliases then (expandZones opts.zoneAliases.${name})
       else throw "Firewall rule references unknown zone or alias: ${name}"
     ) names);
 
-    zones = mapAttrs (name: zone: with zone; {
-      name = name;
-      ingressExpression = flatten [
-        ingressExpression
-        (optionals (parent != null) zones.${parent}.ingressExpression)
-        (optional (length interfaces >= 1) "iifname { ${concatStringsSep ", " interfaces} }")
-        (optional (length ipv6Addresses >= 1) "ip6 saddr { ${concatStringsSep ", " ipv6Addresses} }")
-        (optional (length ipv4Addresses >= 1) "ip saddr { ${concatStringsSep ", " ipv4Addresses} }")
-      ];
-      egressExpression = flatten [
-        egressExpression
-        (optionals (parent != null) zones.${parent}.egressExpression)
-        (optional (length interfaces >= 1) "oifname { ${concatStringsSep ", " interfaces} }")
-        (optional (length ipv6Addresses >= 1) "ip6 daddr { ${concatStringsSep ", " ipv6Addresses} }")
-        (optional (length ipv4Addresses >= 1) "ip daddr { ${concatStringsSep ", " ipv4Addresses} }")
-      ];
-    }) opts.zones;
+    zones = mapAttrs (name: zone:
+      let
+        inherit (zone) egressExpression ingressExpression interfaces ipv4Addresses ipv6Addresses parent;
+      in {
+        name = name;
+        ingressExpression = flatten [
+          ingressExpression
+          (optionals (parent != null) zones.${parent}.ingressExpression)
+          (optional (length interfaces >= 1) "iifname { ${concatStringsSep ", " interfaces} }")
+          (optional (length ipv6Addresses >= 1) "ip6 saddr { ${concatStringsSep ", " ipv6Addresses} }")
+          (optional (length ipv4Addresses >= 1) "ip saddr { ${concatStringsSep ", " ipv4Addresses} }")
+        ];
+        egressExpression = flatten [
+          egressExpression
+          (optionals (parent != null) zones.${parent}.egressExpression)
+          (optional (length interfaces >= 1) "oifname { ${concatStringsSep ", " interfaces} }")
+          (optional (length ipv6Addresses >= 1) "ip6 daddr { ${concatStringsSep ", " ipv6Addresses} }")
+          (optional (length ipv4Addresses >= 1) "ip daddr { ${concatStringsSep ", " ipv4Addresses} }")
+        ];
+      }
+    ) opts.zones;
 
-    rules = mapAttrs (name: rule: rule // (with rule; {
-      from = expandZones from;
-      to = expandZones to;
-    })) opts.rules;
+    rules = mapAttrs (name: rule:
+      let
+        inherit (rule) from to;
+      in rule // {
+        from = expandZones from;
+        to = expandZones to;
+      }
+    ) opts.rules;
 
     sets = mapAttrsToList (name: set: ''
       set ${name} {
@@ -117,7 +132,7 @@
 
     toPorts = ports:
       "{ ${concatMapStringsSep ", " (port:
-        if isInt port then toString port
+        if lib.isInt port then toString port
         else "${toString port.from}-${toString port.to}"
       ) ports} }";
 

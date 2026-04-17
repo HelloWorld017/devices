@@ -1,20 +1,23 @@
 { lib, pkgs, config, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) attrsOf bool str submodule;
+  in {
     pkgs.server.podman = {
-      enable = lib.mkOption {
+      enable = mkOption {
         type = bool;
         default = true;
       };
 
-      services = lib.mkOption {
+      services = mkOption {
         type = attrsOf (submodule ({ name, ... }: {
           options = {
-            enable = lib.mkOption {
+            enable = mkOption {
               type = bool;
             };
 
-            path = lib.mkOption {
+            path = mkOption {
               type = str;
               description = "path of the directory containing podman-compose.yml";
               default = "/srv/${config.constants.device}-${name}";

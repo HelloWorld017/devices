@@ -1,6 +1,9 @@
 { lib, config, ... }:
 {
-  options = with lib; with types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) str;
+  in {
     constants = {
       device = mkOption {
         type = str;

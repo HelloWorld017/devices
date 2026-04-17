@@ -1,8 +1,11 @@
 { lib, pkgs, inputs, config, options, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool;
+  in {
     pkgs.alacritty = {
-      useClaritty = lib.mkOption {
+      useClaritty = mkOption {
         type = bool;
         default = false;
         description = "Use HelloWorld017/claritty for the package (WIP)";

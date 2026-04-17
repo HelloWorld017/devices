@@ -1,19 +1,22 @@
 { pkgs, lib, config, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) attrs bool listOf str;
+  in {
     pkgs.server.ingress = {
-      enable = lib.mkOption {
+      enable = mkOption {
         type = bool;
         default = true;
       };
 
-      rules = lib.mkOption {
+      rules = mkOption {
         type = attrs;
         default = {};
         description = "virtual host rules for ingress";
       };
 
-      zones = lib.mkOption {
+      zones = mkOption {
         type = listOf str;
         default = [ "all" ];
       };

@@ -1,8 +1,11 @@
 { pkgs, lib, config, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) float;
+  in {
     pkgs.shell.hyprland = {
-      scale = lib.mkOption {
+      scale = mkOption {
         type = float;
         default = 1.5;
         description = "Scale of display";

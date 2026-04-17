@@ -15,11 +15,12 @@ in fetchurl {
     mv $downloadedFile $out/share/fonts/truetype/Geologica-Variable.ttf
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "Geologica is grounded in the humanist genre, but leans assertively into geometric, constructed letterforms to find its stability.";
     homepage = "https://github.com/googlefonts/geologica";
     license = licenses.ofl;
     platforms = platforms.all;
   };
 }
-

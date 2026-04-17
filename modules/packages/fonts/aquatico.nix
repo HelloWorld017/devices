@@ -14,11 +14,12 @@ in fetchzip {
     mv $out/*.otf -t $out/share/fonts/truetype
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "Aquatico Display Typeface";
     homepage = "https://font.download/font/aquatico";
     license = licenses.unfree;
     platforms = platforms.all;
   };
 }
-

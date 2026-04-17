@@ -1,28 +1,31 @@
 { pkgs, latestPkgs, config, lib, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool;
+  in {
     pkgs.nvim.languages = {
-      elixir = lib.mkOption {
+      elixir = mkOption {
         type = bool;
         default = false;
       };
 
-      graphql = lib.mkOption {
+      graphql = mkOption {
         type = bool;
         default = false;
       };
 
-      nix = lib.mkOption {
+      nix = mkOption {
         type = bool;
         default = true;
       };
 
-      python = lib.mkOption {
+      python = mkOption {
         type = bool;
         default = true;
       };
 
-      rust = lib.mkOption {
+      rust = mkOption {
         type = bool;
         default = true;
       };

@@ -1,15 +1,18 @@
 { lib, config, inputs, self, system, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) nullOr str;
+  in {
     pkgs.shell.midnightway = {
       system = {
-        gpuCard = lib.mkOption {
+        gpuCard = mkOption {
           type = nullOr str;
           default = "renderD128";
           description = "GPU Interface Name";
         };
 
-        networkInterface = lib.mkOption {
+        networkInterface = mkOption {
           type = str;
           default = "wlo1";
           description = "Network Interface Name";

@@ -24,7 +24,9 @@ stdenvNoCC.mkDerivation {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "A Slick and Modern Global theme for KDE Plasma utilizing the Nord Color Palette with transparency and blur in UI";
     homepage = "https://github.com/HimDek/Utterly-Nord-Plasma";
     license = licenses.gpl2;

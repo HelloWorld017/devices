@@ -1,6 +1,9 @@
 { lib, config, ... }:
-with lib; {
-  options = with types; {
+{
+  options = let
+    inherit (lib) concatMapStringsSep isList mapAttrs mkOption types;
+    inherit (types) attrsOf either listOf oneOf str path;
+  in {
     env = mkOption {
       type = attrsOf (oneOf [ str path (listOf (either str path)) ]);
       apply = mapAttrs (n: v:
@@ -15,7 +18,9 @@ with lib; {
     };
   };
 
-  config = {
+  config = let
+    inherit (lib) concatStringsSep mapAttrsToList;
+  in {
     env.PATH = ["$PATH"];
 
     # Writing Environments

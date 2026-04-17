@@ -15,11 +15,12 @@ in fetchurl {
     mv $downloadedFile $out/share/fonts/truetype/Nothing5x7-Regular.otf
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "A recreation of the font used by the Nothing company. This one is the 5x7 version.";
     homepage = "https://fontstruct.com/fontstructions/show/2095104/nothing-font-5x7";
     license = licenses.unfree;
     platforms = platforms.all;
   };
 }
-

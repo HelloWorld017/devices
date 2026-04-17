@@ -1,8 +1,11 @@
 { lib, config, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) nullOr str;
+  in {
     pkgs.shell.wallpaper = {
-      directory = lib.mkOption {
+      directory = mkOption {
         type = nullOr str;
         description = "Directory of wallpapers";
         default = null;

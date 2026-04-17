@@ -19,7 +19,9 @@ stdenvNoCC.mkDerivation {
     runHook postInstall
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "the candlelight fcitx5 theme";
     homepage = "https://github.com/thep0y/fcitx5-themes-candlelight";
     license = licenses.mit;

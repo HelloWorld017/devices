@@ -1,25 +1,28 @@
 { lib, config, self, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool listOf str;
+  in {
     pkgs.server.acme = {
-      enable = lib.mkOption {
+      enable = mkOption {
         type = bool;
         default = true;
       };
 
-      email = lib.mkOption {
+      email = mkOption {
         type = str;
         default = "khi@nenw.dev";
         description = "email for the certificate";
       };
 
-      domainNames = lib.mkOption {
+      domainNames = mkOption {
         type = listOf str;
         default = [];
         description = "domain names to fetch";
       };
 
-      reloadedServices = lib.mkOption {
+      reloadedServices = mkOption {
         type = listOf str;
         default = [];
         description = "services which will be reloaded on acme renew";

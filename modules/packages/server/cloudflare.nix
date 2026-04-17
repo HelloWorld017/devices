@@ -1,13 +1,16 @@
 { lib, config, pkgs, ... }:
 {
-  options = {
-    pkgs.server.firewall.cloudflare = with lib.types; {
-      enable = lib.mkOption {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool str;
+  in {
+    pkgs.server.firewall.cloudflare = {
+      enable = mkOption {
         type = bool;
         default = false;
       };
 
-      uplinkZone = lib.mkOption {
+      uplinkZone = mkOption {
         type = str;
         default = "uplink";
       };

@@ -14,11 +14,12 @@ in fetchzip {
     mv $out/TrueType/*.ttf -t $out/share/fonts/truetype
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "A modern, geometric typeface";
     homepage = "https://github.com/njugunagathere/Metropolis";
     license = licenses.ofl;
     platforms = platforms.all;
   };
 }
-

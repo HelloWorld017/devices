@@ -1,8 +1,11 @@
 { pkgs, config, lib, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool;
+  in {
     pkgs.nix-ld = {
-      withPackages = lib.mkOption {
+      withPackages = mkOption {
         type = bool;
         default = false;
       };

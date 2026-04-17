@@ -4,9 +4,12 @@
     inputs.wsl.nixosModules.default
   ];
 
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) bool;
+  in {
     pkgs.wsl = {
-      nvidia.enable = lib.mkOption {
+      nvidia.enable = mkOption {
         type = bool;
         default = false;
       };

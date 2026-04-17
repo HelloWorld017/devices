@@ -1,6 +1,9 @@
 { inputs, pkgs, lib, config, options, ... }:
-with lib; {
-  options = with types; {
+{
+  options = let 
+    inherit (lib) mkOption types;
+    inherit (types) attrs listOf package str;
+  in {
     home = {
       description = mkOption {
         type = str;
@@ -103,7 +106,9 @@ with lib; {
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${user} = {
+      users.${user} = let
+          inherit (lib) mkAliasDefinitions;
+      in {
         home = {
           file = mkAliasDefinitions options.home.file;
           packages = mkAliasDefinitions options.home.packages;

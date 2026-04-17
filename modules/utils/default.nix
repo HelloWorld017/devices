@@ -1,5 +1,7 @@
 inputs: let
-  recursiveMerge = with builtins; zipAttrsWith(key: values:
+  inherit (builtins) all head isAttrs last tail zipAttrsWith;
+
+  recursiveMerge = zipAttrsWith(key: values:
     if tail values == [] then head values
     else if all isAttrs values then recursiveMerge values
     else last values

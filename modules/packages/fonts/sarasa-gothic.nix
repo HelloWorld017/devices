@@ -14,11 +14,12 @@ in fetchzip {
     mv $out/*.ttf -t $out/share/fonts/truetype
   '';
 
-  meta = with lib; {
+  meta = let
+    inherit (lib) licenses platforms;
+  in {
     description = "Nerd font fetched SarasaGothic";
     homepage = "https://github.com/jonz94/Sarasa-Gothic-Nerd-Fonts";
     license = licenses.ofl;
     platforms = platforms.all;
   };
 }
-

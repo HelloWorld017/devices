@@ -1,13 +1,16 @@
 { lib, config, ... }:
 {
-  options = with lib.types; {
+  options = let
+    inherit (lib) mkOption types;
+    inherit (types) nullOr package str;
+  in {
     pkgs.shell.kvantum = {
-      name = lib.mkOption {
+      name = mkOption {
         type = nullOr str;
         default = null;
       };
 
-      package = lib.mkOption {
+      package = mkOption {
         type = nullOr package;
         default = null;
       };
