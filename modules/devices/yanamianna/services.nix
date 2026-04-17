@@ -8,6 +8,7 @@
     ./services/gluetun.nix
     ./services/images.nix
     ./services/mailserver.nix
+    ./services/opencloud.nix
     ./services/openssh.nix
     ./services/tailscale.nix
   ];

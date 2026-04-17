@@ -17,8 +17,8 @@
           }
         '';
 
-        location."/remote.php".proxyPass = "http://127.0.0.1:20623";
-        location."/remote.php".extraConfig = ''
+        locations."/remote.php".proxyPass = "http://127.0.0.1:20623";
+        locations."/remote.php".extraConfig = ''
           # Find Actions
           set $cors_action "";
 
