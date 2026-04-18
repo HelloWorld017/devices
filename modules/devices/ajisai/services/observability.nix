@@ -15,6 +15,7 @@
       ingress.rules."dashboard.nenw.dev" = {
         acmeHost = "nenw.dev";
         proxyPort = 20624;
+        tailscale = true;
       };
 
       # Observability
