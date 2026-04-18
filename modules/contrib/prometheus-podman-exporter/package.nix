@@ -54,6 +54,7 @@ buildGoModule (finalAttrs: {
 
   # NOTE: requires a running podman daemon and a $HOME in scripts
   doCheck = false;
+  allowGoReference = true;
 
   meta = {
     description = "Prometheus exporter for podman environments exposing containers, pods, images, volumes and networks information";
