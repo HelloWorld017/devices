@@ -25,9 +25,9 @@
 
   renderObject = indentSize: attrs:
     assert isRiverAttrs attrs;
-    lib.concatStringsSep ",\n" (
+    lib.concatStringsSep "\n" (
       lib.mapAttrsToList
-        (k: v: indent indentSize "${k} = ${renderExpr indentSize v}")
+        (k: v: (indent indentSize "${k} = ${renderExpr indentSize v}") + ",")
         (lib.filterAttrs (k: v: v != null) attrs)
     );
 
@@ -67,8 +67,8 @@
       "[" + (lib.concatMapStringsSep ", " (v: (renderExpr indentSize v)) v) + "]"
     else if builtins.isList v then
       bracketsExpr indentSize "["
-        (lib.concatMapStringsSep ",\n"
-          (v: indent (indentSize + 1) (renderExpr (indentSize + 1) v)) v)
+        (lib.concatMapStringsSep "\n"
+          (v: (indent (indentSize + 1) (renderExpr (indentSize + 1) v)) + ",") v)
         "]"
     else if isRiverAttrs v then
       bracketsExpr indentSize "{" (renderObject (indentSize + 1) v) "}"
