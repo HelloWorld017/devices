@@ -44,9 +44,9 @@
         Type = "oneshot";
         RemainAfterExit = "yes";
         WorkingDirectory = value.path;
-        ExecStartPre = ''${pkgs.coreutils}/bin/sleep 1'';
-        ExecStart = ''/bin/sh -c "podman compose up -d"'';
-        ExecStop = ''/bin/sh -c "podman compose down"'';
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+        ExecStart = "/bin/sh -c 'podman compose up -d'";
+        ExecStop = "/bin/sh -c 'podman compose down'";
       };
     }) opts.services;
 
