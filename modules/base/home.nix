@@ -1,5 +1,8 @@
-{ inputs, pkgs, lib, config, options, ... }:
-{
+{ inputs, pkgs, lib, config, options, ... }: let
+  inherit (lib) genAttrs;
+  passThruAttrs = ["fonts" "gtk" "programs" "qt" "services" "wayland"];
+  aliasAttrs = passThruAttrs ++ ["file" "configFile" "defaultApplications" "lib"];
+in {
   options = let 
     inherit (lib) mkOption types;
     inherit (types) attrs listOf package str;
@@ -17,75 +20,20 @@
           else "/home/${config.constants.user}";
       };
 
-      file = mkOption {
-        type = attrs;
-        default = {};
-        description = "Files to place directly in $HOME";
-      };
-
-      configFile = mkOption {
-        type = attrs;
-        default = {};
-        description = "Config files to place in $HOME/.config";
-      };
-
-      defaultApplications = mkOption {
-        type = attrs;
-        default = {};
-        description = "Default applications to open mime (currently not active)";
-      };
-
-      services = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided user services";
-      };
-
       packages = mkOption {
         type = listOf package;
         default = [];
         description = "Home-manager provided packages";
       };
-
-      programs = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided programs";
-      };
-
-      fonts = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided fonts";
-      };
-
-      gtk = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided gtk settings";
-      };
-
-      qt = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided qt settings";
-      };
-
-      wayland = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided wayland settings";
-      };
-
-      lib = mkOption {
-        type = attrs;
-        default = {};
-        description = "Home-manager provided libs";
-      };
-    };
+    }
+    // genAttrs aliasAttrs (_: mkOption {
+      type = attrs;
+      default = {};
+    });
   };
 
   config = let
+    alias = key: lib.mkAliasDefinitions options.home.${key};
     user = config.constants.user;
   in {
     programs.zsh.enable = true;
@@ -106,28 +54,21 @@
       useUserPackages = true;
       useGlobalPkgs = true;
 
-      users.${user} = let
-          inherit (lib) mkAliasDefinitions;
-      in {
+      users.${user} = {
         home = {
-          file = mkAliasDefinitions options.home.file;
-          packages = mkAliasDefinitions options.home.packages;
+          file = alias "file";
+          packages = alias "packages";
           stateVersion = "22.05";
         };
-        fonts = mkAliasDefinitions options.home.fonts;
-        gtk = mkAliasDefinitions options.home.gtk;
-        programs = mkAliasDefinitions options.home.programs;
-        qt = mkAliasDefinitions options.home.qt;
-        services = mkAliasDefinitions options.home.services;
-        wayland = mkAliasDefinitions options.home.wayland;
         xdg = {
           mimeApps = {
             enable = false;
-            defaultApplications = mkAliasDefinitions options.home.defaultApplications;
+            defaultApplications = alias "defaultApplications";
           };
-          configFile = mkAliasDefinitions options.home.configFile;
+          configFile = alias "configFile";
         };
-      };
+      }
+      // genAttrs passThruAttrs alias;
     };
 
     home.lib = config.home-manager.users.${user}.lib;
