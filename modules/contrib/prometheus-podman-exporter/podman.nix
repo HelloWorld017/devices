@@ -158,6 +158,11 @@ in
       RuntimeDirectory = "prometheus-podman-exporter";
       RuntimeDirectoryMode = "0700";
       WorkingDirectory = "/run/prometheus-podman-exporter";
+      RestrictAddressFamilies = [
+        "AF_UNIX"
+        "AF_INET"
+        "AF_INET6"
+      ];
       SupplementaryGroups = [ "podman" ];
     };
 
