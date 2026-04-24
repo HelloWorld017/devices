@@ -87,11 +87,15 @@
         };
       }
       (lib.mkIf opts.logs {
-        "loki.write" = blockset {
+        "loki.write" = let
+          url = "http://${opts.remote}:9428/insert/loki/api/v1/push";
+        in blockset {
           remote = {
-            endpoint = block {
-              url = "http://${opts.remote}:9428/insert/loki/api/v1/push";
-            };
+            endpoint = block { inherit url; };
+          };
+
+          journal = {
+            endpoint = block { url = "${url}?_msg_field=MESSAGE"; };
           };
         };
 
@@ -114,7 +118,7 @@
 
         "loki.source.journal" = blockset {
           systemd = {
-            forward_to = [ (expr "loki.write.remote.receiver") ];
+            forward_to = [ (expr "loki.write.journal.receiver") ];
             relabel_rules = expr "loki.relabel.journal.rules";
             labels = { source = "journald"; };
             format_as_json = true;
