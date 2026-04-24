@@ -109,6 +109,7 @@
           "float, workspace:10"
           "bordercolor rgb(5e81ac) rgb(d8dee9),fullscreen:1"
           "float, class:^(xdg-desktop-portal-gtk)$"
+          "float, class:^(praat)$"
           "pin, class:^(it.catboy.ripdrag)$"
         ];
 
