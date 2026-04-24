@@ -2,7 +2,7 @@
 {
   options = let
     inherit (lib) mkOption types;
-    inherit (types) attrs bool str;
+    inherit (types) anything attrsOf bool str;
   in {
     pkgs.server.observability = {
       enable = mkOption {
@@ -31,7 +31,7 @@
       };
 
       config = mkOption {
-        type = attrs;
+        type = attrsOf anything;
         default = {};
       };
     };
