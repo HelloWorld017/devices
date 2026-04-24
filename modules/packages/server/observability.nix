@@ -131,13 +131,6 @@
     services.alloy.configPath = pkgs.writeText "alloy.conf" (render opts.config);
     services.prometheus.exporters.smartctl.enable = opts.smartctl;
     services.prometheus.exporters.podman.enable = opts.podman;
-
-    # Allow NVMe Read
-    systemd.services.alloy.serviceConfig = {
-      AmbientCapabilities = [ "CAP_SYS_RAWIO" ];
-      CapabilityBoundingSet = [ "CAP_SYS_RAWIO" ];
-      SupplementaryGroups = [ "disk" ];
-    };
   };
 }
 
