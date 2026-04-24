@@ -155,9 +155,18 @@ in
       TimeoutStopSec = "20s";
       SendSIGKILL = false;
       Restart = "on-failure";
+      RuntimeDirectory = "prometheus-podman-exporter";
+      RuntimeDirectoryMode = "0700";
+      WorkingDirectory = "/run/prometheus-podman-exporter";
+      SupplementaryGroups = [ "podman" ];
     };
 
-    environment.CONTAINER_HOST = cfg.podmanSocket;
+    environment = {
+      CONTAINER_HOST = cfg.podmanSocket;
+      HOME = "/run/prometheus-podman-exporter";
+      XDG_CONFIG_HOME = "/run/prometheus-podman-exporter";
+      XDG_RUNTIME_DIR = "/run/prometheus-podman-exporter";
+    };
 
     path = with pkgs; [
       aardvark-dns
