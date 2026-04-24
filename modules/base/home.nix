@@ -5,7 +5,7 @@
 in {
   options = let 
     inherit (lib) mkOption types;
-    inherit (types) attrs listOf package str;
+    inherit (types) anything attrsOf listOf package str;
   in {
     home = {
       description = mkOption {
@@ -27,7 +27,7 @@ in {
       };
     }
     // genAttrs aliasAttrs (_: mkOption {
-      type = attrs;
+      type = attrsOf anything;
       default = {};
     });
   };
