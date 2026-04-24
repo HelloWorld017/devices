@@ -31,6 +31,8 @@
       ffmpeg
       file
       fzf
+      go
+      gopls
       inetutils
       jq
       net-tools
