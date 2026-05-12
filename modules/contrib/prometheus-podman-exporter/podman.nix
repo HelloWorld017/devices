@@ -10,8 +10,7 @@ let
   boolFlag = name: value: lib.optional (value == true) name;
   inherit (lib)
     mkOption
-    types
-    ;
+    types;
 
   args = lib.flatten [
     (lib.optional (cfg.collector.cacheDuration != null) [

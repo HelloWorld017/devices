@@ -16,8 +16,7 @@ let
     mkIf
     mkMerge
     mkOption
-    types
-    ;
+    types;
 
   cfg = config.services.prometheus.exporters;
 

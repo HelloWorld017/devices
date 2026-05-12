@@ -46,7 +46,7 @@ in {
       isNormalUser = true;
       description = config.home.description;
       openssh.authorizedKeys.keys =
-        (import "${inputs.self}/keys.nix").all;
+        (import "${inputs.self}/keys.nix").clients;
     };
 
     # Initialize Home
