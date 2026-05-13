@@ -15,7 +15,7 @@ let
 in (
   {
     all = builtins.attrValues keys;
-    clients = {
+    clients = builtins.attrValues {
       inherit (keys)
         user-nenw-akebi
         user-nenw-shigureui
