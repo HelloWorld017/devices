@@ -69,7 +69,7 @@
 
           podman = lib.mkIf opts.podman {
             targets = [{
-              __address__ = "127.0.0.1:9882";
+              __address__ = "127.0.0.1:9156";
               instance = hostname;
             }];
             forward_to = [ (expr "prometheus.remote_write.remote.receiver") ];
