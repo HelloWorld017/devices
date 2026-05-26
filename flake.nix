@@ -37,6 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs-base";
     };
 
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+      inputs.nixpkgs.follows = "nixpkgs-latest";
+    };
+
     midnightway = {
       url = "github:HelloWorld017/midnightway";
       inputs.nixpkgs.follows = "nixpkgs-base";
