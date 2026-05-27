@@ -51,6 +51,7 @@ in {
       file-roller
       fzf
       ghostscript
+      gimp
       gjs
       gnome-text-editor
       gnumake
