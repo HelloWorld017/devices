@@ -7,7 +7,7 @@
 
       # Firewall
       firewall.rules.gluetun = {
-        from = [ "local" ];
+        from = [ "local" "tailscale" ];
         allowedTCPPorts = [ 30021 ];
       };
     };
