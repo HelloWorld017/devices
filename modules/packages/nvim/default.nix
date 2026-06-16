@@ -50,9 +50,6 @@
         + (builtins.readFile ./assets/init.nvim)
         + (lib.strings.join "\n" (
           []
-          ++ (lib.optional opts.languages.python ''
-            call extend(g:coc_global_extensions, [ '@yaegassy/coc-ruff', '@yaegassy/coc-ty' ])
-          '')
           ++ (lib.optional opts.languages.elixir ''
             call extend(g:coc_global_extensions, [ 'coc-elixir' ])
           '')
@@ -161,7 +158,31 @@
                 "filetypes" = ["nix"];
                 "rootPatterns" = ["flake.nix"];
               };
+            })
+            // (lib.optionalAttrs opts.languages.python {
+              "ruff" = {
+                "command" = "ruff";
+                "args" = ["server"];
+                "filetypes" = ["python"];
+                "rootPatterns" = ["pyproject.toml"];
+                "requireRootPattern" = true;
+              };
+            })
+            // (lib.optionalAttrs opts.languages.python {
+              "ty" = {
+                "command" = "ty";
+                "args" = ["server"];
+                "filetypes" = ["python"];
+                "rootPatterns" = ["pyproject.toml"];
+                "requireRootPattern" = true;
+              };
             });
+
+          "editor.codeActionsOnSave" = {
+            "source.fixAll.eslint" = "always";
+            "source.fixAll.ruff" = "always";
+            "source.organizeImports.ruff" = "always";
+          };
 
           # Language-Specific
           "tsserver" = {
@@ -186,11 +207,6 @@
 
           "graphql" = {
             "filetypes" = ["graphql"];
-          };
-
-          "editor.codeActionsOnSave" = {
-            # the eslint's formatter takes lower priority than the tsserver's
-            "source.fixAll.eslint" = "always";
           };
 
           "eslint" = {
