@@ -7,6 +7,7 @@ let
 
     user-nenw-ajisai = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEicn7yNmNDwaQdawpSeQTqKbirakurD7RZsGe+RlS4w";
     user-nenw-akebi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWzjPz2+WzZd4IjSoeaSSSvXizSObmCxg+KMp+/V/jG";
+    user-nenw-ruri = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICmaHK50ylrxQjfFQA4Dytp8O6M1o1vLz7mLbLVa2HaK";
     user-nenw-shigureui = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDkd7Fk7lI0Sdh5i0U2vI1AUTlQo+pVKghxLW4vJ17/D";
     user-nenw-yanamianna = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWoH/3Ptb5sLPhLUvMw5CZdTIRPP5zpi6dytqIAj9RS";
 
