@@ -5,7 +5,7 @@
     opts.services.${serviceName}.pods.${podName}.containerName;
 in {
   options = let
-    inherit (lib) all attrNames concatStringsSep filter flatten hasAttr isAttrs isList isString
+    inherit (lib) all attrNames concatStringsSep filter flatten hasAttr hasPrefix isAttrs isList isString
       length mkOption mkOptionType optional types;
 
     inherit (types) addCheck attrsOf coercedTo bool enum externalPath ints listOf nullOr oneOf
@@ -21,24 +21,19 @@ in {
       };
     };
 
-    address = let
-      addressOptionType = mkOptionType {
-        name = "address";
-        check = value:
-          (isAttrs value)
-          && (!(value ? "port") || (port.check value.port))
-          && (!(value ? "addr") || (isString value.addr))
-          && ((value ? "port") || (value ? "addr"));
+    address = submodule ({ config, ... }: {
+      options = {
+        port = mkOption { type = nullOr port; default = null; };
+        addr = mkOption { type = nullOr str; default = null; };
+        value = mkOption { type = str; readOnly = true; };
       };
-    in
-      coercedTo
-        addressOptionType
-        (config:
-          if config.addr != null && config.port != null then "${config.addr}:${toString config.port}"
-          else if config.addr != null then "${config.addr}:"
-          else toString config.port
-        )
-        str;
+
+      config.value =
+        if config.addr != null && config.port != null then "${config.addr}:${toString config.port}"
+        else if config.addr != null then "${config.addr}:"
+        else if config.port != null then toString config.port
+        else throw "an address should have addr or port";
+    });
 
     passwords = serviceName: podName: let
       passwordSubmodule = submodule ({ config, ... }: {
@@ -83,7 +78,7 @@ in {
       shorthand = mkOptionType {
         name = "network reference";
         check = value:
-          (isList value)
+          (isList value && all isString value)
           || (hasOnly "host" value && value.host == true)
           || (hasOnly "container" value && (isString value.container))
           || (hasOnly "pod" value && (isString value.pod));
@@ -92,10 +87,11 @@ in {
       coercedTo
         shorthand
         (reference:
-          if reference ? "host" then { kind = "host"; }
+          if isList reference then { kind = null; networks = reference; }
+          else if reference ? "host" then { kind = "host"; }
           else if reference ? "container" then { kind = "container:${reference.container}"; }
           else if reference ? "pod" then { kind = "container:${podContainerName serviceName reference.pod}"; }
-          else { kind = null; networks = reference; }
+          else throw "networks field has unknown shape"
         )
         (submodule {
           options = {
@@ -104,69 +100,74 @@ in {
           };
         });
 
-      containerReference = serviceName: let
-        shorthand = mkOptionType {
-          name = "container reference";
-          check = value:
-            (hasOnly "container" value && (isString value.container))
-            || (hasOnly "pod" value && (isString value.pod));
-        };
-      in
-        coercedTo
-          shorthand
-          (reference:
-            if reference ? "container" then reference.container
-            else podContainerName serviceName reference.pod
-          )
-          str;
+    containerReference = serviceName: let
+      shorthand = mkOptionType {
+        name = "container reference";
+        check = value:
+          (hasOnly "container" value && (isString value.container))
+          || (hasOnly "pod" value && (isString value.pod));
+      };
+    in
+      coercedTo
+        shorthand
+        (reference:
+          if reference ? "container" then reference.container
+          else podContainerName serviceName reference.pod
+        )
+        str;
 
-      volumeReference = serviceName: let
-        servicePath = name: "${opts.services.${serviceName}.path}/${name}";
-        shorthand = mkOptionType {
-          name = "volume reference";
-          check = value:
-            (hasOnly "hostPath" value && (path.check value.hostPath))
-            || (hasOnly "service" value && (isString value.service))
-            || (hasOnly "volume" value && (isString value.volume));
-        };
-      in
-        coercedTo
-          (oneOf [ path str shorthand ])
-          (reference:
-            if isAttrs reference then
-              if reference ? "hostPath" then (toString reference.hostPath)
-              else if reference ? "volume" then reference.volume
-              else (servicePath reference.service)
-            else if (path.check reference) then (toString reference)
-            else (servicePath reference)
-          )
-          str;
+    volumeReference = serviceName: let
+      servicePath = name: "${opts.services.${serviceName}.path}/${name}";
+      shorthand = mkOptionType {
+        name = "volume reference";
+        check = value:
+          (hasOnly "hostPath" value && (path.check value.hostPath))
+          || (hasOnly "service" value && (isString value.service))
+          || (hasOnly "volume" value && (isString value.volume));
+      };
+    in
+      coercedTo
+        (oneOf [ path str shorthand ])
+        (reference:
+          if isAttrs reference then
+            if reference ? "hostPath" then (toString reference.hostPath)
+            else if reference ? "volume" then reference.volume
+            else (servicePath reference.service)
+          else if (path.check reference) then (toString reference)
+          else (servicePath reference)
+        )
+        str;
 
-      volume = serviceName:
-        coercedTo
-          (submodule ({ config, ... }: {
-            options = {
-              from = mkOption { type = volumeReference serviceName; };
-              to = mkOption { type = externalPath; };
-              readonly = mkOption { type = bool; default = false; };
-              chown = mkOption { type = bool; default = !config.readonly; };
-            };
-          }))
-          (volume: concatStringsSep ":" (filter (x: x != "") [
-            volume.from
-            volume.to
-            (concatStringsSep "," (flatten [
-              (optional volume.readonly "ro")
-              (optional volume.chown "U")
-            ]))
-          ]))
-          str;
+    volume = serviceName: submodule ({ config, ... }: {
+      options = {
+        from = mkOption { type = volumeReference serviceName; };
+        to = mkOption { type = externalPath; };
+        readonly = mkOption { type = bool; default = false; };
+        chown = mkOption {
+          type = bool;
+          default = !config.readonly && (hasPrefix "${opts.services.${serviceName}.path}/" config.from);
+        };
+        value = mkOption { type = str; readOnly = true; };
+      };
+
+      config.value = concatStringsSep ":" (filter (x: x != "") [
+        config.from
+        config.to
+        (concatStringsSep "," (flatten [
+          (optional config.readonly "ro")
+          (optional config.chown "U")
+        ]))
+      ]);
+    });
+
+    dockerImage =
+      addCheck package (drv: drv ? imageName && drv ? imageTag);
 
     container = serviceName: submodule ({ name, config, ... }: {
       options = {
         # Images
         image = mkOption {
-          type = oneOf [ str package ];
+          type = oneOf [ str dockerImage ];
         };
 
         pull = mkOption {
@@ -208,7 +209,7 @@ in {
         };
 
         environmentFiles = mkOption {
-          type = listOf str;
+          type = listOf path;
           default = [];
         };
 
@@ -259,7 +260,7 @@ in {
         };
 
         capabilities = mkOption {
-          type = attrsOf bool;
+          type = attrsOf (nullOr bool);
           default = {};
         };
       };
@@ -358,8 +359,8 @@ in {
           after = [ "network-online.target" ];
           path = [ config.virtualisation.podman.package ];
 
-          environment = {
-            HOME = mkIf (service.hostUser != "root") (config.users.users.${service.hostUser}.home);
+          environment = mkIf (service.hostUser != "root") {
+            HOME = (config.users.users.${service.hostUser}.home);
             XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.${service.hostUser}.uid}";
           };
 
@@ -479,14 +480,15 @@ in {
           serviceName = (names.pod serviceName podName);
 
           # Mappings
-          inherit (pod) environment user volumes;
+          inherit (pod) environment user;
           environmentFiles =
             pod.environmentFiles ++
             (optional pod.passwords.enable pod.passwords.fileName);
 
           networks = pod.networks.networks;
-          ports = map (mapping: "${mapping.from}:${mapping.to}") pod.ports;
+          ports = map (mapping: "${mapping.from.value}:${mapping.to}") pod.ports;
           devices = map (mapping: "${mapping.from}:${mapping.to}") pod.devices;
+          volumes = map (volume: volume.value) pod.volumes;
 
           # Permissions
           inherit (pod) privileged capabilities;
