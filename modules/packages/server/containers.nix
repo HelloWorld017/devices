@@ -38,25 +38,13 @@ in {
     passwords = serviceName: podName: let
       passwordSubmodule = submodule ({ config, ... }: {
         options = {
-          enable = mkOption {
-            type = bool;
-            readOnly = true;
-          };
-
-          fileName = mkOption {
-            type = str;
-            readOnly = true;
-          };
-
+          enable = mkOption { type = bool; readOnly = true; };
+          fileName = mkOption { type = str; readOnly = true; };
           seedFileName = mkOption {
             type = externalPath;
             default = self.lib.secret "containers-passwords-seed";
           };
-
-          environment = mkOption {
-            type = attrsOf str;
-            default = {};
-          };
+          environment = mkOption { type = attrsOf str; default = {}; };
         };
 
         config = {
@@ -457,7 +445,6 @@ in {
         })
       ) service.pods;
 
-      virtualisation.oci-containers.backend = "podman";
       virtualisation.oci-containers.containers = mapAttrs' (podName: pod:
         (nameValuePair "${pod.containerName}")
         {
@@ -507,6 +494,7 @@ in {
     buildTargets = serviceName: {
       systemd.targets.${names.target serviceName} = {
         description = "Containers for ${serviceName}";
+        wants = [ "network-online.target" "podman.service" ];
         wantedBy = [ "multi-user.target" ];
       };
     };
@@ -535,5 +523,38 @@ in {
         gid = opts.user.uid;
       };
     })
+
+    {
+      virtualisation.oci-containers.backend = "podman";
+      virtualisation.podman = {
+        enable = true;
+
+        # Prune unused images periodically
+        autoPrune = {
+          enable = true;
+          dates = "weekly";
+          flags = ["--all"];
+        };
+
+        defaultNetwork.settings = {
+          dns_enabled = true;
+        };
+      };
+
+      pkgs.server.firewall.zones = {
+        podman = { interfaces = [ "podman*" ]; };
+      };
+
+      pkgs.server.firewall.rules.podman = {
+        from = [ "podman" ];
+        allowedUDPPorts = [ 53 ];
+      };
+
+      pkgs.server.firewall.rules.podman-forward = {
+        from = [ "podman" ];
+        to = [ "all" ];
+        verdict = "accept";
+      };
+    }
   ]));
 }
