@@ -6,5 +6,6 @@
     ./firewall.nix
     ./ingress.nix
     ./observability.nix
+    ./ports.nix
   ];
 }

@@ -1,6 +1,6 @@
 { self, config, lib, pkgs, ... }: let
   opts = config.pkgs.server.containers;
-  deviceName = config.constants.device;
+  configRoot = config;
   podContainerName = serviceName: podName:
     opts.services.${serviceName}.pods.${podName}.containerName;
 in {
@@ -21,19 +21,28 @@ in {
       };
     };
 
-    address = submodule ({ config, ... }: {
-      options = {
-        port = mkOption { type = nullOr port; default = null; };
-        addr = mkOption { type = nullOr str; default = null; };
-        value = mkOption { type = str; readOnly = true; };
-      };
+    address = let
+      addressSubmodule = submodule ({ config, ... }: {
+        options = {
+          port = mkOption { type = nullOr port; default = null; };
+          addr = mkOption { type = nullOr str; default = null; };
+          value = mkOption { type = str; readOnly = true; };
+        };
 
-      config.value =
-        if config.addr != null && config.port != null then "${config.addr}:${toString config.port}"
-        else if config.addr != null then "${config.addr}:"
-        else if config.port != null then toString config.port
-        else throw "an address should have addr or port";
-    });
+        config.value =
+          if config.addr != null && config.port != null then "${config.addr}:${toString config.port}"
+          else if config.addr != null then "${config.addr}:"
+          else if config.port != null then toString config.port
+          else throw "an address should have addr or port";
+      });
+    in
+      coercedTo port
+        (port: { inherit port; })
+        addressSubmodule;
+
+    device = coercedTo str
+      (path: { from = path; to = path; })
+      (mapping externalPath externalPath);
 
     passwords = serviceName: podName: let
       passwordSubmodule = submodule ({ config, ... }: {
@@ -42,7 +51,7 @@ in {
           fileName = mkOption { type = str; readOnly = true; };
           seedFileName = mkOption {
             type = externalPath;
-            default = self.lib.secret "containers-passwords-seed";
+            default = configRoot.age.secrets.containers-passwords-seed.path;
           };
           environment = mkOption { type = attrsOf str; default = {}; };
         };
@@ -130,10 +139,10 @@ in {
       options = {
         from = mkOption { type = volumeReference serviceName; };
         to = mkOption { type = externalPath; };
-        readonly = mkOption { type = bool; default = false; };
+        readOnly = mkOption { type = bool; default = false; };
         chown = mkOption {
           type = bool;
-          default = !config.readonly && (hasPrefix "${opts.services.${serviceName}.path}/" config.from);
+          default = !config.readOnly && (hasPrefix "${opts.services.${serviceName}.path}/" config.from);
         };
         value = mkOption { type = str; readOnly = true; };
       };
@@ -232,7 +241,7 @@ in {
         };
 
         devices = mkOption {
-          type = listOf (mapping externalPath externalPath);
+          type = listOf device;
           default = [];
         };
 
@@ -262,7 +271,7 @@ in {
 
         path = mkOption {
           type = externalPath;
-          default = "${opts.basePath}/${deviceName}-${name}";
+          default = "${opts.basePath}/${configRoot.constants.device}-${name}";
         };
 
         hostUser = mkOption {
@@ -326,7 +335,7 @@ in {
 
   config = let
     inherit (lib) concatStringsSep escapeShellArg flatten isDerivation listToAttrs mapAttrs'
-      mapAttrsToList mkIf mkMerge nameValuePair optional unique;
+      mapAttrsToList mkDefault mkIf mkMerge nameValuePair optional unique;
 
     names = {
       target = serviceName: "containers-${serviceName}";
@@ -442,6 +451,15 @@ in {
           partOf = [ "${names.target serviceName}.target" ];
           after = dependencies;
           requires = dependencies;
+          unitConfig = {
+            StartLimitIntervalSec = mkDefault 300;
+            StartLimitBurst = mkDefault 5;
+          };
+          serviceConfig = {
+            Restart = mkDefault "always";
+            RestartSec = mkDefault "5s";
+            RestartMaxDelaySec = mkDefault "30s";
+          };
         })
       ) service.pods;
 
@@ -525,6 +543,10 @@ in {
     })
 
     {
+      age.secrets.containers-passwords-seed = {
+        file = self.lib.secret "containers-passwords-seed.age";
+      };
+
       virtualisation.oci-containers.backend = "podman";
       virtualisation.podman = {
         enable = true;

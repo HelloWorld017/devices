@@ -5,7 +5,7 @@
   in {
     pkgs.server = {
       # Service
-      podman.services.e2email.enable = true;
+      # TODO
 
       # Observability
       observability.config = {

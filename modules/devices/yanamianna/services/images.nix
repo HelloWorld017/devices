@@ -1,14 +1,33 @@
-{ ... }:
-{
+{ config, ... }:
+let
+  ports = config.pkgs.server.ports.ports;
+in {
   config = {
     pkgs.server = {
       # Service
-      podman.services.images.enable = true;
+      ports.allocation.names = [ "images" ];
+      containers.services.images.pods = {
+        images = {
+          environment = {
+            IMAGE_MAX_SIZE = "15M";
+            ORIGIN = "https://images.nenw.dev";
+            STORAGE_PROVIDER = "local";
+            TZ = "Asia/Seoul";
+            USER_APPROVAL_REQUIRED = "true";
+          };
+        };
+
+        ports = [ { from = ports.images; to = 3000; } ];
+        volumes = [
+          { from = "slink_data"; to = "/app/var/data"; }
+          { from = "slink_images"; to = "/app/slink/images"; }
+        ];
+      };
 
       # Ingress
       ingress.rules."images.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = 20622;
+        proxyPort = ports.images;
       };
     };
   };

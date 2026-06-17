@@ -1,15 +1,16 @@
-{ ... }:
-{
+{ self, config, ... }:
+let
+  ports = config.pkgs.server.ports.ports;
+in {
   config = {
-    pkgs.server = {
-      # Service
-      podman.services.wireray.enable = true;
+    imports = [ (self.lib.private "ajisai-wireray.nix") ];
 
+    pkgs.server = {
       # Ingress
       ingress.rules."test.nabi.moe" = {
         acmeHost = "nabi.moe";
         locations."/" = {
-          proxyPass = "http://127.0.0.1:20619";
+          proxyPass = "http://127.0.0.1:${toString ports.wireray}";
           extraConfig = ''
             client_max_body_size 0;
 

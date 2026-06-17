@@ -1,14 +1,14 @@
-{ ... }:
-{
+{ self, config, ... }:
+let
+  ports = config.pkgs.server.ports.ports;
+in {
   config = {
+    imports = [ (self.lib.private "yanamianna-gluetun.nix") ];
     pkgs.server = {
-      # Service
-      podman.services.gluetun.enable = true;
-
       # Firewall
       firewall.rules.gluetun = {
         from = [ "local" "tailscale" ];
-        allowedTCPPorts = [ 30021 ];
+        allowedTCPPorts = [ ports.gluetun ];
       };
     };
   };
