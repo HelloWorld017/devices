@@ -10,7 +10,7 @@
 
   config = {
     environment.systemPackages = with pkgs; [
-      clang_22
+      clang_19
       coreutils
       git
       wget

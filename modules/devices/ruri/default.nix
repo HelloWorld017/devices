@@ -11,6 +11,7 @@ in
         device.base
         ./hardware.nix
         ./packages.nix
+        ./services.nix
         ./settings.nix
       ];
     };
