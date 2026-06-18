@@ -2,9 +2,9 @@
 let
   ports = config.pkgs.server.ports.ports;
 in {
-  config = {
-    imports = [ (self.lib.private "ajisai-wireray.nix") ];
+  imports = [ (self.lib.private "ajisai-wireray.nix") ];
 
+  config = {
     pkgs.server = {
       # Ingress
       ingress.rules."test.nabi.moe" = {

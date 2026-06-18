@@ -13,8 +13,54 @@ in {
       volumes = serviceName: "containers-${serviceName}-volumes";
       network = serviceName: serviceNetworkName: "containers-${serviceName}-network-${serviceNetworkName}";
       passwords = serviceName: podName: "containers-${serviceName}-${podName}-passwords";
+      secrets = serviceName: podName: "containers-${serviceName}-${podName}-secrets.env";
       pod = serviceName: podName: "containers-${serviceName}-${podName}";
     };
+
+    podSecrets = service:
+      flatten (mapAttrsToList (_podName: pod: pod.secrets) service.pods);
+
+    secretNames = service:
+      unique (map (secret: secret.from) (podSecrets service));
+
+    secretEnvironmentFiles = pod:
+      map
+        (secret: config.age.secrets.${secret.from}.path)
+        (filter (secret: secret.kind == "environmentFile") pod.secrets);
+
+    secretEnvironmentVars = pod:
+      filter (secret: secret.kind == "environment") pod.secrets;
+
+    secretVolumes = pod:
+      map
+        (secret: concatStringsSep ":" [
+          config.age.secrets.${secret.from}.path
+          (toString secret.to)
+          "ro"
+        ])
+        (filter (secret: secret.kind == "volume") pod.secrets);
+
+    buildAgeSecrets = serviceName: service:
+      listToAttrs (map
+        (secretName: nameValuePair secretName {
+          file = mkDefault (self.lib.secret "${secretName}.age");
+        })
+        (secretNames service));
+
+    buildAgeSecretTemplates = serviceName: service:
+      listToAttrs (flatten (mapAttrsToList (podName: pod: let
+        envSecrets = secretEnvironmentVars pod;
+        templateName = names.secrets serviceName podName;
+      in optional (length envSecrets > 0) (nameValuePair templateName {
+        owner = service.hostUser;
+        group = service.hostGroup;
+        vars = listToAttrs (map
+          (secret: nameValuePair (toString secret.to) config.age.secrets.${secret.from}.path)
+          envSecrets);
+        content = (concatStringsSep "\n" (map
+          (secret: "${toString secret.to}=$" + (toString secret.to))
+          envSecrets)) + "\n";
+      })) service.pods));
 
     buildNetworkServices = serviceName: service: let
       networks = unique (flatten (mapAttrsToList
@@ -237,12 +283,15 @@ in {
           inherit (pod) environment user;
           environmentFiles =
             pod.environmentFiles ++
+            (secretEnvironmentFiles pod) ++
+            (optional ((length (secretEnvironmentVars pod)) > 0)
+              config.age-template.files.${names.secrets serviceName podName}.path) ++
             (optional pod.passwords.enable pod.passwords.fileName);
 
           networks = map (podNetworkName serviceName) pod.networks.effectiveNetworks;
           ports = map (mapping: "${mapping.from.value}:${toString mapping.to}") pod.ports;
           devices = map (mapping: "${mapping.from}:${mapping.to}") pod.devices;
-          volumes = map (volume: volume.value) pod.volumes;
+          volumes = (map (volume: volume.value) pod.volumes) ++ (secretVolumes pod);
 
           # Permissions
           inherit (pod) privileged;
@@ -329,6 +378,8 @@ in {
     (let
       build = fn: mapAttrsToList fn opts.services;
     in {
+      age.secrets = mkMerge (build buildAgeSecrets);
+      age-template.files = mkMerge (build buildAgeSecretTemplates);
       virtualisation.oci-containers.containers = mkMerge (build buildContainers);
       systemd.targets = mkMerge (build buildTargets);
       systemd.services = mkMerge (flatten [

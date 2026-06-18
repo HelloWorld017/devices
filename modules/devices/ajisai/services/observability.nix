@@ -1,6 +1,7 @@
 { self, lib, config, pkgs, ... }: {
   config = let
-    inherit (lib) mapAttrsToList toJSON;
+    inherit (builtins) toJSON;
+    inherit (lib) mapAttrsToList;
     inherit (self.lib.river) blockset expr;
 
     ports = config.pkgs.server.ports.ports.observability;

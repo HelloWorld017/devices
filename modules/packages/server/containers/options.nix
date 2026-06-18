@@ -106,6 +106,30 @@ in {
         (environment: { inherit environment; })
         passwordSubmodule;
 
+    secret = let
+      secretSubmodule = submodule ({ config, ... }: {
+        options = {
+          from = mkOption { type = str; };
+          to = mkOption {
+            type = nullOr (oneOf [ str path ]);
+            default = null;
+          };
+          kind = mkOption {
+            type = enum [ "environmentFile" "environment" "volume" ];
+            readOnly = true;
+          };
+        };
+
+        config.kind =
+          if config.to == null then "environmentFile"
+          else if path.check config.to then "volume"
+          else "environment";
+      });
+    in
+      coercedTo str
+        (from: { inherit from; })
+        secretSubmodule;
+
     networks = serviceName: let
       shorthand = mkOptionType {
         name = "network reference";
@@ -263,6 +287,11 @@ in {
 
         environmentFiles = mkOption {
           type = listOf path;
+          default = [];
+        };
+
+        secrets = mkOption {
+          type = listOf secret;
           default = [];
         };
 

@@ -2,8 +2,8 @@
 let
   ports = config.pkgs.server.ports.ports;
 in {
+  imports = [ (self.lib.private "yanamianna-gluetun.nix") ];
   config = {
-    imports = [ (self.lib.private "yanamianna-gluetun.nix") ];
     pkgs.server = {
       # Firewall
       firewall.rules.gluetun = {
