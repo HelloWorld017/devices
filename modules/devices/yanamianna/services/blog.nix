@@ -1,6 +1,6 @@
 { self, config, ... }:
 let
-  ports = config.pkgs.server.ports.ports;
+  ports = config.pkgs.server.ports.ports.blog;
   secrets = config.age.secrets;
 in {
   config = {
@@ -19,7 +19,7 @@ in {
     pkgs.server = {
       # Service
       ports.allocation.names.blog = [ "ghost" "kaede" ];
-      containers.blog.pods = {
+      containers.services.blog.pods = {
         ghost = {
           image = "docker.io/ghost:5.101-alpine";
           environment = {
@@ -32,7 +32,7 @@ in {
 
           environmentFiles = [ secrets.yanamianna-blog-database-password.path ];
           ports = [
-            { from = { addr = "127.0.0.1"; port = ports.blog.ghost; }; to = 2368; }
+            { from = { addr = "127.0.0.1"; port = ports.ghost; }; to = 2368; }
           ];
 
           volumes = [
@@ -63,7 +63,7 @@ in {
           ];
 
           ports = [
-            { from = { addr = "127.0.0.1"; port = ports.blog.kaede; }; to = 11005; }
+            { from = { addr = "127.0.0.1"; port = ports.kaede; }; to = 11005; }
           ];
         };
 
@@ -83,12 +83,12 @@ in {
       # Ingress
       ingress.rules."blog.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = ports.blog.ghost;
+        proxyPort = ports.ghost;
       };
 
       ingress.rules."kaede.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = ports.blog.kaede;
+        proxyPort = ports.kaede;
       };
     };
   };

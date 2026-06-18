@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  ports = config.pkgs.server.ports.ports;
+  ports = config.pkgs.server.ports.ports.mailserver;
 in {
   config = {
     pkgs.server = {
@@ -22,14 +22,14 @@ in {
       # Ingress
       ingress.rules."webmail.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = ports.mailserver.webmail;
+        proxyPort = ports.webmail;
       };
 
       # Firewall
       firewall.rules.mailserver = {
         from = [ "all" ];
         allowedTCPPorts = lib.attrValues {
-          inherit (ports.mailserver) smtp pop3 imap smtp-starttls imaps pop3s;
+          inherit (ports) smtp pop3 imap smtp-starttls imaps pop3s;
         };
       };
 

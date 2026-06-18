@@ -2,7 +2,7 @@
 {
   options = let
     inherit (lib) attrNames concatLists isAttrs isList map mkOption types;
-    inherit (types) attrsOf coercedTo lazyAttrsOf listOf port str;
+    inherit (types) coercedTo lazyAttrsOf listOf oneOf port str;
 
     flattenAttrs = prefix: value:
       if isAttrs value then
@@ -14,10 +14,13 @@
       else if isList value then map (item: prefix ++ [ item ]) value
       else throw "invalid port allocation name";
 
-    allocationNames = coercedTo (lazyAttrsOf (listOf str))
+    allocationInput = oneOf [(listOf str) (lazyAttrsOf allocationInput)];
+    allocationNames = coercedTo
+      allocationInput
       (attrs: flattenAttrs [] attrs)
       (listOf (listOf str));
 
+    portsOutput = lazyAttrsOf (oneOf [port portsOutput]);
   in {
     pkgs.server.ports = {
       allocation = {
@@ -33,7 +36,7 @@
       };
 
       ports = mkOption {
-        type = attrsOf port;
+        type = portsOutput;
         default = {};
       };
     };

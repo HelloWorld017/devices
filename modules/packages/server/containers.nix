@@ -1,12 +1,14 @@
 { self, config, lib, pkgs, ... }: let
   opts = config.pkgs.server.containers;
   configRoot = config;
+  podNetworkName = serviceName: serviceNetworkName:
+    "${serviceName}_${serviceNetworkName}";
   podContainerName = serviceName: podName:
     opts.services.${serviceName}.pods.${podName}.containerName;
 in {
   options = let
     inherit (lib) all attrNames concatStringsSep filter flatten hasAttr hasPrefix isAttrs isList isString
-      length mapAttrs mkOption mkOptionType optional types;
+      length mapAttrs mkOption mkOptionType optional optionals types;
 
     inherit (types) addCheck attrsOf coercedTo bool enum externalPath int ints listOf nullOr oneOf
       package path port str submodule;
@@ -40,9 +42,38 @@ in {
         (port: { inherit port; })
         addressSubmodule;
 
-    device = coercedTo str
-      (path: { from = path; to = path; })
-      (mapping externalPath externalPath);
+    device = let
+      deviceSubmodule = submodule {
+        options = {
+          from = mkOption { type = path; };
+          to = mkOption { type = path; };
+          allowHost = mkOption {
+            type = listOf (enum ["read" "write" "make"]);
+            default = ["read" "write" "make"];
+          };
+        };
+      };
+    in
+      coercedTo str
+        (path: { from = path; to = path; })
+        deviceSubmodule;
+
+    capabilities = let
+      capabilitySubmodule = submodule ({ config, ... }: {
+        options = {
+          verdict = mkOption { type = bool; };
+          allowHost = mkOption {
+            type = bool;
+            default = config.verdict;
+          };
+        };
+      });
+
+      capability = coercedTo bool
+        (verdict: { inherit verdict; })
+        capabilitySubmodule;
+    in
+      attrsOf (nullOr capability);
 
     environment = coercedTo (attrsOf (oneOf [ str int bool ]))
       (env: mapAttrs (name: value: toString value) env)
@@ -84,6 +115,8 @@ in {
           || (hasOnly "container" value && (isString value.container))
           || (hasOnly "pod" value && (isString value.pod));
       };
+
+      serviceNetwork = optional opts.services.${serviceName}.defaultNetwork "default";
     in
       coercedTo
         shorthand
@@ -94,12 +127,20 @@ in {
           else if reference ? "pod" then { kind = "container:${podContainerName serviceName reference.pod}"; }
           else throw "networks field has unknown shape"
         )
-        (submodule {
+        (submodule ({ config, ...}: {
           options = {
             kind = mkOption { type = nullOr str; default = null; };
             networks = mkOption { type = listOf str; default = []; };
+            effectiveNetworks = mkOption {
+              type = listOf str;
+              readOnly = true;
+            };
           };
-        });
+
+          config.effectiveNetworks = optionals
+            (config.kind == null)
+            (if (length config.networks > 0) then config.networks else serviceNetwork);
+        }));
 
     containerReference = serviceName: let
       shorthand = mkOptionType {
@@ -155,7 +196,7 @@ in {
         config.from
         config.to
         (concatStringsSep "," (flatten [
-          (optional config.readonly "ro")
+          (optional config.readOnly "ro")
           (optional config.chown "U")
         ]))
       ]);
@@ -226,7 +267,7 @@ in {
 
         networkAlias = mkOption {
           type = nullOr str;
-          default = if (length config.networks.networks > 0) then name else null;
+          default = if (length config.networks.effectiveNetworks > 0) then name else null;
         };
 
         user = mkOption {
@@ -261,7 +302,7 @@ in {
         };
 
         capabilities = mkOption {
-          type = attrsOf (nullOr bool);
+          type = capabilities;
           default = {};
         };
       };
@@ -276,6 +317,11 @@ in {
         path = mkOption {
           type = externalPath;
           default = "${opts.basePath}/${configRoot.constants.device}-${name}";
+        };
+
+        defaultNetwork = mkOption {
+          type = bool;
+          default = true;
         };
 
         hostUser = mkOption {
@@ -338,23 +384,28 @@ in {
   };
 
   config = let
-    inherit (lib) concatStringsSep escapeShellArg flatten isDerivation listToAttrs mapAttrs'
-      mapAttrsToList mkDefault mkIf mkMerge nameValuePair optional unique;
+    inherit (lib) concatStrings concatStringsSep elem escapeShellArg flatten isDerivation listToAttrs
+      mapAttrs mapAttrs' mapAttrsToList mkDefault mkIf mkMerge nameValuePair optional unique;
 
     names = {
       target = serviceName: "containers-${serviceName}";
-      network = serviceName: networkName: "containers-${serviceName}-network-${networkName}";
+      network = serviceName: serviceNetworkName: "containers-${serviceName}-network-${serviceNetworkName}";
       passwords = serviceName: podName: "containers-${serviceName}-${podName}-passwords";
       pod = serviceName: podName: "containers-${serviceName}-${podName}";
     };
 
     buildNetworks = serviceName: service: let
-      networks = unique (flatten (mapAttrsToList (podName: pod: pod.networks.networks) service.pods));
+      networks = unique (flatten (mapAttrsToList
+        (podName: pod: pod.networks.effectiveNetworks)
+        service.pods
+      ));
     in {
-      systemd.services = listToAttrs (map (networkName:
-        (nameValuePair (names.network serviceName networkName))
-        {
-          description = "Create podman network ${networkName} for ${serviceName}";
+      systemd.services = listToAttrs (map (serviceNetworkName:
+        (nameValuePair (names.network serviceName serviceNetworkName))
+        (let
+          networkId = (podNetworkName serviceName serviceNetworkName);
+        in {
+          description = "Create podman network ${serviceNetworkName} for ${serviceName}";
           wantedBy = [ "${names.target serviceName}.target" ];
           partOf = [ "${names.target serviceName}.target" ];
           after = [ "network-online.target" ];
@@ -365,27 +416,21 @@ in {
             XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.${service.hostUser}.uid}";
           };
 
-          serviceConfig = mkMerge [
-            {
-              Type = "oneshot";
-              RemainAfterExit = true;
-              User = service.hostUser;
-              Group = service.hostGroup;
-            }
-            (mkIf (service.hostUser != "root") {
-              AmbientCapabilities = "cap_net_bind_service";
-              CapabilityBoundingSet = "cap_net_bind_service";
-            })
-          ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            User = service.hostUser;
+            Group = service.hostGroup;
+          };
 
           script = ''
-            podman network create --ignore ${lib.escapeShellArg networkName}
+            podman network create --ignore ${lib.escapeShellArg networkId}
           '';
 
           preStop = ''
-            podman network rm --ignore ${lib.escapeShellArg networkName}
+            podman network rm --ignore ${lib.escapeShellArg networkId}
           '';
-        }
+        })
       ) networks);
     };
 
@@ -453,7 +498,10 @@ in {
         (let
           dependencies = flatten [
             (optional pod.passwords.enable "${names.passwords serviceName podName}.service")
-            (map (networkName: "${names.network serviceName networkName}.service") pod.networks.networks)
+            (map
+              (serviceNetworkName: "${names.network serviceName serviceNetworkName}.service")
+              pod.networks.effectiveNetworks
+            )
           ];
         in {
           description = "Create container for ${podName} in ${serviceName}";
@@ -472,10 +520,27 @@ in {
               RestartSec = mkDefault "5s";
               RestartMaxDelaySec = mkDefault "30s";
             }
-            (mkIf (service.hostUser != "root") {
-              AmbientCapabilities = "cap_net_bind_service";
-              CapabilityBoundingSet = "cap_net_bind_service";
-            })
+            (mkIf (service.hostUser != "root") (let
+              capabilities = unique (flatten [
+                "CAP_NET_BIND_SERVICE"
+                (mapAttrsToList
+                    (capName: cap: optional (cap != null && cap.allowHost && cap.verdict) "CAP_${capName}")
+                    pod.capabilities
+                )
+              ]);
+
+              devices = flatten (map (device: let
+                permissions = concatStrings (unique (flatten [
+                  (optional (elem "read" device.allowHost) "r")
+                  (optional (elem "write" device.allowHost) "w")
+                  (optional (elem "make" device.allowHost) "m")
+                ]));
+              in optional (permissions != "") "${device.from} ${permissions}"));
+            in {
+              DeviceAllow = devices;
+              AmbientCapabilities = capabilities;
+              CapabilityBoundingSet = capabilities;
+            }))
           ];
         })
       ) service.pods;
@@ -507,13 +572,18 @@ in {
             pod.environmentFiles ++
             (optional pod.passwords.enable pod.passwords.fileName);
 
-          networks = pod.networks.networks;
+          networks = map (podNetworkName serviceName) pod.networks.effectiveNetworks;
           ports = map (mapping: "${mapping.from.value}:${mapping.to}") pod.ports;
           devices = map (mapping: "${mapping.from}:${mapping.to}") pod.devices;
           volumes = map (volume: volume.value) pod.volumes;
 
           # Permissions
-          inherit (pod) privileged capabilities;
+          inherit (pod) privileged;
+          capabilities = (mapAttrs
+            (capName: cap: if cap == null then cap else cap.verdict)
+            pod.capabilities
+          );
+
           podman.user = service.hostUser;
 
           # Extra

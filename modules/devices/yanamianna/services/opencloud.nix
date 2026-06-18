@@ -21,7 +21,9 @@ in {
             PROXY_TLS = false;
           };
 
-          ports = [{ from = ports.opencloud; to = 9200; }];
+          ports = [
+            { from = { addr = "127.0.0.1"; port = ports.opencloud; }; to = 9200; }
+          ];
         };
       };
 
@@ -37,7 +39,7 @@ in {
           }
         '';
 
-        locations."/remote.php".proxyPass = "http://127.0.0.1:20623";
+        locations."/remote.php".proxyPass = "http://127.0.0.1:${toString ports.opencloud}";
         locations."/remote.php".extraConfig = ''
           # Find Actions
           set $cors_action "";

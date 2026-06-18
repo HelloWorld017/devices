@@ -3,6 +3,8 @@
     inherit (lib) mapAttrsToList toJSON;
     inherit (self.lib.river) blockset expr;
 
+    ports = config.pkgs.server.ports.ports.observability;
+
     uptimeProbes = {
       blog = "https://blog.nenw.dev";
       cloud = "https://cloud.nenw.dev";
@@ -15,7 +17,7 @@
           name = "VictoriaMetrics";
           type = "prometheus";
           access = "proxy";
-          url = "http://victoriametrics:8428";
+          url = "http://victoriametrics:${ports.victoriametrics}";
           isDefault = true;
           jsonData = {
             prometheusType = "Prometheus";
@@ -26,15 +28,13 @@
           name = "VictoriaLogs";
           type = "victoriametrics-logs-datasource";
           access = "proxy";
-          url = "http://victorialogs:8428";
+          url = "http://victorialogs:${ports.victorialogs}";
           jsonData = {
             maxLines = 1000;
           };
         }
       ];
     });
-
-    ports = config.pkgs.server.ports.ports;
   in {
     age.secrets."ajisai-grafana-password" = {
       file = self.lib.secret "ajisai-grafana-password.age";
@@ -43,10 +43,10 @@
     pkgs.server = {
       # Ports
       ports = {
-        allocation.names = ["observability-grafana"];
-        ports = {
-          observability-victoriametrics = 8428;
-          observability-victorialogs = 9428;
+        allocation.names.observability = ["grafana"];
+        ports.observability = {
+          victoriametrics = 8428;
+          victorialogs = 9428;
         };
       };
 
@@ -60,7 +60,7 @@
           ];
 
           volumes = [{ from = "victoriametrics"; to = "/storage"; }];
-          ports = [{ from = ports.observability-victoriametrics; to = 8428; }];
+          ports = [{ from = ports.victoriametrics; to = 8428; }];
         };
 
         victorialogs = {
@@ -71,7 +71,7 @@
           ];
 
           volumes = [{ from = "victorialogs"; to = "/storage"; }];
-          ports = [{ from = ports.observability-victorialogs; to = 9428; }];
+          ports = [{ from = ports.victorialogs; to = 9428; }];
         };
 
         grafana = {
@@ -92,17 +92,16 @@
             { from = grafanaDatasource; to = "/etc/grafana/provisioning/datasources/datasource.yml"; readOnly = true; }
           ];
 
-          ports = [{
-            from = { addr = "127.0.0.1"; port = ports.observability-grafana; };
-            to = 3000;
-          }];
+          ports = [
+            { from = { addr = "127.0.0.1"; port = ports.grafana; }; to = 3000; }
+          ];
         };
       };
 
       # Ingress
       ingress.rules."dashboard.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = ports.observability-grafana;
+        proxyPort = ports.grafana;
         tailscale = true;
       };
 
@@ -141,8 +140,8 @@
       firewall.rules.observability = {
         from = [ "tailscale" ];
         allowedTCPPorts = [
-          ports.observability-victorialogs
-          ports.observability-victoriametrics
+          ports.victorialogs
+          ports.victoriametrics
         ];
       };
     };
