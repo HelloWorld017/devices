@@ -15,13 +15,13 @@ in {
       pod = serviceName: podName: "containers-${serviceName}-${podName}";
     };
 
-    buildNetworks = serviceName: service: let
+    buildNetworkServices = serviceName: service: let
       networks = unique (flatten (mapAttrsToList
         (podName: pod: pod.networks.effectiveNetworks)
         service.pods
       ));
-    in {
-      systemd.services = listToAttrs (map (serviceNetworkName:
+    in
+      listToAttrs (map (serviceNetworkName:
         (nameValuePair (names.network serviceName serviceNetworkName))
         (let
           networkId = (podNetworkName serviceName serviceNetworkName);
@@ -29,7 +29,8 @@ in {
           description = "Create podman network ${serviceNetworkName} for ${serviceName}";
           wantedBy = [ "${names.target serviceName}.target" ];
           partOf = [ "${names.target serviceName}.target" ];
-          after = [ "network-online.target" ];
+          after = [ "network-online.target" "podman.service" ];
+          wants = [ "network-online.target" "podman.service" ];
           path = [ config.virtualisation.podman.package ];
 
           environment = mkIf (service.hostUser != "root") {
@@ -53,10 +54,9 @@ in {
           '';
         })
       ) networks);
-    };
 
-    buildPasswords = serviceName: service: {
-      systemd.services = mapAttrs' (podName: pod:
+    buildPasswordServices = serviceName: service:
+      mapAttrs' (podName: pod:
         (nameValuePair (names.passwords serviceName podName))
         (mkIf pod.passwords.enable {
           description = "Derive environment passwords for ${podName} in ${serviceName}";
@@ -111,10 +111,9 @@ in {
           '';
         })
       ) service.pods;
-    };
 
-    buildContainers = serviceName: service: {
-      systemd.services = mapAttrs' (podName: pod:
+    buildContainerServices = serviceName: service:
+      mapAttrs' (podName: pod:
         (nameValuePair (names.pod serviceName podName))
         (let
           dependencies = flatten [
@@ -151,12 +150,13 @@ in {
               ]);
 
               devices = flatten (map (device: let
-                permissions = concatStrings (unique (flatten [
-                  (optional (elem "read" device.allowHost) "r")
-                  (optional (elem "write" device.allowHost) "w")
-                  (optional (elem "make" device.allowHost) "m")
-                ]));
-              in optional (permissions != "") "${device.from} ${permissions}"));
+                  permissions = concatStrings (unique (flatten [
+                    (optional (elem "read" device.allowHost) "r")
+                    (optional (elem "write" device.allowHost) "w")
+                    (optional (elem "make" device.allowHost) "m")
+                  ]));
+                in optional (permissions != "") "${device.from} ${permissions}"
+              ) pod.devices);
             in {
               DeviceAllow = devices;
               AmbientCapabilities = capabilities;
@@ -166,7 +166,8 @@ in {
         })
       ) service.pods;
 
-      virtualisation.oci-containers.containers = mapAttrs' (podName: pod:
+    buildContainers = serviceName: service:
+      mapAttrs' (podName: pod:
         (nameValuePair "${pod.containerName}")
         {
           # Images
@@ -194,7 +195,7 @@ in {
             (optional pod.passwords.enable pod.passwords.fileName);
 
           networks = map (podNetworkName serviceName) pod.networks.effectiveNetworks;
-          ports = map (mapping: "${mapping.from.value}:${mapping.to}") pod.ports;
+          ports = map (mapping: "${mapping.from.value}:${toString mapping.to}") pod.ports;
           devices = map (mapping: "${mapping.from}:${mapping.to}") pod.devices;
           volumes = map (volume: volume.value) pod.volumes;
 
@@ -215,24 +216,17 @@ in {
           ];
         }
       ) service.pods;
-    };
 
-    buildTargets = serviceName: {
-      systemd.targets.${names.target serviceName} = {
+    buildTargets = serviceName: service: {
+      ${names.target serviceName} = {
         description = "Containers for ${serviceName}";
+        after = [ "network-online.target" "podman.service" ];
         wants = [ "network-online.target" "podman.service" ];
         wantedBy = [ "multi-user.target" ];
       };
     };
 
-  in mkIf opts.enable (mkMerge (flatten [
-    (mapAttrsToList (serviceName: service: mkMerge [
-      (buildNetworks serviceName service)
-      (buildPasswords serviceName service)
-      (buildContainers serviceName service)
-      (buildTargets serviceName)
-    ]) opts.services)
-
+  in mkIf opts.enable (mkMerge [
     (mkIf opts.user.enable {
       users.users.${opts.user.name} = {
         uid = opts.user.uid;
@@ -286,5 +280,17 @@ in {
         verdict = "accept";
       };
     }
-  ]));
+
+    (let
+      build = fn: mapAttrsToList fn opts.services;
+    in {
+      virtualisation.oci-containers.containers = mkMerge (build buildContainers);
+      systemd.targets = mkMerge (build buildTargets);
+      systemd.services = mkMerge (flatten [
+        (build buildContainerServices)
+        (build buildPasswordServices)
+        (build buildNetworkServices)
+      ]);
+    })
+  ]);
 }

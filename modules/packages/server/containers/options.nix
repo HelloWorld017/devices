@@ -8,8 +8,10 @@ in {
     inherit (lib) all attrNames concatStringsSep filter flatten hasAttr hasPrefix isAttrs isList isString
       length mapAttrs mkOption mkOptionType optional optionals types;
 
-    inherit (types) addCheck attrsOf coercedTo bool enum externalPath int ints listOf nullOr oneOf
+    inherit (types) addCheck attrsOf coercedTo bool enum int ints listOf nullOr oneOf
       package path port str submodule;
+
+    externalPath = if types ? "externalPath" then externalPath else path;
 
     hasOnly = name: value:
       isAttrs value && ((attrNames value) == [name]);
