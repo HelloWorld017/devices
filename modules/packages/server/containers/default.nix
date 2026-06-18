@@ -44,6 +44,8 @@ in {
       listToAttrs (map
         (secretName: nameValuePair secretName {
           file = mkDefault (self.lib.secret "${secretName}.age");
+          owner = service.hostUser;
+          group = service.hostGroup;
         })
         (secretNames service));
 

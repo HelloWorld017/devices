@@ -1,12 +1,8 @@
-{ self, config, ... }:
+{ config, ... }:
 let
   ports = config.pkgs.server.ports.ports;
 in {
   config = {
-    age.secrets."ruri-auth-encryption-key" = {
-      file = self.lib.secret "ruri-auth-encryption-key.age";
-    };
-
     pkgs.server = {
       # Service
       ports.allocation.names = [ "auth" ];
