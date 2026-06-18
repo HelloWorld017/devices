@@ -5,7 +5,7 @@
     opts.services.${serviceName}.pods.${podName}.containerName;
 in {
   options = let
-    inherit (lib) all attrNames concatStringsSep filter flatten hasAttr hasPrefix isAttrs isList isString
+    inherit (lib) all attrNames concatStringsSep filter flatten hasAttr isAttrs isList isString
       length mapAttrs mkOption mkOptionType optional optionals types;
 
     inherit (types) addCheck attrsOf coercedTo bool enum int ints listOf nullOr oneOf
@@ -163,22 +163,33 @@ in {
       shorthand = mkOptionType {
         name = "volume reference";
         check = value:
-          (hasOnly "hostPath" value && (path.check value.hostPath))
-          || (hasOnly "service" value && (isString value.service))
+          (path.check value)
+          || (isString value)
+          || (hasOnly "hostPath" value && (path.check value.hostPath))
+          || (hasOnly "servicePath" value && (isString value.servicePath))
           || (hasOnly "volume" value && (isString value.volume));
+      };
+      volumeReferenceSubmodule = submodule {
+        options = {
+          kind = mkOption { type = enum [ "hostPath" "servicePath" "volume" ]; };
+          value = mkOption { type = str; };
+        };
       };
     in
       coercedTo
-        (oneOf [ path str shorthand ])
-        (reference:
-          if isAttrs reference then
-            if reference ? "hostPath" then (toString reference.hostPath)
-            else if reference ? "volume" then reference.volume
-            else (servicePath reference.service)
-          else if (path.check reference) then (toString reference)
-          else (servicePath reference)
+        shorthand
+        (reference: let
+          coerced = if (path.check reference) then { hostPath = reference; }
+            else { servicePath = reference; };
+        in
+          if coerced ? "hostPath" then
+            { kind = "hostPath"; value = (toString coerced.hostPath); }
+          else if coerced ? "volume" then
+            { kind = "volume"; value = coerced.volume; }
+          else
+            { kind = "servicePath"; value = (servicePath coerced.servicePath); }
         )
-        str;
+        volumeReferenceSubmodule;
 
     volume = serviceName: submodule ({ config, ... }: {
       options = {
@@ -187,13 +198,13 @@ in {
         readOnly = mkOption { type = bool; default = false; };
         chown = mkOption {
           type = bool;
-          default = !config.readOnly && (hasPrefix "${opts.services.${serviceName}.path}/" config.from);
+          default = !config.readOnly && (config.from.kind == "servicePath");
         };
         value = mkOption { type = str; readOnly = true; };
       };
 
       config.value = concatStringsSep ":" (filter (x: x != "") [
-        config.from
+        config.from.value
         config.to
         (concatStringsSep "," (flatten [
           (optional config.readOnly "ro")

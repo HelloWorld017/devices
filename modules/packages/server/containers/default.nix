@@ -5,11 +5,12 @@
 in {
   imports = [ ./options.nix ];
   config = let
-    inherit (lib) concatStrings concatStringsSep elem escapeShellArg flatten isDerivation listToAttrs
+    inherit (lib) concatStrings concatStringsSep elem escapeShellArg filter flatten isDerivation length listToAttrs
       mapAttrs mapAttrs' mapAttrsToList mkDefault mkIf mkMerge nameValuePair optional unique;
 
     names = {
       target = serviceName: "containers-${serviceName}";
+      volumes = serviceName: "containers-${serviceName}-volumes";
       network = serviceName: serviceNetworkName: "containers-${serviceName}-network-${serviceNetworkName}";
       passwords = serviceName: podName: "containers-${serviceName}-${podName}-passwords";
       pod = serviceName: podName: "containers-${serviceName}-${podName}";
@@ -25,12 +26,18 @@ in {
         (nameValuePair (names.network serviceName serviceNetworkName))
         (let
           networkId = (podNetworkName serviceName serviceNetworkName);
+          uid = config.users.users.${service.hostUser}.uid;
+          dependencies = flatten [
+            "network-online.target"
+            "podman.service"
+            (optional (service.hostUser != "root") "user@${toString uid}.service")
+          ];
         in {
           description = "Create podman network ${serviceNetworkName} for ${serviceName}";
           wantedBy = [ "${names.target serviceName}.target" ];
           partOf = [ "${names.target serviceName}.target" ];
-          after = [ "network-online.target" "podman.service" ];
-          wants = [ "network-online.target" "podman.service" ];
+          after = dependencies;
+          wants = dependencies;
           path = [ config.virtualisation.podman.package ];
 
           environment = mkIf (service.hostUser != "root") {
@@ -112,12 +119,49 @@ in {
         })
       ) service.pods;
 
+    serviceVolumePaths = service:
+      unique (map
+        (volume: volume.from.value)
+        (filter
+          (volume: volume.from.kind == "servicePath" && !volume.readOnly)
+          (flatten (mapAttrsToList (_podName: pod: pod.volumes) service.pods))
+        )
+      );
+
+    buildVolumeServices = serviceName: service: let
+      volumePaths = serviceVolumePaths service;
+    in {
+      ${names.volumes serviceName} = mkIf (length volumePaths > 0) {
+        description = "Prepare servicePath volumes for ${serviceName}";
+        wantedBy = [ "${names.target serviceName}.target" ];
+        partOf = [ "${names.target serviceName}.target" ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = false;
+        };
+
+        script = ''
+          set -euo pipefail
+
+          ${concatStringsSep "\n" (map (path: ''
+            ${pkgs.coreutils}/bin/install -d -m 0750 \
+              -o ${escapeShellArg service.hostUser} \
+              -g ${escapeShellArg service.hostGroup} \
+              ${escapeShellArg path}
+          '') volumePaths)}
+        '';
+      };
+    };
+
     buildContainerServices = serviceName: service:
       mapAttrs' (podName: pod:
         (nameValuePair (names.pod serviceName podName))
         (let
+          volumePaths = serviceVolumePaths service;
           dependencies = flatten [
             (optional pod.passwords.enable "${names.passwords serviceName podName}.service")
+            (optional (length volumePaths > 0) "${names.volumes serviceName}.service")
             (map
               (serviceNetworkName: "${names.network serviceName serviceNetworkName}.service")
               pod.networks.effectiveNetworks
@@ -138,6 +182,7 @@ in {
             {
               Restart = mkDefault "always";
               RestartSec = mkDefault "5s";
+              RestartSteps = mkDefault 6;
               RestartMaxDelaySec = mkDefault "30s";
             }
             (mkIf (service.hostUser != "root") (let
@@ -290,6 +335,7 @@ in {
         (build buildContainerServices)
         (build buildPasswordServices)
         (build buildNetworkServices)
+        (build buildVolumeServices)
       ]);
     })
   ]);
