@@ -67,6 +67,7 @@ in {
       nodejs
       inputs.notion-linux.packages.${system}.default
       onlyoffice-bin
+      openssl
       ouch
       parsec-bin
       pinta

@@ -36,6 +36,7 @@
       jq
       net-tools
       nodejs
+      openssl
       ouch
       pkg-config
       pnpm

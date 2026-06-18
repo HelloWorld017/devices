@@ -37,6 +37,7 @@
       lm_sensors
       net-tools
       nodejs
+      openssl
       ouch
       pkg-config
       nodePackages.pnpm

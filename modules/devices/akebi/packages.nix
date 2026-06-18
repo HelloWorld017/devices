@@ -38,6 +38,7 @@
       net-tools
       nftables
       nodejs
+      openssl
       ouch
       nodePackages.pnpm
       pkg-config
