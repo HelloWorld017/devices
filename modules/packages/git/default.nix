@@ -14,12 +14,13 @@
         branch.sort = "-committerdate";
         checkout.defaultRemote = "origin";
         diff.algorithm = "histogram";
+        merge.conflictstyle = "zdiff3";
         pager.diff = "delta --plus-style 'syntax #205820'";
         pull.ff = "only";
         push.autoSetupRemote = "true";
-        merge.conflictstyle = "zdiff3";
         rebase.autosquash = "true";
         rerere.enabled = "true";
+        submodule.recurse = "true";
       };
     };
 
