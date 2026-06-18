@@ -43,10 +43,10 @@
     pkgs.server = {
       # Ports
       ports = {
-        allocation.names = ["grafana"];
+        allocation.names = ["observability-grafana"];
         ports = {
-          victoriametrics = 8428;
-          victorialogs = 9428;
+          observability-victoriametrics = 8428;
+          observability-victorialogs = 9428;
         };
       };
 
@@ -60,7 +60,7 @@
           ];
 
           volumes = [{ from = "victoriametrics"; to = "/storage"; }];
-          ports = [{ from = ports.victoriametrics; to = 8428; }];
+          ports = [{ from = ports.observability-victoriametrics; to = 8428; }];
         };
 
         victorialogs = {
@@ -71,7 +71,7 @@
           ];
 
           volumes = [{ from = "victorialogs"; to = "/storage"; }];
-          ports = [{ from = ports.victorialogs; to = 9428; }];
+          ports = [{ from = ports.observability-victorialogs; to = 9428; }];
         };
 
         grafana = {
@@ -93,7 +93,7 @@
           ];
 
           ports = [{
-            from = { addr = "127.0.0.1"; port = ports.grafana; };
+            from = { addr = "127.0.0.1"; port = ports.observability-grafana; };
             to = 3000;
           }];
         };
@@ -102,7 +102,7 @@
       # Ingress
       ingress.rules."dashboard.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = ports.grafana;
+        proxyPort = ports.observability-grafana;
         tailscale = true;
       };
 
@@ -140,7 +140,10 @@
       # Firewall
       firewall.rules.observability = {
         from = [ "tailscale" ];
-        allowedTCPPorts = [ ports.victorialogs ports.victoriametrics ];
+        allowedTCPPorts = [
+          ports.observability-victorialogs
+          ports.observability-victoriametrics
+        ];
       };
     };
   };

@@ -1,14 +1,34 @@
-{ ... }:
-{
+{ config, ... }:
+let
+  ports = config.pkgs.server.ports.ports;
+in {
   config = {
     pkgs.server = {
       # Service
-      podman.services.opencloud.enable = true;
+      ports.allocation.names = [ "opencloud" ];
+      containers.services.opencloud.pods = {
+        opencloud = {
+          image = "docker.io/opencloudeu/opencloud-rolling:6.0.0";
+          volumes = [
+            { from = "opencloud-data"; to = "/var/lib/opencloud"; }
+            { from = "opencloud-config"; to = "/etc/opencloud"; }
+          ];
+
+          environment = {
+            OC_URL = "https://cloud.nenw.dev";
+            OC_INSECURE = true;
+            PROXY_HTTP_ADDR = "0.0.0.0:9200";
+            PROXY_TLS = false;
+          };
+
+          ports = [{ from = ports.opencloud; to = 9200; }];
+        };
+      };
 
       # Ingress
       ingress.rules."cloud.nenw.dev" = {
         acmeHost = "nenw.dev";
-        proxyPort = 20623;
+        proxyPort = ports.opencloud;
 
         httpConfig = ''
           map $http_origin $opencloud_cors_origin {

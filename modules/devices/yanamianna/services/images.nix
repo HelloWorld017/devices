@@ -13,7 +13,7 @@ in {
             ORIGIN = "https://images.nenw.dev";
             STORAGE_PROVIDER = "local";
             TZ = "Asia/Seoul";
-            USER_APPROVAL_REQUIRED = "true";
+            USER_APPROVAL_REQUIRED = true;
           };
         };
 

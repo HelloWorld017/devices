@@ -6,9 +6,9 @@
 in {
   options = let
     inherit (lib) all attrNames concatStringsSep filter flatten hasAttr hasPrefix isAttrs isList isString
-      length mkOption mkOptionType optional types;
+      length mapAttrs mkOption mkOptionType optional types;
 
-    inherit (types) addCheck attrsOf coercedTo bool enum externalPath ints listOf nullOr oneOf
+    inherit (types) addCheck attrsOf coercedTo bool enum externalPath int ints listOf nullOr oneOf
       package path port str submodule;
 
     hasOnly = name: value:
@@ -43,6 +43,10 @@ in {
     device = coercedTo str
       (path: { from = path; to = path; })
       (mapping externalPath externalPath);
+
+    environment = coercedTo (attrsOf (oneOf [ str int bool ]))
+      (env: mapAttrs (name: value: toString value) env)
+      (attrsOf str);
 
     passwords = serviceName: podName: let
       passwordSubmodule = submodule ({ config, ... }: {
@@ -201,7 +205,7 @@ in {
 
         # Mappings
         environment = mkOption {
-          type = attrsOf str;
+          type = environment;
           default = {};
         };
 
@@ -361,12 +365,18 @@ in {
             XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.${service.hostUser}.uid}";
           };
 
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            User = service.hostUser;
-            Group = service.hostGroup;
-          };
+          serviceConfig = mkMerge [
+            {
+              Type = "oneshot";
+              RemainAfterExit = true;
+              User = service.hostUser;
+              Group = service.hostGroup;
+            }
+            (mkIf (service.hostUser != "root") {
+              AmbientCapabilities = "cap_net_bind_service";
+              CapabilityBoundingSet = "cap_net_bind_service";
+            })
+          ];
 
           script = ''
             podman network create --ignore ${lib.escapeShellArg networkName}
@@ -455,11 +465,18 @@ in {
             StartLimitIntervalSec = mkDefault 300;
             StartLimitBurst = mkDefault 5;
           };
-          serviceConfig = {
-            Restart = mkDefault "always";
-            RestartSec = mkDefault "5s";
-            RestartMaxDelaySec = mkDefault "30s";
-          };
+
+          serviceConfig = mkMerge [
+            {
+              Restart = mkDefault "always";
+              RestartSec = mkDefault "5s";
+              RestartMaxDelaySec = mkDefault "30s";
+            }
+            (mkIf (service.hostUser != "root") {
+              AmbientCapabilities = "cap_net_bind_service";
+              CapabilityBoundingSet = "cap_net_bind_service";
+            })
+          ];
         })
       ) service.pods;
 

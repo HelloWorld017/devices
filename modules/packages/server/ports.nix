@@ -1,8 +1,23 @@
 { lib, config, ... }:
 {
   options = let
-    inherit (lib) mkOption types;
-    inherit (types) attrsOf listOf port str;
+    inherit (lib) attrNames concatLists isAttrs isList map mkOption types;
+    inherit (types) attrsOf coercedTo lazyAttrsOf listOf port str;
+
+    flattenAttrs = prefix: value:
+      if isAttrs value then
+        concatLists (
+          map
+            (innerKey: flattenAttrs (prefix ++ [ innerKey ]) value.${innerKey})
+            (attrNames value)
+        )
+      else if isList value then map (item: prefix ++ [ item ]) value
+      else throw "invalid port allocation name";
+
+    allocationNames = coercedTo (lazyAttrsOf (listOf str))
+      (attrs: flattenAttrs [] attrs)
+      (listOf (listOf str));
+
   in {
     pkgs.server.ports = {
       allocation = {
@@ -12,7 +27,7 @@
         };
 
         names = mkOption {
-          type = listOf str;
+          type = allocationNames;
           default = [];
         };
       };
@@ -25,7 +40,7 @@
   };
 
   config = let
-    inherit (lib) imap0 length listToAttrs mkDefault nameValuePair unique;
+    inherit (lib) foldl' imap0 length mkDefault recursiveUpdate setAttrByPath unique;
     opts = config.pkgs.server.ports;
   in {
     assertions = [
@@ -35,10 +50,9 @@
       }
     ];
 
-    pkgs.server.ports.ports =
-      listToAttrs (imap0 (i: name:
-        (nameValuePair name)
-        (mkDefault (opts.allocation.basePort + i))
-      ) opts.allocation.names);
+    pkgs.server.ports.ports = foldl' recursiveUpdate {} (imap0
+      (i: path: setAttrByPath path (mkDefault (opts.allocation.basePort + i)))
+      opts.allocation.names
+    );
   };
 }
