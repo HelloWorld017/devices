@@ -2,7 +2,7 @@
   imports = [
     ./acme.nix
     ./cloudflare.nix
-    ./containers.nix
+    ./containers
     ./firewall.nix
     ./ingress.nix
     ./observability.nix
