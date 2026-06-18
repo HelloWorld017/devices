@@ -1,21 +1,8 @@
-{ self, config, ... }:
+{ config, ... }:
 let
   ports = config.pkgs.server.ports.ports.blog;
-  secrets = config.age.secrets;
 in {
   config = {
-    age.secrets."yanamianna-blog-database-password" = {
-      file = self.lib.secret "yanamianna-blog-database-password.age";
-    };
-
-    age.secrets."yanamianna-blog-kaede-password" = {
-      file = self.lib.secret "yanamianna-blog-kaede-password.age";
-    };
-
-    age.secrets."yanamianna-blog-kaede-database-password" = {
-      file = self.lib.secret "yanamianna-blog-kaede-database-password.age";
-    };
-
     pkgs.server = {
       # Service
       ports.allocation.names.blog = [ "ghost" "kaede" ];
@@ -30,7 +17,10 @@ in {
             url = "https://blog.nenw.dev";
           };
 
-          environmentFiles = [ secrets.yanamianna-blog-database-password.path ];
+          secrets = [
+            { from = "yanamianna-blog-database-password"; to = "database__connection__password"; }
+          ];
+
           ports = [
             { from = { addr = "127.0.0.1"; port = ports.ghost; }; to = 2368; }
           ];
@@ -42,7 +32,10 @@ in {
 
         db = {
           image = "docker.io/mysql:8.4";
-          environmentFiles = [ secrets.yanamianna-blog-database-password.path ];
+          secrets = [
+            { from = "yanamianna-blog-database-password"; to = "MYSQL_ROOT_PASSWORD"; }
+          ];
+
           volumes = [
             { from = "ghost_database"; to = "/var/lib/mysql"; }
           ];
@@ -57,9 +50,9 @@ in {
             MONGODB_USERNAME = "root";
           };
 
-          environmentFiles = [
-            secrets.yanamianna-blog-kaede-password.path
-            secrets.yanamianna-blog-kaede-database-password.path
+          secrets = [
+            "yanamianna-blog-kaede-password"
+            { from = "yanamianna-blog-kaede-database-password"; to = "MONGODB_PASSWORD"; }
           ];
 
           ports = [
@@ -73,7 +66,10 @@ in {
             MONGO_INITDB_ROOT_USERNAME = "root";
           };
 
-          environmentFiles = [ secrets.yanamianna-blog-kaede-database-password.path ];
+          secrets = [
+            { from = "yanamianna-blog-kaede-database-password"; to = "MONGODB_INITDB_ROOT_PASSWORD"; }
+          ];
+
           volumes = [
             { from = "kaede_database"; to = "/data/db"; }
           ];
