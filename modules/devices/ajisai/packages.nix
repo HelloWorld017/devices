@@ -10,7 +10,7 @@
 
   config = {
     environment.systemPackages = with pkgs; [
-      clang_19
+      clang_22
       coreutils
       git
       wget
@@ -39,7 +39,7 @@
       nodejs
       ouch
       pkg-config
-      nodePackages.pnpm
+      pnpm
       podman
       podman-compose
       python314

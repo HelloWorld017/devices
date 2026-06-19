@@ -40,7 +40,7 @@
         biome
       ]
       ++ (lib.optional opts.languages.nix nil)
-      ++ (lib.optional opts.languages.graphql nodePackages.graphql-language-service-cli)
+      ++ (lib.optional opts.languages.graphql graphql-language-service-cli)
       ++ (lib.optionals opts.languages.python [ latestPkgs.ruff latestPkgs.ty ])
     );
 

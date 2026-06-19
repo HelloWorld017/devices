@@ -18,7 +18,7 @@
           name = "VictoriaMetrics";
           type = "prometheus";
           access = "proxy";
-          url = "http://victoriametrics:${ports.victoriametrics}";
+          url = "http://victoriametrics:${toString ports.victoriametrics}";
           isDefault = true;
           jsonData = {
             prometheusType = "Prometheus";
@@ -29,7 +29,7 @@
           name = "VictoriaLogs";
           type = "victoriametrics-logs-datasource";
           access = "proxy";
-          url = "http://victorialogs:${ports.victorialogs}";
+          url = "http://victorialogs:${toString ports.victorialogs}";
           jsonData = {
             maxLines = 1000;
           };
