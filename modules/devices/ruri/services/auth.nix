@@ -9,12 +9,11 @@ in {
       containers.services.auth.pods.pocket-id = {
         image = "ghcr.io/pocket-id/pocket-id:v2.9.0";
         secrets = [
-          { from = "ruri-auth-encryption-key"; to = "/app/encryption-key"; }
+          { from = "ruri-auth-encryption-key"; to = "ENCRYPTION_KEY"; }
         ];
 
         environment = {
           APP_URL = "https://auth.nenw.dev";
-          ENCRYPTION_KEY_FILE = "/app/encryption-key";
           TRUST_PROXY = true;
           ANALYTICS_DISABLED = true;
           VERSION_CHECK_DISABLED = true;
