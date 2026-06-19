@@ -1,11 +1,11 @@
-{ self, nixpkgs-20251020, ... }:
+{ self, nixpkgs-20260616, ... }:
 let
   device = self.lib.defineDevice {
     system = "aarch64-linux";
   };
 in
   {
-    nixosConfigurations."nenw-ruri" = nixpkgs-20251020.lib.nixosSystem {
+    nixosConfigurations."nenw-ruri" = nixpkgs-20260616.lib.nixosSystem {
       inherit (device) system specialArgs;
       modules = [
         device.base

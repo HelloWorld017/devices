@@ -11,7 +11,7 @@ in {
     inherit (types) addCheck attrsOf coercedTo bool enum int ints listOf nullOr oneOf
       package path port str submodule;
 
-    externalPath = if types ? "externalPath" then externalPath else path;
+    externalPath = if types ? "externalPath" then types.externalPath else path;
 
     hasOnly = name: value:
       isAttrs value && ((attrNames value) == [name]);
