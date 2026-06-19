@@ -1,10 +1,11 @@
-{ self, config, ... }:
+{ self, config, lib, ... }:
 let
+  enable = false;
   ports = config.pkgs.server.ports.ports;
 in {
   imports = [ (self.lib.private "ajisai-wireray.nix") ];
 
-  config = {
+  config = lib.mkIf enable {
     pkgs.server = {
       # Ingress
       ingress.rules."test.nabi.moe" = {
