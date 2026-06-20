@@ -3,6 +3,7 @@
   imports = [
     repo.fastfetch
     repo.git
+    repo.nix-ld
     repo.nvim
     repo.opencode
     repo.tmux
