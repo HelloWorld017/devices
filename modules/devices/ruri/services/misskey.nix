@@ -24,7 +24,7 @@ let
     host = "nenw.dev";
     port = 3000;
     db = {
-      host = "db";
+      host = "database";
       port = 5432;
       db = "misskey";
       user = "misskey";
@@ -86,8 +86,8 @@ in {
           ];
         };
 
-        db = {
-          image = "docker.io/postgres:18-alpine";
+        database = {
+          image = "docker.io/postgres:18.4-alpine";
           environment = {
             POSTGRES_DB = "misskey";
             POSTGRES_USER = "misskey";
@@ -103,7 +103,7 @@ in {
         };
 
         redis = {
-          image = "docker.io/redis:7-alpine";
+          image = "docker.io/valkey/valkey:9.1.0-alpine";
           volumes = [
             { from = "redis"; to = "/data"; }
           ];
