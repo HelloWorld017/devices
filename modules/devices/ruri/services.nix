@@ -3,6 +3,7 @@
   imports = [
     repo.server
     ./services/auth.nix
+    ./services/misskey.nix
     ./services/openssh.nix
     ./services/tailscale.nix
   ];
