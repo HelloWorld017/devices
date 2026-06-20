@@ -2,11 +2,11 @@
 {
   imports = [
     repo.server
-    # ./services/e2email.nix
     ./services/observability.nix
     ./services/openssh.nix
     ./services/tailscale.nix
-    ./services/wireray.nix
+    # ./services/e2email.nix
+    # ./services/wireray.nix
   ];
 
   config = {

@@ -37,10 +37,6 @@
       ];
     });
   in {
-    age.secrets."ajisai-grafana-password" = {
-      file = self.lib.secret "ajisai-grafana-password.age";
-    };
-
     pkgs.server = {
       # Ports
       ports = {
@@ -84,8 +80,8 @@
             GF_SERVER_ROOT_URL = "https://dashboard.nenw.dev";
           };
 
-          environmentFiles = [
-            config.age.secrets.ajisai-grafana-password.path
+          secrets = [
+            { from = "ajisai-grafana-password"; to = "GF_SECURITY_ADMIN_PASSWORD"; }
           ];
 
           volumes = [
