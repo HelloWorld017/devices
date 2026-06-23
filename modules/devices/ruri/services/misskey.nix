@@ -6,7 +6,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "HelloWorld017";
       repo = "misskey";
-      rev = "e52b40a8b5d97e1dbad290a7045d75613325211f";
+      rev = "288955e2a53c42d46bbb5d27818cacb367699f48";
       hash = "sha256-0CmJIQxeh3xCWnDRlhwabljy6Yt+vh2pRMp+1lJqSSk=";
       fetchSubmodules = true;
     };
@@ -20,8 +20,8 @@ let
   });
 
   misskeySettings = {
-    url = "https://misskey.nenw.dev/";
-    host = "nenw.dev";
+    url = "https://social.nenw.dev/";
+    accountHost = "nenw.dev";
     port = 3000;
     db = {
       host = "database";
@@ -117,13 +117,13 @@ in {
         redis = {
           image = "docker.io/valkey/valkey:9.1.0-alpine";
           volumes = [
-            { from = "redis"; to = "/data"; }
+            { from = "redis"; to = "/data"; mode = "1777"; }
           ];
         };
       };
 
       # Ingress
-      ingress.rules."misskey.nenw.dev" = {
+      ingress.rules."social.nenw.dev" = {
         acmeHost = "nenw.dev";
         proxyPort = ports.misskey;
         extraConfig = ''
