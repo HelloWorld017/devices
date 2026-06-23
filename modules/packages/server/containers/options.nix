@@ -215,11 +215,19 @@ in {
         )
         volumeReferenceSubmodule;
 
+    fileMode = mkOptionType {
+      name = "file mode";
+      check = value:
+        isString value
+        && (builtins.match "[0-7][0-7][0-7][0-7]?" value) != null;
+    };
+
     volume = serviceName: submodule ({ config, ... }: {
       options = {
         from = mkOption { type = volumeReference serviceName; };
         to = mkOption { type = externalPath; };
         readOnly = mkOption { type = bool; default = false; };
+        mode = mkOption { type = fileMode; default = "0750"; };
         chown = mkOption {
           type = bool;
           default = !config.readOnly && (config.from.kind == "servicePath");

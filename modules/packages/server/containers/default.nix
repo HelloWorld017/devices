@@ -167,9 +167,9 @@ in {
         })
       ) service.pods;
 
-    serviceVolumePaths = service:
+    serviceVolumes = service:
       unique (map
-        (volume: volume.from.value)
+        (volume: { path = volume.from.value; mode = volume.mode; })
         (filter
           (volume: volume.from.kind == "servicePath" && !volume.readOnly)
           (flatten (mapAttrsToList (_podName: pod: pod.volumes) service.pods))
@@ -177,9 +177,9 @@ in {
       );
 
     buildVolumeServices = serviceName: service: let
-      volumePaths = serviceVolumePaths service;
+      volumes = serviceVolumes service;
     in {
-      ${names.volumes serviceName} = mkIf (length volumePaths > 0) {
+      ${names.volumes serviceName} = mkIf (length volumes > 0) {
         description = "Prepare servicePath volumes for ${serviceName}";
         wantedBy = [ "${names.target serviceName}.target" ];
         partOf = [ "${names.target serviceName}.target" ];
@@ -192,12 +192,12 @@ in {
         script = ''
           set -euo pipefail
 
-          ${concatStringsSep "\n" (map (path: ''
-            ${pkgs.coreutils}/bin/install -d -m 0750 \
+          ${concatStringsSep "\n" (map (volume: ''
+            ${pkgs.coreutils}/bin/install -d -m ${escapeShellArg volume.mode} \
               -o ${escapeShellArg service.hostUser} \
               -g ${escapeShellArg service.hostGroup} \
-              ${escapeShellArg path}
-          '') volumePaths)}
+              ${escapeShellArg volume.path}
+          '') volumes)}
         '';
       };
     };
@@ -206,10 +206,10 @@ in {
       mapAttrs' (podName: pod:
         (nameValuePair (names.pod serviceName podName))
         (let
-          volumePaths = serviceVolumePaths service;
+          volumes = serviceVolumes service;
           dependencies = flatten [
             (optional pod.passwords.enable "${names.passwords serviceName podName}.service")
-            (optional (length volumePaths > 0) "${names.volumes serviceName}.service")
+            (optional (length volumes > 0) "${names.volumes serviceName}.service")
             (map
               (serviceNetworkName: "${names.network serviceName serviceNetworkName}.service")
               pod.networks.effectiveNetworks

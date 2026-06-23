@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   ports = config.pkgs.server.ports.ports;
   misskey = pkgs.misskey.overrideAttrs (finalAttrs: previousAttrs: {
@@ -7,7 +7,7 @@ let
       owner = "HelloWorld017";
       repo = "misskey";
       rev = "e52b40a8b5d97e1dbad290a7045d75613325211f";
-      hash = lib.fakeHash;
+      hash = "sha256-0CmJIQxeh3xCWnDRlhwabljy6Yt+vh2pRMp+1lJqSSk=";
       fetchSubmodules = true;
     };
 
@@ -15,7 +15,7 @@ let
       inherit (finalAttrs) pname version src;
       pnpm = pkgs.pnpm_11;
       fetcherVersion = 4;
-      hash = lib.fakeHash;
+      hash = "sha256-Q3vV7ZI3sxyKLZAmI9/1i24NjQe0P3Il5i/jB5u/HEg=";
     };
   });
 
@@ -38,13 +38,23 @@ let
     id = "aidx";
   };
 
-  misskeySettingsFile =
+  misskeySettingsYamlFile =
     (pkgs.formats.yaml { }).generate "misskey-default.yml" misskeySettings;
+
+  misskeySettingsJsonFile =
+    (pkgs.formats.json { }).generate "misskey-default.json" misskeySettings;
 
   misskeyImage = pkgs.dockerTools.streamLayeredImage {
     name = "misskey";
-    tag = "develop";
-    contents = [ misskey ];
+    tag = misskey.version;
+    contents = [
+      misskey
+      pkgs.busybox
+      pkgs.dockerTools.usrBinEnv
+      pkgs.dockerTools.binSh
+      pkgs.dockerTools.caCertificates
+      pkgs.dockerTools.fakeNss
+    ];
     extraCommands = ''
       mkdir -p run/misskey var/lib/misskey tmp
       chmod 1777 tmp
@@ -54,6 +64,7 @@ let
       Env = [
         "MISSKEY_CONFIG_YML=/run/misskey/default.yml"
         "NODE_ENV=production"
+        "HOME=/var/lib/misskey"
       ];
       WorkingDir = "${misskey}/data";
     };
@@ -68,7 +79,7 @@ in {
           image = misskeyImage;
           pull = "never";
           dependsOn = [
-            { pod = "db"; }
+            { pod = "database"; }
             { pod = "redis"; }
           ];
 
@@ -82,7 +93,8 @@ in {
 
           volumes = [
             { from = "files"; to = "/var/lib/misskey"; }
-            { from = misskeySettingsFile; to = "/run/misskey/default.yml"; readOnly = true; }
+            { from = misskeySettingsYamlFile; to = "/run/misskey/default.yml"; readOnly = true; }
+            { from = misskeySettingsJsonFile; to = "/run/misskey/default.json"; readOnly = true; }
           ];
         };
 
@@ -98,7 +110,7 @@ in {
           };
 
           volumes = [
-            { from = "postgres"; to = "/var/lib/postgresql/data"; }
+            { from = "postgres"; to = "/var/lib/postgresql"; mode = "0755"; }
           ];
         };
 
