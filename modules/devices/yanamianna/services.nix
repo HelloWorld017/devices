@@ -2,7 +2,6 @@
 {
   imports = [
     repo.server
-    ./services/cuttingedge.nix
     ./services/blog.nix
     ./services/gluetun.nix
     ./services/images.nix
