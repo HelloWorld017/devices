@@ -9,7 +9,6 @@
     proxyPass = "https://${pagesHost}";
     extraConfig = ''
       proxy_set_header Host ${pagesHost};
-      proxy_ssl_server_name on;
       proxy_ssl_name ${pagesHost};
       proxy_redirect https://${pagesHost}/ https://$host/;
       proxy_redirect https://${pagesHost} https://$host;

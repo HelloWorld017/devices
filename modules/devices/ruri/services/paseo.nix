@@ -35,35 +35,6 @@ let
       "/share"
     ];
   };
-
-  paseoImageConfig = {
-    "x86_64-linux" = {
-      arch = "amd64";
-      os = "linux";
-      imageDigest = "sha256:656e046de970bc1056e828ce6dfd14a2cd23240977f949e2f2e04f21884d5fe0";
-      sha256 = "sha256-phMlI/mW3/J9u1bqXT905McKyRG1542ksZ2TijOuGSc=";
-    };
-
-    "aarch64-linux" = {
-      arch = "arm64";
-      os = "linux";
-      imageDigest = "sha256:b80c895b9f9de67b22af9b38b1dd343589f1705085bbb8966933259a3de81f6d";
-      sha256 = "sha256-kp1cJJs6zS5PiRvcLBbWcVltFMM2FR4tPG7XpoN2T9o=";
-    };
-  };
-
-  paseoBase = pkgs.dockerTools.pullImage (paseoImageConfig.${system} // {
-    imageName = "ghcr.io/getpaseo/paseo";
-    finalImageName = "ghcr.io/getpaseo/paseo";
-    finalImageTag = "0.1.103";
-  });
-
-  paseo = pkgs.dockerTools.streamLayeredImage {
-    name = "paseo-opencode";
-    tag = "0.1.103";
-    fromImage = paseoBase;
-    contents = [ devTools ];
-  };
 in
 {
   config = {
@@ -71,8 +42,8 @@ in
       ports.allocation.names.paseo = [ "paseo" "relay" ];
       containers.services.paseo.pods = {
         daemon = {
-          image = paseo;
-          pull = "never";
+          image = "ghcr.io/getpaseo/paseo:0.1.103";
+          pull = "missing";
 
           environment = {
             PASEO_WEB_UI_ENABLED = "true";
@@ -81,6 +52,9 @@ in
             PASEO_RELAY_ENDPOINT = "paseo-relay.1e-9.space:443";
             PASEO_RELAY_PUBLIC_ENDPOINT = "paseo-relay.1e-9.space:443";
             PASEO_RELAY_USE_TLS = "true";
+
+            # "Magic"
+            PATH = "${devTools}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
           };
 
           ports = [
@@ -91,6 +65,7 @@ in
           ];
 
           volumes = [
+            { from = "/nix/store"; to = "/nix/store"; readOnly = true; }
             { from = "home"; to = "/home/paseo"; mode = "0750"; }
             { from = "workspace"; to = "/workspace"; mode = "0770"; }
           ];
@@ -119,7 +94,7 @@ in
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "https://127.0.0.1:${toString ports.relay}";
+          proxyPass = "http://127.0.0.1:${toString ports.relay}";
 
           extraConfig = ''
             proxy_buffering off;
@@ -135,7 +110,7 @@ in
 
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "https://127.0.0.1:${toString ports.paseo}";
+          proxyPass = "http://127.0.0.1:${toString ports.paseo}";
 
           extraConfig = ''
             proxy_buffering off;
