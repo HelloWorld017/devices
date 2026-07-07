@@ -5,12 +5,10 @@
     ./services/observability.nix
     ./services/openssh.nix
     ./services/tailscale.nix
-    # ./services/e2email.nix
-    # ./services/wireray.nix
   ];
 
   config = {
-    pkgs.server.acme.domainNames = [ "khinenw.tk" "nenw.moe" "nenw.dev" "nabi.moe" ];
+    pkgs.server.acme.domainNames = [ "nabi.moe" "nenw.dev" ];
     pkgs.server.ingress.zones = [ "cloudflare" "tailscale" ];
     pkgs.server.firewall.cloudflare.enable = true;
     pkgs.server.firewall.zones = {
