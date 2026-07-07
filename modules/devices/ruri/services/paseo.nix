@@ -66,8 +66,8 @@ in
 
           volumes = [
             { from = "/nix/store"; to = "/nix/store"; readOnly = true; }
-            { from = "home"; to = "/home/paseo"; mode = "0750"; }
-            { from = "workspace"; to = "/workspace"; mode = "0770"; }
+            { from = "home"; to = "/home/paseo"; uid = 1000; gid = 1000; mode = "0750"; }
+            { from = "workspace"; to = "/workspace"; uid = 1000; gid = 1000; mode = "0770"; }
           ];
         };
 
