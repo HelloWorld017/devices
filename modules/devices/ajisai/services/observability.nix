@@ -9,6 +9,7 @@
     uptimeProbes = {
       blog = "https://blog.nenw.dev";
       cloud = "https://cloud.nenw.dev";
+      misskey = "https://social.nenw.dev";
     };
 
     grafanaDatasource = pkgs.writeText "datasource.yml" (toJSON {
@@ -76,8 +77,8 @@
           environment = {
             GF_SECURITY_ADMIN_USER = "nenw";
             GF_INSTALL_PLUGINS = "victoriametrics-logs-datasource";
-            GF_SERVER_DOMAIN = "dashboard.nenw.dev";
-            GF_SERVER_ROOT_URL = "https://dashboard.nenw.dev";
+            GF_SERVER_DOMAIN = "dashboard.1e-9.space";
+            GF_SERVER_ROOT_URL = "https://dashboard.1e-9.space";
           };
 
           secrets = [
@@ -96,8 +97,8 @@
       };
 
       # Ingress
-      ingress.rules."dashboard.nenw.dev" = {
-        acmeHost = "nenw.dev";
+      ingress.rules."dashboard.1e-9.space" = {
+        acmeHost = "1e-9.space";
         proxyPort = ports.grafana;
         tailscale = true;
       };
