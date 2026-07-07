@@ -228,9 +228,14 @@ in {
         to = mkOption { type = externalPath; };
         readOnly = mkOption { type = bool; default = false; };
         mode = mkOption { type = fileMode; default = "0750"; };
+        uid = mkOption { type = nullOr ints.unsigned; default = null; };
+        gid = mkOption { type = nullOr ints.unsigned; default = config.uid; };
         chown = mkOption {
           type = bool;
-          default = !config.readOnly && (config.from.kind == "servicePath");
+          default = !config.readOnly
+            && (config.from.kind == "servicePath")
+            && config.uid == null
+            && config.gid == null;
         };
         value = mkOption { type = str; readOnly = true; };
       };

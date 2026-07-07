@@ -167,9 +167,42 @@ in {
         })
       ) service.pods;
 
+    inherit (let
+      mapIdRanges = { root, ranges, startKey }: let
+        mapToContainer = id: let
+          iterateRange = offset: ranges:
+            if ranges == [] then throw "container id ${toString id} is outside configured id ranges"
+            else let range = builtins.head ranges;
+            in if id < offset + range.count then range.${startKey} + id - offset
+              else iterateRange (offset + range.count) (builtins.tail ranges);
+        in iterateRange 1 ranges;
+      in id:
+        toString (
+          if id == null || id == 0 then root
+          else mapToContainer id
+      );
+    in {
+      mapUidToContainer = service: mapIdRanges {
+        root = config.users.users.${service.hostUser}.uid;
+        ranges = config.users.users.${service.hostUser}.subUidRanges;
+        startKey = "startUid";
+      };
+
+      mapGidToContainer = service: mapIdRanges {
+        root = config.users.groups.${service.hostGroup}.gid;
+        ranges = config.users.users.${service.hostUser}.subGidRanges;
+        startKey = "startGid";
+      };
+    }) mapUidToContainer mapGidToContainer;
+
     serviceVolumes = service:
       unique (map
-        (volume: { path = volume.from.value; mode = volume.mode; })
+        (volume: {
+          path = volume.from.value;
+          mode = volume.mode;
+          owner = mapUidToContainer service volume.uid;
+          group = mapGidToContainer service volume.gid;
+        })
         (filter
           (volume: volume.from.kind == "servicePath" && !volume.readOnly)
           (flatten (mapAttrsToList (_podName: pod: pod.volumes) service.pods))
@@ -194,8 +227,8 @@ in {
 
           ${concatStringsSep "\n" (map (volume: ''
             ${pkgs.coreutils}/bin/install -d -m ${escapeShellArg volume.mode} \
-              -o ${escapeShellArg service.hostUser} \
-              -g ${escapeShellArg service.hostGroup} \
+              -o ${escapeShellArg volume.owner} \
+              -g ${escapeShellArg volume.group} \
               ${escapeShellArg volume.path}
           '') volumes)}
         '';
