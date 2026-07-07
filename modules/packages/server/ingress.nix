@@ -119,14 +119,16 @@
             };
 
             locations."/_fence" = {
+              recommendedProxySettings = false;
               proxyPass = "https://${opts.fence.host}/api/auth/nginx";
               extraConfig = ''
                 internal;
 
                 proxy_pass_request_body off;
-                proxy_set_header Host ${opts.fence.host};
                 proxy_ssl_name ${opts.fence.host};
+                proxy_set_header Host ${opts.fence.host};
                 proxy_set_header Content-Length "";
+                proxy_set_header X-Forwarded-Host $host;
                 proxy_set_header X-Forwarded-Uri $request_uri;
                 proxy_set_header X-Original-Uri $request_uri;
               '';

@@ -91,6 +91,7 @@ in
 
       ingress.rules."paseo-relay.1e-9.space" = {
         acmeHost = "1e-9.space";
+        tailscale = true;
 
         locations."/" = {
           proxyWebsockets = true;

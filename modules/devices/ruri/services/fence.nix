@@ -53,6 +53,27 @@ in {
       ingress.rules."fence.1e-9.space" = {
         acmeHost = "1e-9.space";
         proxyPort = ports.fence;
+        httpConfig = ''
+          map $http_x_forwarded_host $fence_forwarded_host {
+            default $host;
+            "~.+" $http_x_forwarded_host;
+          }
+        '';
+
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:${toString ports.fence}/";
+          recommendedProxySettings = false;
+          extraConfig = ''
+            # Use host from x-forwarded-host
+            proxy_set_header Host $fence_forwarded_host;
+
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $fence_forwarded_host;
+            proxy_set_header X-Forwarded-Server $hostname;
+          '';
+        };
       };
     };
   };

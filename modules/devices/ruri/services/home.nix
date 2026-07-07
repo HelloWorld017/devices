@@ -7,6 +7,7 @@
   pagesRoutes = [ "bits" "irodori" "tone-marble" ];
   pagesProxy = {
     proxyPass = "https://${pagesHost}";
+    recommendedProxySettings = false;
     extraConfig = ''
       proxy_set_header Host ${pagesHost};
       proxy_ssl_name ${pagesHost};
