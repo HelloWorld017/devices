@@ -5,8 +5,8 @@
     opts.services.${serviceName}.pods.${podName}.containerName;
 in {
   options = let
-    inherit (lib) all attrNames concatStringsSep filter flatten hasAttr isAttrs isList isString
-      length mapAttrs mkOption mkOptionType optional optionals types;
+    inherit (lib) all attrNames boolToString concatStringsSep filter flatten hasAttr isAttrs
+      isBool isList isString length mapAttrs mkOption mkOptionType optional optionals types;
 
     inherit (types) addCheck attrsOf coercedTo bool enum int ints listOf nullOr oneOf
       package path port str submodule;
@@ -76,7 +76,7 @@ in {
       attrsOf (nullOr capability);
 
     environment = coercedTo (attrsOf (oneOf [ str int bool ]))
-      (env: mapAttrs (name: value: toString value) env)
+      (env: mapAttrs (name: value: if isBool value then boolToString value else toString value) env)
       (attrsOf str);
 
     passwords = serviceName: podName: let
