@@ -21,6 +21,10 @@ A repository containing nix-based configurations which is currently running on m
   * Status: `Pending`
   * Device: Radxa ROCK 5B+
   * Platform: NixOS
+* `ruri`
+  * Status: `Active`
+  * Device: Oracle Cloud (VM.Standard.A1.Flex, 4 oCPU)
+  * Playform: NixOS
 * `shigureui`
   * Status: `Active`
   * Device: ASUS Zenbook S14 (UX5406SA, Intel Lunar Lake 258V)
