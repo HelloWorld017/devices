@@ -2,12 +2,12 @@
 let
   ports = config.pkgs.server.ports.ports;
   misskey = pkgs.misskey.overrideAttrs (finalAttrs: previousAttrs: {
-    version = "2026.6.0-beta.1-e52b40a";
+    version = "2026.6.0-beta.1-288955e";
     src = pkgs.fetchFromGitHub {
       owner = "HelloWorld017";
       repo = "misskey";
       rev = "288955e2a53c42d46bbb5d27818cacb367699f48";
-      hash = "sha256-0CmJIQxeh3xCWnDRlhwabljy6Yt+vh2pRMp+1lJqSSk=";
+      hash = "sha256-CFWemB1Lgtx8gS4PN87FQnFbl/uGuk90OkWzI+NsP8E=";
       fetchSubmodules = true;
     };
 
