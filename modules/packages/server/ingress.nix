@@ -78,7 +78,7 @@
       recommendedTlsSettings = true;
 
       appendHttpConfig = lib.concatStringsSep "\n" (
-        lib.mapAttrsToList (name: value: 
+        lib.mapAttrsToList (name: value:
           if (value ? httpConfig && value.httpConfig != "") then
             ''
               # Rules for ${name}

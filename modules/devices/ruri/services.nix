@@ -3,9 +3,11 @@
   imports = [
     repo.server
     ./services/auth.nix
+    ./services/fence.nix
     ./services/home.nix
     ./services/misskey.nix
     ./services/openssh.nix
+    ./services/redirect.nix
     ./services/tailscale.nix
   ];
 
