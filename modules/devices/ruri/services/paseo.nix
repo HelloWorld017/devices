@@ -1,4 +1,4 @@
-{ pkgs, config, system, ... }:
+{ pkgs, config, inputs, system, ... }:
 
 let
   ports = config.pkgs.server.ports.ports.paseo;
@@ -31,6 +31,7 @@ let
 
     pathsToLink = [
       "/bin"
+      "/etc"
       "/share"
     ];
   };
@@ -40,14 +41,14 @@ let
       arch = "amd64";
       os = "linux";
       imageDigest = "sha256:656e046de970bc1056e828ce6dfd14a2cd23240977f949e2f2e04f21884d5fe0";
-      sha256 = "";
+      sha256 = "sha256-phMlI/mW3/J9u1bqXT905McKyRG1542ksZ2TijOuGSc=";
     };
 
     "aarch64-linux" = {
       arch = "arm64";
       os = "linux";
       imageDigest = "sha256:b80c895b9f9de67b22af9b38b1dd343589f1705085bbb8966933259a3de81f6d";
-      sha256 = "";
+      sha256 = "sha256-kp1cJJs6zS5PiRvcLBbWcVltFMM2FR4tPG7XpoN2T9o=";
     };
   };
 
