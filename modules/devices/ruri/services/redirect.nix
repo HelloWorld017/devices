@@ -32,11 +32,12 @@
       };
     in concatMapAttrs (name: value:
       listToAttrs (map
-        (host: nameValuePair (value.domain host) (lib.mkMerge [
+        (host: nameValuePair (value.domain host) (
           { acmeHost = host; }
-          (removeAttrs value ["host" "domain"])
-        ]))
-      ) value.host
+          // (removeAttrs value ["host" "domain"])
+        ))
+        value.host
+      )
     ) rules;
   };
 }

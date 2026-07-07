@@ -126,7 +126,7 @@
               '';
             };
           })
-          (removeAttrs value ["proxyPort" "acmeHost" "tailscale" "httpConfig"])
+          (removeAttrs value ["acmeHost" "fence" "httpConfig" "proxyPort" "tailscale"])
         ]) opts.rules
       );
 

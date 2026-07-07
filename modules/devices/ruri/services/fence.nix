@@ -35,7 +35,7 @@ in {
 
         secrets = [
           {
-            from = "ruri-fence-pocket-id-client-secret";
+            from = "ruri-fence-client-secret";
             to = "TINYAUTH_OAUTH_PROVIDERS_POCKETID_CLIENTSECRET";
           }
         ];
