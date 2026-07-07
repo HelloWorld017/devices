@@ -20,6 +20,13 @@
         type = listOf str;
         default = [ "all" ];
       };
+
+      fence = {
+        url = mkOption {
+          type = str;
+          default = "https://fence.1e-9.space";
+        };
+      };
     };
   };
 
@@ -42,6 +49,25 @@
         chmod 600 $out/privkey.pem
       ''
     );
+
+    fenceExtraConfig = ''
+      auth_request /_fence;
+      auth_request_set $tinyauth_redirect $upstream_http_x_tinyauth_location;
+
+      auth_request_set $tinyauth_remote_user $upstream_http_remote_user;
+      auth_request_set $tinyauth_remote_email $upstream_http_remote_email;
+      auth_request_set $tinyauth_remote_name $upstream_http_remote_name;
+      auth_request_set $tinyauth_remote_groups $upstream_http_remote_groups;
+      auth_request_set $tinyauth_remote_sub $upstream_http_remote_sub;
+
+      error_page 401 403 =302 $tinyauth_redirect;
+
+      proxy_set_header Remote-User $tinyauth_remote_user;
+      proxy_set_header Remote-Email $tinyauth_remote_email;
+      proxy_set_header Remote-Name $tinyauth_remote_name;
+      proxy_set_header Remote-Groups $tinyauth_remote_groups;
+      proxy_set_header Remote-Sub $tinyauth_remote_sub;
+    '';
   in lib.mkIf opts.enable {
     # Service
     services.nginx = {
@@ -81,6 +107,23 @@
           (lib.mkIf (value ? "proxyPort") {
             locations."/" = {
               proxyPass = "http://127.0.0.1:${toString value.proxyPort}/";
+            };
+          })
+          (lib.mkIf (value ? "fence" && value.fence) {
+            locations."/" = {
+              extraConfig = fenceExtraConfig;
+            };
+
+            locations."/_fence" = {
+              proxyPass = "${opts.fence.url}/api/auth/nginx";
+              extraConfig = ''
+                internal;
+
+                proxy_pass_request_body off;
+                proxy_set_header Content-Length "";
+                proxy_set_header X-Forwarded-Uri $request_uri;
+                proxy_set_header X-Original-Uri $request_uri;
+              '';
             };
           })
           (removeAttrs value ["proxyPort" "acmeHost" "tailscale" "httpConfig"])
