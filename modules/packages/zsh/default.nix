@@ -7,6 +7,8 @@
       shellAliases =
         {
           # Base Aliases
+          mv = "mv -i";
+          cp = "cp -i";
           ls = "ls -F";
           ll = "eza -alh -F always";
           cls = "clear";
