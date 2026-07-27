@@ -6,7 +6,7 @@
       ingress.rules."cuttingedge.nenw.dev" = {
         acmeHost = "nenw.dev";
         locations."/" = {
-          proxyPass = "http://nenw-akebi:8000";
+          proxyPass = "http://akebi-internal.zone.1e-9.space:8000";
         };
       };
     };

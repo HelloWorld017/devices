@@ -4,6 +4,7 @@
     repo.server
     ./services/auth.nix
     ./services/blog.nix
+    ./services/cuttingedge.nix
     ./services/gluetun.nix
     ./services/images.nix
     ./services/mailserver.nix
