@@ -22,6 +22,7 @@
 
     home.wayland.windowManager.hyprland = {
       enable = true;
+      configType = "hyprlang";
       settings = {
         general = {
           gaps_out = 12;
@@ -128,10 +129,7 @@
     ];
 
     services.displayManager = {
-      gdm = {
-        enable = true;
-        wayland = true;
-      };
+      gdm.enable = true;
     };
   };
 }

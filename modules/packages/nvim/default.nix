@@ -46,6 +46,8 @@
 
     home.programs.neovim = {
       enable = true;
+      withRuby = false;
+      withPython3 = false;
       extraConfig = ""
         + (builtins.readFile ./assets/init.nvim)
         + (lib.strings.join "\n" (

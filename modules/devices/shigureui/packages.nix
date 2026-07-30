@@ -66,13 +66,13 @@ in {
       inputs.nix-alien.packages.${system}.nix-alien
       nodejs
       inputs.notion-linux.packages.${system}.default
-      onlyoffice-bin
+      onlyoffice-desktopeditors
       openssl
       ouch
       parsec-bin
       pinta
       pkg-config
-      nodePackages.pnpm
+      pnpm
       podman
       podman-compose
       praat
