@@ -13,6 +13,7 @@
           ll = "eza -alh -F always";
           cls = "clear";
           archive = ''_archive() { local t="$1"; shift; [[ "$t" != *.tar.zst ]] && t="''${t}.tar.zst"; tar --xattrs --xattrs-include='*' --acls --zstd -cf "$t" "$@"; }; _archive'';
+          hexdump = "hexdump -C";
         } //
         {
           # Git Related Aliases
