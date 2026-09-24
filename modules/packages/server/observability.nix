@@ -12,7 +12,7 @@
 
       remote = mkOption {
         type = str;
-        default = "nenw-ajisai";
+        default = "ajisai-internal.zone.1e-9.space";
       };
 
       logs = mkOption {
