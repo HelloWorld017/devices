@@ -16,7 +16,7 @@
   config = {
     pkgs.server.acme.domainNames = [ "nenw.dev" ];
     pkgs.server.firewall.zones = {
-      uplink = { interfaces = [ "enp4s0" ]; };
+      uplink = { interfaces = [ "enp4s0" "enp3s0" ]; };
       podman = { interfaces = [ "podman*" ]; };
       tailscale = { interfaces = [ "tailscale*" ]; };
       local = {
