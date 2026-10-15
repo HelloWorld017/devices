@@ -34,13 +34,19 @@
 
   config = let
     opts = config.pkgs.nvim;
+    jsFileTypes = [
+      "javascript" "javascript.tsx" "javascriptreact"
+      "typescript" "typescript.tsx" "typescriptreact"
+    ];
   in {
-    home.packages = with pkgs; (
+    home.packages = (
       [
-        biome
+        latestPkgs.biome
+        latestPkgs.oxfmt
+        latestPkgs.oxlint
       ]
-      ++ (lib.optional opts.languages.nix nil)
-      ++ (lib.optional opts.languages.graphql graphql-language-service-cli)
+      ++ (lib.optional opts.languages.nix latestPkgs.nil)
+      ++ (lib.optional opts.languages.graphql latestPkgs.graphql-language-service-cli)
       ++ (lib.optionals opts.languages.python [ latestPkgs.ruff latestPkgs.ty ])
     );
 
@@ -72,15 +78,7 @@
         source = json.generate "coc-settings.json" ({
           # Generic
           "coc.preferences" = {
-            "formatOnSaveFiletypes" = [
-              "javascript"
-              "javascript.tsx"
-              "javascriptreact"
-              "typescript"
-              "typescript.tsx"
-              "typescriptreact"
-              "python"
-            ];
+            "formatOnSaveFiletypes" = jsFileTypes ++ [ "python" ];
           };
 
           "workspace" = {
@@ -147,6 +145,23 @@
 
           # LSP
           "languageserver" = {}
+            // ({
+              "oxlint" = {
+                "command" = "oxlint";
+                "args" = ["--lsp"];
+                "filetypes" = jsFileTypes;
+                "rootPatterns" = [".oxlintrc.json" "oxlint.config.ts" "oxlint.config.mts"];
+                "requireRootPattern" = true;
+              };
+
+              "oxfmt" = {
+                "command" = "oxfmt";
+                "args" = ["--lsp"];
+                "filetypes" = jsFileTypes;
+                "rootPatterns" = [".oxfmtrc.json" "oxfmt.config.ts" "oxfmt.config.mts"];
+                "requireRootPattern" = true;
+              };
+            })
             // (lib.optionalAttrs opts.languages.graphql {
               "graphql" = {
                 "command" = "graphql-lsp";
@@ -182,6 +197,7 @@
 
           "editor.codeActionsOnSave" = {
             "source.fixAll.eslint" = "always";
+            "source.fixAll.oxlint" = "always";
             "source.fixAll.ruff" = "always";
             "source.organizeImports.ruff" = "always";
           };
