@@ -117,6 +117,10 @@
         xwayland = {
           force_zero_scaling = true;
         };
+
+        misc = {
+          anr_missed_pings = 20;
+        };
       };
 
       plugins = with pkgs.hyprlandPlugins; [
