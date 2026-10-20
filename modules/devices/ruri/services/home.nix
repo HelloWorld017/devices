@@ -28,10 +28,26 @@
 in {
   config = {
     pkgs.server = {
+      ports.allocation.names = [ "home" ];
+      containers.services.home.pods.home = {
+        image = "ghcr.io/helloworld017/nenwchan4:1.0.0";
+        pull = "missing";
+
+        ports = [
+          { from = { addr = "127.0.0.1"; port = ports.home; }; to = 8080; }
+        ];
+
+        volumes = [
+          { from = "data"; to = "/data"; }
+        ];
+      };
+
       ingress.rules."nenw.dev" = {
         acmeHost = "nenw.dev";
         locations = pagesLocation // {
-          "/" = pagesProxy;
+          "/" = {
+            proxyPass = "http://127.0.0.1:${toString ports.home}";
+          };
 
           "= /.well-known/openid-configuration" = {
             proxyPass = "http://127.0.0.1:${toString ports.auth}";
