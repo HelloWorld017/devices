@@ -8,7 +8,7 @@
   ];
 
   config = {
-    pkgs.server.acme.domainNames = [ "nabi.moe" "nenw.dev" ];
+    pkgs.server.acme.domainNames = [ "1e-9.space" "nabi.moe" "nenw.dev" ];
     pkgs.server.ingress.zones = [ "cloudflare" "tailscale" ];
     pkgs.server.firewall.cloudflare.enable = true;
     pkgs.server.firewall.zones = {
