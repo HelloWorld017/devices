@@ -25,12 +25,12 @@ in {
           };
 
           ports = [
-            /* { from = ports.smtp; to = 25; }
+            { from = ports.smtp; to = 25; }
             { from = ports.pop3; to = 110; }
             { from = ports.imap; to = 143; }
             { from = ports.smtp-starttls; to = 587; }
             { from = ports.imaps; to = 993; }
-            { from = ports.pop3s; to = 995; } */
+            { from = ports.pop3s; to = 995; }
             { from = { addr = "127.0.0.1"; port = ports.jmap; }; to = 8080; }
           ];
 
@@ -76,6 +76,21 @@ in {
       ingress.rules."mail.nenw.dev" = {
         acmeHost = "nenw.dev";
         proxyPort = ports.jmap;
+
+        locations."/".extraConfig = ''
+            # Prevent duplicate upstream CORS headers
+            proxy_hide_header Access-Control-Allow-Origin;
+            proxy_hide_header Access-Control-Allow-Methods;
+            proxy_hide_header Access-Control-Allow-Headers;
+            proxy_hide_header Access-Control-Allow-Credentials;
+
+            # Allow only Bulwark
+            add_header Access-Control-Allow-Origin "https://webmail.1e-9.space" always;
+            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+            add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-JMAP-Prefix, X-JMAP-Request-Id" always;
+            add_header Access-Control-Allow-Credentials "true" always;
+            add_header Vary "Origin" always;
+        '';
       };
 
       ingress.rules."webmail.1e-9.space" = {
