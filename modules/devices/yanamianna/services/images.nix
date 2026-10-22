@@ -8,10 +8,10 @@ in {
       ports.allocation.names = [ "images" ];
       containers.services.images.pods = {
         images = {
-          image = "docker.io/anirdev/slink:v1.10.6";
+          image = "docker.io/anirdev/slink:v1.14.3";
           environment = {
             IMAGE_MAX_SIZE = "15M";
-            ORIGIN = "https://images.nenw.dev";
+            ORIGIN = "https://images.1e-9.space";
             STORAGE_PROVIDER = "local";
             TZ = "Asia/Seoul";
             USER_APPROVAL_REQUIRED = true;
@@ -31,6 +31,18 @@ in {
       # Ingress
       ingress.rules."images.nenw.dev" = {
         acmeHost = "nenw.dev";
+
+        locations."/".extraConfig = ''
+          return 404;
+        '';
+
+        locations."^~ /image/" = {
+          proxyPass = "http://127.0.0.1:${toString ports.images}";
+        };
+      };
+
+      ingress.rules."images.1e-9.space" = {
+        acmeHost = "1e-9.space";
         proxyPort = ports.images;
       };
     };
