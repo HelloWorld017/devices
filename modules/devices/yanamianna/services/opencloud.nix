@@ -10,8 +10,8 @@ in {
         opencloud = {
           image = "docker.io/opencloudeu/opencloud-rolling:6.0.0";
           volumes = [
-            { from = "opencloud-data"; to = "/var/lib/opencloud"; }
-            { from = "opencloud-config"; to = "/etc/opencloud"; }
+            { from = "opencloud-data"; to = "/var/lib/opencloud"; uid = 1000; gid = 1000; }
+            { from = "opencloud-config"; to = "/etc/opencloud"; uid = 1000; gid = 1000; }
           ];
 
           environment = {

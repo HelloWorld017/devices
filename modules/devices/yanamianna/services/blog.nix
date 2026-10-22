@@ -9,6 +9,7 @@ in {
       containers.services.blog.pods = {
         ghost = {
           image = "docker.io/ghost:5.101-alpine";
+          dependsOn = [{ pod = "db"; }];
           environment = {
             database__client = "mysql";
             database__connection__host = "db";
@@ -43,7 +44,7 @@ in {
 
         kaede = {
           image = "docker.io/khinenw/kaede-api:1.0.2";
-          dependsOn = [{ pod = "kaede-db"; }];
+          dependsOn = [{ pod = "kaede-db"; } { pod = "ghost"; }];
           environment = {
             GHOST_URL = "https://blog.nenw.dev";
             MONGODB_HOST = "kaede-db";
