@@ -90,7 +90,7 @@ in {
             JMAP_SERVER_URL = "https://mail.nenw.dev";
             OAUTH_ENABLED = "true";
             OAUTH_ONLY = "true";
-            OAUTH_CLIENT_ID = "d092461b-3f00-44d1-97ef-589d069607b3";
+            OAUTH_CLIENT_ID = "56faf120-3f28-46c4-b65c-0322e3614400";
             OAUTH_ISSUER_URL = "https://auth.nenw.dev";
             BULWARK_TELEMETRY = "off";
           };
@@ -126,6 +126,8 @@ in {
             add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-JMAP-Prefix, X-JMAP-Request-Id" always;
             add_header Access-Control-Allow-Credentials "true" always;
             add_header Vary "Origin" always;
+
+            client_max_body_size 50m;
         '';
       };
 
