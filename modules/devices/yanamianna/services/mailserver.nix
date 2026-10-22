@@ -54,7 +54,7 @@ in {
             JMAP_SERVER_URL = "https://mail.nenw.dev";
             OAUTH_ENABLED = "true";
             OAUTH_ONLY = "true";
-            OAUTH_CLIENT_ID = "nenw-mail";
+            OAUTH_CLIENT_ID = "d092461b-3f00-44d1-97ef-589d069607b3";
             OAUTH_ISSUER_URL = "https://auth.nenw.dev";
             BULWARK_TELEMETRY = "off";
           };
@@ -67,8 +67,7 @@ in {
           ];
 
           secrets = [
-            { from = "bulwark-oidc-client-secret"; to = "OAUTH_CLIENT_SECRET"; }
-            { from = "bulwark-session-secret"; to = "SESSION_SECRET"; }
+            { from = "yanamianna-mail-webmail-session-secret"; to = "SESSION_SECRET"; }
           ];
         };
       };
