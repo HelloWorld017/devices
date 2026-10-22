@@ -17,6 +17,12 @@
         default = true;
       };
 
+      extraInputRules = mkOption {
+        type = types.lines;
+        default = "";
+        description = "Additional nftables rules evaluated at the beginning of input-allow.";
+      };
+
       sets = mkOption {
         type = attrsOf (submodule {
           options = {
@@ -275,6 +281,8 @@
         }
 
         chain input-allow {
+          ${opts.extraInputRules}
+
           ${concatLines inputAllowChain}
 
           icmp type echo-request limit rate 2/second accept comment "allow ping"

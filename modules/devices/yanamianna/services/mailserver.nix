@@ -1,36 +1,70 @@
 { config, lib, ... }:
 let
   ports = config.pkgs.server.ports.ports.mailserver;
+  # TODO(Podman 6): Revert this temporary direct-pasta + nftables workaround
+  # when upgrading, after verifying source-IP preservation and low-port publishing.
+  # It avoids rootlessport losing client IPs and rootless privileged-port bind failures.
+  mailPorts = {
+    smtp = 25;
+    pop3 = 110;
+    imap = 143;
+    smtp-starttls = 587;
+    imaps = 993;
+    pop3s = 995;
+  };
+  mappings = lib.mapAttrsToList (name: port: {
+    from = port;
+    to = ports.forward.${name};
+  }) mailPorts;
+  redirectRules = lib.concatMapStringsSep "\n" (mapping:
+    "fib daddr type local tcp dport ${toString mapping.from} redirect to :${toString mapping.to}"
+  ) mappings;
 in {
   config = {
+    assertions = [
+      {
+        assertion = lib.all (mapping: mapping.to >= 1024) mappings;
+        message = "Mailserver forwarding ports must be unprivileged ports (>= 1024).";
+      }
+    ];
+
+    networking.nftables.tables.mailserver-redirect = {
+      family = "inet";
+      content = ''
+        chain prerouting {
+          type nat hook prerouting priority dstnat; policy accept;
+          ${redirectRules}
+        }
+
+        chain output {
+          type nat hook output priority dstnat; policy accept;
+          ${redirectRules}
+        }
+      '';
+    };
+
     pkgs.server = {
       # Service
       ports = {
-        allocation.names.mailserver = [ "webmail" "jmap" ];
-        ports.mailserver = {
-          smtp = 25;
-          pop3 = 110;
-          imap = 143;
-          smtp-starttls = 587;
-          imaps = 993;
-          pop3s = 995;
-        };
+        allocation.names = lib.mkMerge [
+          { mailserver = [ "webmail" "jmap" ]; }
+          { mailserver.forward = lib.attrNames mailPorts; }
+        ];
+        ports.mailserver = mailPorts;
       };
 
       containers.services.mailserver.pods = {
         mailserver = {
           image = "docker.io/stalwartlabs/stalwart:v0.16.26";
+          # Direct pasta forwarding preserves external clients' source addresses.
+          networks.kind = "pasta";
           environment = {
             STALWART_PUBLIC_URL = "https://mail.nenw.dev";
           };
 
-          ports = [
-            { from = ports.smtp; to = 25; }
-            { from = ports.pop3; to = 110; }
-            { from = ports.imap; to = 143; }
-            { from = ports.smtp-starttls; to = 587; }
-            { from = ports.imaps; to = 993; }
-            { from = ports.pop3s; to = 995; }
+          ports = lib.mapAttrsToList (name: port:
+            { from = ports.forward.${name}; to = port; }
+          ) mailPorts ++ [
             { from = { addr = "127.0.0.1"; port = ports.jmap; }; to = 8080; }
           ];
 
@@ -99,11 +133,17 @@ in {
       };
 
       # Firewall
+      firewall.extraInputRules = ''
+        # Accept redirected mail traffic, but reject direct access to the high ports.
+        ${lib.concatMapStringsSep "\n" (mapping:
+          "ct status dnat tcp dport ${toString mapping.to} ct original proto-dst ${toString mapping.from} accept"
+        ) mappings}
+        tcp dport { ${lib.concatMapStringsSep ", " (mapping: toString mapping.to) mappings} } drop
+      '';
+
       firewall.rules.mailserver = {
         from = [ "all" ];
-        allowedTCPPorts = lib.attrValues {
-          inherit (ports) smtp pop3 imap smtp-starttls imaps pop3s;
-        };
+        allowedTCPPorts = lib.attrValues mailPorts;
       };
     };
   };
