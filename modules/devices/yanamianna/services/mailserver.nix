@@ -58,6 +58,8 @@ in {
           image = "docker.io/stalwartlabs/stalwart:v0.16.26";
           # Direct pasta forwarding preserves external clients' source addresses.
           networks.kind = "pasta";
+          # The image's non-root user needs the binary's file capability to bind low ports.
+          noNewPrivileges = false;
           environment = {
             STALWART_PUBLIC_URL = "https://mail.nenw.dev";
           };
