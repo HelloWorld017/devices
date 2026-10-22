@@ -40,7 +40,7 @@
       openssl
       ouch
       pkg-config
-      nodePackages.pnpm
+      pnpm
       podman
       podman-compose
       protobuf
@@ -51,7 +51,6 @@
       tealdeer
       unzip
       usbutils
-      # verapdf: build error in 1.26.4
       virtualenv
       wakeonlan
       wev
