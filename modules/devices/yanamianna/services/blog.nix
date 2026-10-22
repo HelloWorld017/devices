@@ -26,7 +26,7 @@ in {
           ];
 
           volumes = [
-            { from = "ghost_content"; to = "/var/lib/ghost/content"; }
+            { from = "ghost_content"; to = "/var/lib/ghost/content"; uid = 1000; gid = 1000; }
           ];
         };
 
@@ -37,7 +37,7 @@ in {
           ];
 
           volumes = [
-            { from = "ghost_database"; to = "/var/lib/mysql"; }
+            { from = "ghost_database"; to = "/var/lib/mysql"; uid = 999; gid = 999; }
           ];
         };
 
@@ -67,11 +67,11 @@ in {
           };
 
           secrets = [
-            { from = "yanamianna-blog-kaede-database-password"; to = "MONGODB_INITDB_ROOT_PASSWORD"; }
+            { from = "yanamianna-blog-kaede-database-password"; to = "MONGO_INITDB_ROOT_PASSWORD"; }
           ];
 
           volumes = [
-            { from = "kaede_database"; to = "/data/db"; }
+            { from = "kaede_database"; to = "/data/db"; uid = 999; gid = 999; }
           ];
         };
       };

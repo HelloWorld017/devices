@@ -43,6 +43,7 @@ in {
 
       ingress.rules."images.1e-9.space" = {
         acmeHost = "1e-9.space";
+        tailscale = true;
         proxyPort = ports.images;
       };
     };

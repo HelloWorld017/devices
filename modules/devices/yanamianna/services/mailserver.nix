@@ -14,7 +14,6 @@ in {
           smtp-starttls = 587;
           imaps = 993;
           pop3s = 995;
-          webmail = 20618;
         };
       };
 
@@ -75,8 +74,13 @@ in {
       };
 
       # Ingress
-      ingress.rules."webmail.nenw.dev" = {
+      ingress.rules."mail.nenw.dev" = {
         acmeHost = "nenw.dev";
+        proxyPort = ports.jmap;
+      };
+
+      ingress.rules."webmail.1e-9.space" = {
+        acmeHost = "1e-9.space";
         proxyPort = ports.webmail;
       };
 
@@ -87,9 +91,6 @@ in {
           inherit (ports) smtp pop3 imap smtp-starttls imaps pop3s;
         };
       };
-
-      # Acme
-      acme.reloadedServices = [ "containers-mailserver-mailserver" ];
     };
   };
 }
