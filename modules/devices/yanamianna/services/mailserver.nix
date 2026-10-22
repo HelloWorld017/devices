@@ -8,7 +8,7 @@ let
     smtp = 25;
     pop3 = 110;
     imap = 143;
-    smtp-starttls = 587;
+    smtp-tls = 465;
     imaps = 993;
     pop3s = 995;
   };
