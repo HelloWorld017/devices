@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
   constants.device = "shigureui";
 
@@ -7,7 +7,32 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+
+    # Do not pass DNS config to resolved
+    dns = lib.mkForce "none";
+    settings.main."systemd-resolved" = false;
+  };
+
+  networking.nameservers = [
+    "9.9.9.9#dns.quad9.net"
+    "1.1.1.1#one.one.one.one"
+  ];
+
+  services.resolved = {
+    enable = true;
+
+    settings.Resolve = {
+      DNSSEC = "true";
+      DNSOverTLS = "true";
+    };
+  };
+
+  programs.captive-browser = {
+    enable = true;
+    interface = "wlo1";
+  };
 
   hardware.graphics = {
     enable = true;
