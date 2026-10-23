@@ -23,10 +23,8 @@
   services.resolved = {
     enable = true;
 
-    settings.Resolve = {
-      DNSSEC = "true";
-      DNSOverTLS = "true";
-    };
+    dnssec = "true";
+    dnsovertls = "true";
   };
 
   programs.captive-browser = {
