@@ -1,5 +1,9 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, inputs, ... }:
 {
+  imports = [
+    inputs.keeless.nixosModules.default
+  ];
+
   constants.device = "shigureui";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -64,21 +68,22 @@
   programs.noisetorch.enable = true;
   services.blueman.enable = true;
   services.gnome.gnome-keyring.enable = true;
-  services.upower.enable = true;
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "client";
-  };
+  services.keeless-passkey.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
   services.udev.extraRules = ''
     # Rule for mediatek
     SUBSYSTEM=="usb", ATTR{idVendor}=="0e8d", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1"
   '';
+  services.upower.enable = true;
 
   users.users.${config.constants.user} = {
     extraGroups = [
