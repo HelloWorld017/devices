@@ -57,6 +57,7 @@ in {
       gnumake
       inetutils
       jq
+      inputs.keeless.packages.${system}.default
       keeweb
       kubectl
       lm_sensors

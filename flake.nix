@@ -37,6 +37,10 @@
       inputs.nixpkgs.follows = "nixpkgs-base";
     };
 
+    keeless = {
+      url = "github:HelloWorld017/keeless/flakes";
+    };
+
     llm-agents = {
       url = "github:numtide/llm-agents.nix";
       inputs.nixpkgs.follows = "nixpkgs-latest";
@@ -72,5 +76,17 @@
   outputs = { ... }@inputs: {
     inherit (import ./modules/utils inputs) lib;
     inherit (import ./modules/devices inputs) nixosConfigurations darwinConfigurations;
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://cache.nixos.org/"
+      "https://github.com/HelloWorld017/keeless/releases/latest/download"
+    ];
+
+    extra-trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "keeless.nenw.dev-1:eKVDsvA/nRl6mi0y8of31nX8xyOKdtiWvMVh0y8HXqk="
+    ];
   };
 }
