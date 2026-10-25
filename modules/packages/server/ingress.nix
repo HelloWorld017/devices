@@ -105,7 +105,15 @@
         };
       } // (
         lib.mapAttrs (name: value: lib.mkMerge [
-          { http2 = true; forceSSL = true; }
+          {
+            http2 = true;
+            forceSSL = true;
+            extraConfig = lib.mkBefore ''
+              if ($http_content_encoding ~* "(^|,)\s*br\s*(,|$)") {
+                return 415;
+              }
+            '';
+          }
           (lib.mkIf (value ? "acmeHost") { useACMEHost = value.acmeHost; })
           (lib.mkIf (!(value ? "acmeHost")) { enableACME = true; })
           (lib.mkIf (value ? "proxyPort") {
