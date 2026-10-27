@@ -15,8 +15,8 @@
     enable = true;
 
     # Do not pass DNS config to resolved
-    dns = lib.mkForce "none";
-    settings.main."systemd-resolved" = false;
+    /* dns = lib.mkForce "none";
+    settings.main."systemd-resolved" = false; */
   };
 
   networking.nameservers = [
@@ -24,12 +24,12 @@
     "1.1.1.1#one.one.one.one"
   ];
 
-  services.resolved = {
+  /* services.resolved = {
     enable = true;
 
     dnssec = "true";
     dnsovertls = "true";
-  };
+  }; */
 
   programs.captive-browser = {
     enable = true;
