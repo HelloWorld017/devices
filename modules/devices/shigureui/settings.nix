@@ -66,6 +66,7 @@
   };
 
   programs.noisetorch.enable = true;
+  programs.steam.enable = true;
   services.blueman.enable = true;
   services.gnome.gnome-keyring.enable = true;
   services.keeless-passkey.enable = true;
