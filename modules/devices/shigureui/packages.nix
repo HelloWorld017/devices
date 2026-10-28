@@ -31,7 +31,7 @@ in {
       inputs.agenix.packages.${system}.default
       android-tools
       bat
-      better-control
+      inputs.nixpkgs-20260616.legacyPackages.${system}.better-control
       binwalk
       latestPkgs.blender
       btop
@@ -58,7 +58,6 @@ in {
       inetutils
       jq
       inputs.keeless.packages.${system}.default
-      keeweb
       kubectl
       lm_sensors
       loupe

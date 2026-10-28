@@ -4,8 +4,8 @@
 * [v] split nixpkgs per-device (+ rolling), as update period differs
 
 ### `devices/shigureui`
-* [ ] use wayland for keeweb
-  * might migrate from keeweb to keepassxc
+* [v] use wayland for keeweb
+  * ~~might migrate from keeweb to keepassxc~~ migrated to keeless
 
 ### `devices/yanamianna`
 * [v] rewrite an alternative for nixos-nftables-firewall

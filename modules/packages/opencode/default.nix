@@ -7,7 +7,7 @@ let
   config = {
     autoupdate = false;
     snapshots = false;
-    permissions = {
+    permission = {
       external_directory = listToAttrs (map (dir: nameValuePair dir "allow") stores);
       edit = listToAttrs (map (dir: nameValuePair dir "deny") stores);
     };
