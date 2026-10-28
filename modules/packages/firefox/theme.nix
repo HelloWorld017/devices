@@ -10,7 +10,7 @@ let
 in
   {
     config = {
-      home.file.".mozilla/firefox/dev-edition-default/chrome/theme" = {
+      home.configFile."mozilla/firefox/dev-edition-default/chrome/theme" = {
         source = "${ffultima}/theme";
         recursive = true;
       };

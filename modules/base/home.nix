@@ -20,6 +20,10 @@ in {
           else "/home/${config.constants.user}";
       };
 
+      configHome = mkOption {
+        type = str;
+      };
+
       packages = mkOption {
         type = listOf package;
         default = [];
@@ -72,5 +76,6 @@ in {
     };
 
     home.lib = config.home-manager.users.${user}.lib;
+    home.configHome = config.home-manager.users.${user}.xdg.configHome;
   };
 }
