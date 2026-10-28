@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, ... }:
 {
   config = {
     home.services.hypridle = {
@@ -6,25 +6,21 @@
       settings = {
         general = {
           lock_cmd = "pidof hyprlock || hyprlock --quiet";
-          before_sleep_cmd = let
-            wallpaperRoll = if config.pkgs.shell.wallpaper.directory != null then
-              " && ~/.config/hypr/scripts/wallpaper_roll.sh"
-            else "";
-          in "loginctl lock-session ${wallpaperRoll}";
-          after_sleep_cmd = "hyprctl dispatch dpms on";
+          before_sleep_cmd = "loginctl lock-session";
+          after_sleep_cmd = ''hyprctl dispatch "hl.dsp.dpms({ action = 'on' })"'';
           ignore_dbus_inhibit = false;
         };
 
         listener = [
           {
             timeout = 150;
-            on-timeout = "brightnessctl -s set 10";
-            on-resume = "brightnessctl -r";
+            on-timeout = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10%";
+            on-resume = "${pkgs.brightnessctl}/bin/brightnessctl -r";
           }
           {
             timeout = 180;
-            on-timeout = "hyprctl dispatch dpms off";
-            on-resume = "hyprctl dispatch dpms on";
+            on-timeout = ''hyprctl dispatch "hl.dsp.dpms({ action = 'off' })"'';
+            on-resume = ''hyprctl dispatch "hl.dsp.dpms({ action = 'on' })"'';
           }
           {
             timeout = 210;

@@ -35,11 +35,11 @@
             valign = "top";
           } // shadow)
           ({
-            text = ''cmd[update:1000] echo -e "$(date +"%b %d %A")"'';
+            text = ''cmd[update:1000] echo -e "$(LC_TIME="ja_JP.UTF-8" date +"%b %d日 %A")"'';
             color = "rgba(255, 255, 255, 0.7)";
             font_size = 24;
             font_family = "Pretendard JP";
-            position = "330, -560";
+            position = "310, -560";
             halign = "left";
             valign = "top";
           } // shadow)
@@ -47,7 +47,7 @@
 
       input-field = [
         {
-          size = "250, 60";
+          size = "375, 90";
           outline_thickness = 1;
           outer_color = "rgba(255, 255, 255, 0.05)";
           dots_size = 0.1;
@@ -59,6 +59,7 @@
           font_color = "rgba(200, 200, 200, 1)";
           fade_on_empty = false;
           font_family = "Pretendard JP";
+          font_size = 32;
           placeholder_text = ''<span foreground="##cdd6f4">$USER</span>'';
           hide_input = false;
           position = "0, -470";
