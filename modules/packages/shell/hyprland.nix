@@ -124,7 +124,6 @@ in
 
           misc = {
             anr_missed_pings = 20;
-            disable_splash_rendering = true;
             disable_hyprland_logo = true;
           };
         };

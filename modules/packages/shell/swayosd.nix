@@ -5,7 +5,7 @@
 
     pkgs.shell.keybind = let
       bind = key: action: args: { inherit key action args; };
-      bindRepeat = key: action: args: (bind key action args) // { flag.repeating = true; };
+      bindRepeat = key: action: args: (bind key action args) // { flags.repeating = true; };
     in [
       (bind "XF86AudioMute" "exec_cmd" ["swayosd-client --output-volume mute-toggle"])
       (bind "XF86AudioMicMute" "exec_cmd" ["swayosd-client --input-volume mute-toggle"])

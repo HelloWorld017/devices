@@ -56,6 +56,7 @@ ShellRoot {
     } else if (Greetd.available && username.length > 0) {
       failed = false;
       message = "";
+
       if (responseRequired) {
         responseRequired = false;
         clearInput();
@@ -92,16 +93,19 @@ ShellRoot {
         root.message = message;
       }
     }
+
     function onAuthFailure(message) {
       root.reset();
       root.failed = true;
       root.message = message || "Authentication failed. Try again.";
     }
+
     function onError(error) {
       root.reset();
       root.failed = true;
       root.message = error;
     }
+
     function onReadyToLaunch() {
       root.pendingPassword = "";
       root.hasPendingPassword = false;

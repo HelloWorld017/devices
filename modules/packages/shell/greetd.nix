@@ -10,6 +10,7 @@ let
       "start" "-F" "--" "hyprland.desktop"
     ];
   });
+
   greeter = pkgs.writeShellScript "quickshell-greeter" ''
     export QT_QPA_PLATFORM=wayland
     export QT_QUICK_CONTROLS_STYLE=Basic
