@@ -22,6 +22,7 @@
 
     home.wayland.windowManager.hyprland = {
       enable = true;
+      systemd.enable = false;
       configType = "hyprlang";
       settings = {
         general = {
@@ -104,14 +105,14 @@
         ];
 
         windowrule = [
-          "bordersize 0, floating:0, onworkspace:w[tv1]s[false]"
-          "rounding 0, floating:0, onworkspace:w[tv1]s[false]"
-          "rounding 6, floating:0, onworkspace:f[1]s[false]"
-          "float, workspace:10"
-          "bordercolor rgb(5e81ac) rgb(d8dee9),fullscreen:1"
-          "float, class:^(xdg-desktop-portal-gtk)$"
-          "float, class:^(praat)$"
-          "pin, class:^(it.catboy.ripdrag)$"
+          "border_size 0, match:float 0, match:workspace w[tv1]s[false]"
+          "rounding 0, match:float 0, match:workspace w[tv1]s[false]"
+          "rounding 6, match:float 0, match:workspace f[1]s[false]"
+          "float on, match:workspace 10"
+          "border_color rgb(5e81ac) rgb(d8dee9), match:fullscreen 1"
+          "float on, match:class ^(xdg-desktop-portal-gtk)$"
+          "float on, match:class ^(praat)$"
+          "pin on, match:class ^(it.catboy.ripdrag)$"
         ];
 
         xwayland = {
