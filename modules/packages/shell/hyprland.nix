@@ -131,9 +131,5 @@
     home.packages = with pkgs; [
       hyprpicker
     ];
-
-    services.displayManager = {
-      gdm.enable = true;
-    };
   };
 }

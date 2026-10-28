@@ -3,6 +3,7 @@
   imports = [
     ./clipboard.nix
     ./crystaldock.nix
+    ./greetd.nix
     ./hyprcursor.nix
     ./hypridle.nix
     ./hyprland.nix
