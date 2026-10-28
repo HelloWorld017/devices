@@ -5,7 +5,7 @@
       enable = true;
       settings = {
         general = {
-          lock_cmd = "pidof hyprlock || hyprlock";
+          lock_cmd = "pidof hyprlock || hyprlock --quiet";
           before_sleep_cmd = let
             wallpaperRoll = if config.pkgs.shell.wallpaper.directory != null then
               " && ~/.config/hypr/scripts/wallpaper_roll.sh"
@@ -35,4 +35,3 @@
     };
   };
 }
-

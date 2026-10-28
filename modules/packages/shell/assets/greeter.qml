@@ -17,6 +17,7 @@ ShellRoot {
   property string message: ""
   property bool failed: false
   property bool editingUser: false
+  property string wallpaperSource: ""
   signal clearInput()
 
   FileView {
@@ -25,9 +26,16 @@ ShellRoot {
     blockLoading: true
     JsonAdapter {
       property string user: ""
-      property string wallpaper: ""
+      property string wallpaperFile: ""
       property list<string> session: []
     }
+  }
+
+  FileView {
+    path: settings.adapter.wallpaperFile
+    watchChanges: true
+    onFileChanged: reload()
+    onLoaded: root.wallpaperSource = text().trim()
   }
 
   SystemClock { id: clock; precision: SystemClock.Seconds }
@@ -119,32 +127,37 @@ ShellRoot {
       title: "Login"
       color: "#101018"
 
-      // Keep Hyprlock's offsets on large screens, and fit smaller displays.
-      readonly property real layoutScale: Math.max(0.1, Math.min(1, width / 1920, height / 1080))
+      readonly property real layoutScale: 1 / Screen.devicePixelRatio
 
       Shortcut {
         sequence: "Escape"
         onActivated: root.cancel()
       }
 
-      Image {
-        id: wallpaper
+      Item {
         anchors.fill: parent
-        source: settings.adapter.wallpaper
-        fillMode: Image.PreserveAspectCrop
-        visible: false
+        layer.enabled: true
+        layer.effect: MultiEffect {
+          blurEnabled: true
+          blurMax: 64
+          blur: 1
+          contrast: -0.1084
+        }
+
+        Image {
+          anchors.fill: parent
+          source: root.wallpaperSource
+          fillMode: Image.PreserveAspectCrop
+          horizontalAlignment: Image.AlignHCenter
+          verticalAlignment: Image.AlignVCenter
+          autoTransform: true
+        }
       }
 
-      MultiEffect {
+      Rectangle {
         anchors.fill: parent
-        source: wallpaper
-        visible: wallpaper.status === Image.Ready
-        blurEnabled: true
-        blurMax: 64
-        blur: 1
-        brightness: -0.2828
-        contrast: -0.1084
-        saturation: 0.1696
+        color: "black"
+        opacity: 1 - 0.7172
       }
 
       Item {
@@ -166,7 +179,7 @@ ShellRoot {
           text: Qt.formatDateTime(clock.date, "HH:mm")
           color: "white"
           font.family: "Aquatico"
-          font.pointSize: 150 * window.layoutScale
+          font.pixelSize: 150 * (96 / 72) * window.layoutScale
         }
 
         Text {
@@ -175,15 +188,14 @@ ShellRoot {
           text: Qt.locale("en_US").toString(clock.date, "MMM dd dddd")
           color: "#b3ffffff"
           font.family: "Pretendard JP"
-          font.pointSize: 24 * window.layoutScale
+          font.pixelSize: 24 * (96 / 72) * window.layoutScale
         }
       }
 
       Rectangle {
         id: field
         anchors.horizontalCenter: parent.horizontalCenter
-        y: Math.min(parent.height / 2 + 470 * window.layoutScale - height / 2,
-                    parent.height - height - 85 * window.layoutScale)
+        y: parent.height / 2 + 470 * window.layoutScale - height / 2
         width: 250 * window.layoutScale
         height: 60 * window.layoutScale
         radius: height / 2
