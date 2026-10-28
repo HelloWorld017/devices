@@ -1,23 +1,27 @@
 { config, pkgs, ... }:
 let
   ports = config.pkgs.server.ports.ports;
-  misskey = pkgs.misskey.overrideAttrs (finalAttrs: previousAttrs: {
-    version = "2026.10.1-nenw.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "HelloWorld017";
-      repo = "misskey";
-      rev = "5c140598d2ecd1bc8ac3f16b6887a71c7cc6adfb";
-      hash = "sha256-UB9QNuM6PWpbF9eaNyBsA2V0HSQJDpmb86lSyKvcXpY=";
-      fetchSubmodules = true;
-    };
+  misskey = (pkgs.misskey.override {
+      nodejs = pkgs.nodejs_26;
+      pnpm_11 = pkgs.pnpm_12;
+    })
+    .overrideAttrs (finalAttrs: previousAttrs: {
+      version = "2026.10.1-nenw.1";
+      src = pkgs.fetchFromGitHub {
+        owner = "HelloWorld017";
+        repo = "misskey";
+        rev = "5c140598d2ecd1bc8ac3f16b6887a71c7cc6adfb";
+        hash = "sha256-UB9QNuM6PWpbF9eaNyBsA2V0HSQJDpmb86lSyKvcXpY=";
+        fetchSubmodules = true;
+      };
 
-    pnpmDeps = pkgs.fetchPnpmDeps {
-      inherit (finalAttrs) pname version src;
-      pnpm = pkgs.pnpm_12;
-      fetcherVersion = 4;
-      hash = "sha256-cX+GVoM/iVk/GIYwYMhrpynv8WSkOOPYfjUVa7Z+GlM=";
-    };
-  });
+      pnpmDeps = pkgs.fetchPnpmDeps {
+        inherit (finalAttrs) pname version src;
+        pnpm = pkgs.pnpm_12;
+        fetcherVersion = 4;
+        hash = "sha256-cX+GVoM/iVk/GIYwYMhrpynv8WSkOOPYfjUVa7Z+GlM=";
+      };
+    });
 
   misskeySettings = {
     url = "https://social.nenw.dev/";
