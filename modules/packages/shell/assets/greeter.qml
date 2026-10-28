@@ -216,7 +216,7 @@ ShellRoot {
         verticalAlignment: TextInput.AlignVCenter
         color: "#c8c8c8"
         font.family: "Pretendard JP"
-        font.pixelSize: 32 * (96 / 72) * window.layoutScale
+        font.pixelSize: 32 * window.layoutScale
         echoMode: root.editingUser || (root.responseRequired && root.echoResponse)
                   ? TextInput.Normal : TextInput.Password
         passwordCharacter: "•"
@@ -260,7 +260,7 @@ ShellRoot {
               : root.message || (root.responseRequired ? root.prompt : "")
         color: root.failed ? "#ef9a9a" : "#b3ffffff"
         font.family: "Pretendard JP"
-        font.pixelSize: 14 * window.layoutScale
+        font.pixelSize: 24 * window.layoutScale
       }
 
       Text {
@@ -270,7 +270,7 @@ ShellRoot {
         text: root.editingUser ? "Cancel" : "Switch user"
         color: userMouse.containsMouse ? "#cdd6f4" : "#80ffffff"
         font.family: "Pretendard JP"
-        font.pixelSize: 13 * window.layoutScale
+        font.pixelSize: 24 * window.layoutScale
         activeFocusOnTab: true
         function activate() {
           root.cancel();
