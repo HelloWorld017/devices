@@ -5,10 +5,6 @@
       wl-clip-persist
     ];
 
-    home.wayland.windowManager.hyprland.settings = {
-      exec-once = [
-        "wl-clip-persist --clipboard regular"
-      ];
-    };
+    pkgs.shell.execOnce = [ "wl-clip-persist --clipboard regular" ];
   };
 }

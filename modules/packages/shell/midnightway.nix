@@ -26,11 +26,7 @@
       inputs.midnightway.packages.${system}.default
     ];
 
-    home.wayland.windowManager.hyprland.settings = {
-      exec-once = [
-        "midnightway &"
-      ];
-    };
+    pkgs.shell.execOnce = [ "midnightway" ];
 
     home.configFile."midnightway/config.json".source = let
       mkOutOfStoreSymlink = config.home.lib.file.mkOutOfStoreSymlink;

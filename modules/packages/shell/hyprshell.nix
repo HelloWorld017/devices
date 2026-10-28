@@ -15,10 +15,6 @@
       };
     };
 
-    home.wayland.windowManager.hyprland.settings = {
-      exec-once = [
-        "hyprshell run &"
-      ];
-    };
+    pkgs.shell.execOnce = [ "hyprshell run" ];
   };
 }

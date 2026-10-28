@@ -41,21 +41,21 @@
 
     home.wayland.windowManager.hyprland = {
       settings = {
-        input = {
+        config.input = {
           kb_layout = "ansi-korean";
           kb_variant = "";
           kb_options = "";
         };
 
-        windowrule = [
-          "pseudo on, match:class fcitx"
-        ];
-
-        exec-once = [
-          "fcitx5 -d -r"
-          "fcitx5-remote -r"
+        window_rule = [
+          { match.class = "fcitx"; pseudo = true; }
         ];
       };
     };
+
+    pkgs.shell.execOnce = [
+      "fcitx5 -d -r"
+      "fcitx5-remote -r"
+    ];
   };
 }
