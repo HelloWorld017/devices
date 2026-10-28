@@ -13,24 +13,10 @@ let
   greeter = pkgs.writeShellScript "quickshell-greeter" ''
     export QT_QPA_PLATFORM=wayland
     export QT_QUICK_CONTROLS_STYLE=Basic
+    export QT_SCALE_FACTOR=${toString config.pkgs.shell.hyprland.scale}
     unset QT_STYLE_OVERRIDE QT_QPA_PLATFORMTHEME
     export GREETER_CONFIG=${greeterConfig}
-    ${lib.getExe pkgs.quickshell} --path ${./assets/greeter.qml}
-    # Release the greeter compositor before greetd starts the user's session.
-    ${pkgs.sway-unwrapped}/bin/swaymsg exit
-  '';
-  compositorConfig = pkgs.writeText "greeter-sway.conf" ''
-    xwayland disable
-    output * bg #101018 solid_color
-    output * scale ${toString config.pkgs.shell.hyprland.scale}
-    input * {
-      xkb_layout us
-      xkb_numlock enabled
-      repeat_delay 300
-      repeat_rate 40
-    }
-    seat * hide_cursor 5000
-    exec ${greeter}
+    exec ${lib.getExe pkgs.quickshell} --path ${./assets/greeter.qml}
   '';
 in {
   options.pkgs.shell.greeter.wallpaper = lib.mkOption {
@@ -42,7 +28,7 @@ in {
   config = {
     services.greetd = {
       enable = true;
-      settings.default_session.command = "${pkgs.sway-unwrapped}/bin/sway --config ${compositorConfig}";
+      settings.default_session.command = "${lib.getExe pkgs.cage} -s -d -- ${greeter}";
     };
 
     # Copy as root so the greeter never needs access to the user's home.

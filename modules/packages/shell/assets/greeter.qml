@@ -3,7 +3,6 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Greetd
-import Quickshell.Wayland
 
 ShellRoot {
   id: root
@@ -111,18 +110,10 @@ ShellRoot {
     }
   }
 
-  Variants {
-    model: Quickshell.screens
-
-    PanelWindow {
+    FloatingWindow {
       id: window
-      required property var modelData
-      screen: modelData
+      title: "Login"
       color: "#101018"
-      anchors { top: true; bottom: true; left: true; right: true }
-      exclusionMode: ExclusionMode.Ignore
-      WlrLayershell.layer: WlrLayer.Overlay
-      WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
 
       // Keep Hyprlock's offsets on large screens, and fit smaller displays.
       readonly property real layoutScale: Math.max(0.1, Math.min(1, width / 1920, height / 1080))
@@ -277,5 +268,4 @@ ShellRoot {
         }
       }
     }
-  }
 }
