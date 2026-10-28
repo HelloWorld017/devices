@@ -2,20 +2,20 @@
 let
   ports = config.pkgs.server.ports.ports;
   misskey = pkgs.misskey.overrideAttrs (finalAttrs: previousAttrs: {
-    version = "2026.6.0-beta.1-288955e";
+    version = "2026.10.1-nenw.1";
     src = pkgs.fetchFromGitHub {
       owner = "HelloWorld017";
       repo = "misskey";
-      rev = "288955e2a53c42d46bbb5d27818cacb367699f48";
-      hash = "sha256-CFWemB1Lgtx8gS4PN87FQnFbl/uGuk90OkWzI+NsP8E=";
+      rev = "5c140598d2ecd1bc8ac3f16b6887a71c7cc6adfb";
+      hash = "sha256-UB9QNuM6PWpbF9eaNyBsA2V0HSQJDpmb86lSyKvcXpY=";
       fetchSubmodules = true;
     };
 
     pnpmDeps = pkgs.fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
-      pnpm = pkgs.pnpm_11;
+      pnpm = pkgs.pnpm_12;
       fetcherVersion = 4;
-      hash = "sha256-Q3vV7ZI3sxyKLZAmI9/1i24NjQe0P3Il5i/jB5u/HEg=";
+      hash = "sha256-cX+GVoM/iVk/GIYwYMhrpynv8WSkOOPYfjUVa7Z+GlM=";
     };
   });
 
