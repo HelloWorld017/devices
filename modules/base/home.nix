@@ -16,7 +16,7 @@ in {
 
       path = mkOption {
         type = str;
-        default = if pkgs.stdenv.isDarwin then "/Users/${config.constants.user}"
+        default = if pkgs.stdenv.hostPlatform.isDarwin then "/Users/${config.constants.user}"
           else "/home/${config.constants.user}";
       };
 

@@ -59,7 +59,7 @@
           "e." = "explorer.exe .";
           "pbcopy" = "win32yank.exe -i";
           "pbpaste" = "win32yank.exe -o";
-        } else if pkgs.stdenv.isDarwin then {
+        } else if pkgs.stdenv.hostPlatform.isDarwin then {
           # Mac-Only Aliases
           "e." = "open .";
         } else {
