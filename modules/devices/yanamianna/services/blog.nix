@@ -8,7 +8,7 @@ in {
       ports.allocation.names.blog = [ "ghost" "kaede" ];
       containers.services.blog.pods = {
         ghost = {
-          image = "docker.io/ghost:5.101-alpine";
+          image = "docker.io/ghost:6.73-alpine";
           dependsOn = [{ pod = "db"; }];
           environment = {
             database__client = "mysql";
