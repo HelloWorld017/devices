@@ -47,8 +47,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tversteeg/registers.nvim'
 
   " leap.nvim: Easy leap between chars
-  Plug 'ggandor/leap.nvim'
-  Plug 'ggandor/flit.nvim'
+  Plug 'https://codeberg.org/andyg/leap.nvim'
 
   " nix.vim: Nix Syntax Highlighting
   Plug 'LnL7/vim-nix'
@@ -63,7 +62,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'rcarriga/nvim-notify'
 
   " nvim-treesitter: Add syntax highlighting
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 
   " Colorschemes
   Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -249,6 +248,9 @@ call extend(g:coc_global_extensions, [ 'coc-css', 'coc-html', '@yaegassy/coc-vol
 " > Structured Data
 call extend(g:coc_global_extensions, [ 'coc-json', 'coc-protobuf', 'coc-yaml' ])
 
+" Fzf Configs
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6, 'border': 'rounded' } }
+
 " Other Configs
 lua << EOF
   vim.api.nvim_set_hl(0, "NormalFloat", { bg = "None" })
@@ -329,42 +331,42 @@ lua << EOF
 
   require'bufferline'.setup()
 
-  require'nvim-treesitter.configs'.setup {
-    auto_install = true,
-    ensure_installed = {
-      'bash',
-      'css',
-      'diff',
-      'elixir',
-      'dockerfile',
-      'git_rebase',
-      'gitignore',
-      'glsl',
-      'go',
-      'graphql',
-      'java',
-      'javascript',
-      'json',
-      'lua',
-      'markdown',
-      'nix',
-      'python',
-      'rust',
-      'scala',
-      'styled',
-      'svelte',
-      'typescript',
-      'tsx',
-      'vim',
-      'vue',
-      'xml',
-      'yaml'
-    },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false
-    }
+  require'nvim-treesitter'.install {
+    'bash',
+    'css',
+    'diff',
+    'elixir',
+    'dockerfile',
+    'git_rebase',
+    'gitignore',
+    'glsl',
+    'go',
+    'graphql',
+    'java',
+    'javascript',
+    'json',
+    'lua',
+    'markdown',
+    'nix',
+    'python',
+    'rust',
+    'scala',
+    'styled',
+    'svelte',
+    'typescript',
+    'tsx',
+    'vim',
+    'vue',
+    'xml',
+    'yaml'
   }
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "*",
+    callback = function(args)
+      pcall(vim.treesitter.start, args.buf)
+    end,
+  })
 
   require'notify'.setup {
     max_width = 80,
@@ -396,7 +398,5 @@ lua << EOF
   require'Comment'.setup {
     pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook()
   }
-
-  -- require'flit'.setup()
 EOF
 

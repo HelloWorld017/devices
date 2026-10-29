@@ -44,6 +44,7 @@
         latestPkgs.biome
         latestPkgs.oxfmt
         latestPkgs.oxlint
+        latestPkgs.tree-sitter
       ]
       ++ (lib.optional opts.languages.nix latestPkgs.nil)
       ++ (lib.optional opts.languages.graphql latestPkgs.graphql-language-service-cli)
