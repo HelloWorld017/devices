@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   ports = config.pkgs.server.ports.ports.mailserver;
-  # TODO(Podman 6): Revert this temporary direct-pasta + nftables workaround
+  # TODO(nixpkgs/podman6): Revert this temporary direct-pasta + nftables workaround
   # when upgrading, after verifying source-IP preservation and low-port publishing.
   # It avoids rootlessport losing client IPs and rootless privileged-port bind failures.
   mailPorts = {

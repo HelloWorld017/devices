@@ -42,6 +42,7 @@ in
       HYPRCURSOR_SIZE = cursorSize;
     };
 
+    # TODO(nixpkgs/hyprland57): Update eyecandies
     programs.hyprland = {
       enable = true;
       withUWSM = true;
