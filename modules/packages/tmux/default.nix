@@ -36,7 +36,7 @@
 
         # Config powerline
         set -g @tmux_power_theme 'custom'
-        set -g @tmux_power_tc '#0084ff' # '#0066ff'
+        set -g @tmux_power_tc '#f5425d' # '#0084ff'
         set -g @tmux_power_user_icon ' '
         set -g @tmux_power_session_icon '  '
         set -g @tmux_power_time_icon '  '

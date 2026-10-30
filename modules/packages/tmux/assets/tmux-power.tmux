@@ -145,13 +145,14 @@ tmux_set @status-right-full "$RS"
 tmux_set status-right "#{?#{e|<:#{window_width},100},,#{T:@status-right-full}}"
 
 # Window status format
-tmux_set window-status-format         "#[fg=$G2,bg=$G0]$larrow#[fg=$T0,bg=$G2] #I:#W#F #[fg=$G2,bg=$G0]$rarrow"
-tmux_set window-status-current-format "#[fg=$G5,bg=$G0]$larrow#[fg=$TC,bg=$G5,bold] #I:#W#F #[fg=$G5,bg=$G0,nobold]$rarrow"
+tmux_set window-status-format         "#[fg=$G2,bg=$G0]$larrow#[fg=$T0,bg=$G2] #I:#W#F #[fg=$G2,bg=$G0]$rarrow "
+tmux_set window-status-current-format "#[fg=$G2,bg=$G0]$larrow#[fg=$TC,bg=$G2,bold] #I:#W#F #[fg=$G2,bg=$G0,nobold]$rarrow "
 
 # Window status style
 tmux_set window-status-style          "fg=$TC,bg=$G0,none"
 tmux_set window-status-last-style     "fg=$TC,bg=$G0,bold"
 tmux_set window-status-activity-style "fg=$TC,bg=$G0,bold"
+tmux_set window-status-current-style  "none"
 
 # Window separator
 tmux_set window-status-separator ""
