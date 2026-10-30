@@ -3,7 +3,7 @@
   podNetworkName = serviceName: serviceNetworkName:
     "${serviceName}_${serviceNetworkName}";
 in {
-  imports = [ ./options.nix ];
+  imports = [ ./options.nix ./cli.nix ];
   config = let
     inherit (lib) concatStrings concatStringsSep elem escapeShellArg filter flatten isDerivation length listToAttrs
       mapAttrs mapAttrs' mapAttrsToList mkDefault mkIf mkMerge nameValuePair optional unique;
