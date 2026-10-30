@@ -8,7 +8,7 @@ in {
       ports.allocation.names = [ "images" ];
       containers.services.images.pods = {
         images = {
-          image = "docker.io/anirdev/slink:v1.14.3";
+          image = "docker.io/anirdev/slink:v1.14.4";
           environment = {
             IMAGE_MAX_SIZE = "15M";
             ORIGIN = "https://images.1e-9.space";
@@ -22,8 +22,8 @@ in {
           ];
 
           volumes = [
-            { from = "slink_data"; to = "/app/var/data"; }
-            { from = "slink_images"; to = "/app/slink/images"; }
+            { from = "slink_data"; to = "/app/var/data"; uid = 1000; gid = 1000; }
+            { from = "slink_images"; to = "/app/slink/images"; uid = 1000; gid = 1000; }
           ];
         };
       };
