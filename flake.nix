@@ -48,8 +48,7 @@
     };
 
     midnightway = {
-      url = "github:HelloWorld017/midnightway";
-      inputs.nixpkgs.follows = "nixpkgs-20251020";
+      url = "github:HelloWorld017/midnightway/flakes-v1.2.0";
     };
 
     nix-alien = {
@@ -82,12 +81,14 @@
   nixConfig = {
     extra-substituters = [
       "https://cache.nixos.org/"
-      "https://github.com/HelloWorld017/keeless/releases/latest/download"
+      "https://github.com/HelloWorld017/keeless/releases/download/v0.1.5"
+      "https://github.com/HelloWorld017/midnightway/releases/download/v1.2.0"
     ];
 
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "keeless.nenw.dev-1:eKVDsvA/nRl6mi0y8of31nX8xyOKdtiWvMVh0y8HXqk="
+      "midnightway.nenw.dev-1:gqHOdIZxjAMstAju9US/So4HFSwKiHuFoOHqgVZ1qS4="
     ];
   };
 }

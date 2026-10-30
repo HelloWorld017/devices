@@ -153,7 +153,7 @@ in
           { match.class = "^(xdg-desktop-portal-gtk)$"; float = true; }
           { match.class = "^(praat)$"; float = true; }
           { match.class = "^(it.catboy.ripdrag)$"; pin = true; }
-          { match.class = "^(better_control.py)$"; float = true; }
+          { match.class = "^(better_control.py)$"; float = true; size = "1024 600"; }
         ];
       };
 

@@ -31,7 +31,7 @@ in {
       inputs.agenix.packages.${system}.default
       android-tools
       bat
-      inputs.nixpkgs-20260616.legacyPackages.${system}.better-control
+      patchedPkgs.better-control
       binwalk
       latestPkgs.blender
       btop
