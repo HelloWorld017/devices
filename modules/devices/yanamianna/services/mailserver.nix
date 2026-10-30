@@ -55,7 +55,7 @@ in {
 
       containers.services.mailserver.pods = {
         mailserver = {
-          image = "docker.io/stalwartlabs/stalwart:v0.16.26";
+          image = "docker.io/stalwartlabs/stalwart:v1.0.0-alpine";
           # Direct pasta forwarding preserves external clients' source addresses.
           networks.kind = "pasta";
           # The image's non-root user needs the binary's file capability to bind low ports.
@@ -77,7 +77,7 @@ in {
         };
 
         webmail = {
-          image = "ghcr.io/bulwarkmail/webmail:1.15.0";
+          image = "ghcr.io/bulwarkmail/webmail:1.18.0";
           dependsOn = [ { pod = "mailserver"; } ];
           ports = [
             { from = { addr = "127.0.0.1"; port = ports.webmail; }; to = 3000; }
