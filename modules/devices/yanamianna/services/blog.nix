@@ -15,6 +15,7 @@ in {
             database__connection__host = "db";
             database__connection__user = "root";
             database__connection__database = "ghost";
+            security__staffDeviceVerification = "false";
             url = "https://blog.nenw.dev";
           };
 
