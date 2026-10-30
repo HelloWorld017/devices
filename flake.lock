@@ -567,22 +567,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-20260616": {
-      "locked": {
-        "lastModified": 1781607440,
-        "narHash": "sha256-rxO+uc/KFbSJp+pgyXRuAX6QlG9hJdnt0BXpEQRXY+U=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "3e41b24abd260e8f71dbe2f5737d24122f972158",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-20261028": {
       "locked": {
         "lastModified": 1792842277,
@@ -682,7 +666,6 @@
         "nix-alien": "nix-alien",
         "nix-index-database": "nix-index-database",
         "nixpkgs-20251020": "nixpkgs-20251020",
-        "nixpkgs-20260616": "nixpkgs-20260616",
         "nixpkgs-20261028": "nixpkgs-20261028",
         "nixpkgs-base": [
           "nixpkgs-20261028"
