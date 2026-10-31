@@ -44,36 +44,16 @@ in {
         };
 
         kaede = {
-          image = "docker.io/khinenw/kaede-api:1.0.2";
-          dependsOn = [{ pod = "kaede-db"; } { pod = "ghost"; }];
+          image = "ghcr.io/helloworld017/kaede-api:2.0.0";
+          dependsOn = [ { pod = "ghost"; } ];
           environment = {
             GHOST_URL = "https://blog.nenw.dev";
-            MONGODB_HOST = "kaede-db";
-            MONGODB_USERNAME = "root";
           };
 
-          secrets = [
-            "yanamianna-blog-kaede-password"
-            { from = "yanamianna-blog-kaede-database-password"; to = "MONGODB_PASSWORD"; }
-          ];
-
+          secrets = [ "yanamianna-blog-kaede-password" ];
+          volumes = [ { from = "kaede_database"; to = "/data"; } ];
           ports = [
             { from = { addr = "127.0.0.1"; port = ports.kaede; }; to = 11005; }
-          ];
-        };
-
-        kaede-db = {
-          image = "docker.io/mongo:5.0.30";
-          environment = {
-            MONGO_INITDB_ROOT_USERNAME = "root";
-          };
-
-          secrets = [
-            { from = "yanamianna-blog-kaede-database-password"; to = "MONGO_INITDB_ROOT_PASSWORD"; }
-          ];
-
-          volumes = [
-            { from = "kaede_database"; to = "/data/db"; uid = 999; gid = 999; }
           ];
         };
       };
