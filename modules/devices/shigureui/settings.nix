@@ -108,7 +108,7 @@
 
   home.defaultApplications = let
     browser = [ "firefox.desktop" ];
-    imageViewer = [ "org.gnome.Loupe.dekstop" ];
+    imageViewer = [ "org.gnome.Loupe.desktop" ];
   in {
     "application/pdf" = browser;
     "image/svg+xml" = browser;

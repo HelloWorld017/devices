@@ -204,7 +204,8 @@ in {
         shorthand
         (reference: let
           coerced = if (path.check reference) then { hostPath = reference; }
-            else { servicePath = reference; };
+            else if (isString reference) then { servicePath = reference; }
+            else reference;
         in
           if coerced ? "hostPath" then
             { kind = "hostPath"; value = (toString coerced.hostPath); }
