@@ -30,7 +30,7 @@ in {
     pkgs.server = {
       ports.allocation.names = [ "home" ];
       containers.services.home.pods.home = {
-        image = "ghcr.io/helloworld017/nenwchan4:1.1.0";
+        image = "ghcr.io/helloworld017/nenwchan4:1.2.0";
         pull = "missing";
 
         ports = [
