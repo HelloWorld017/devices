@@ -44,7 +44,7 @@ in {
         };
 
         kaede = {
-          image = "ghcr.io/helloworld017/kaede-api:2.0.0";
+          image = "ghcr.io/helloworld017/kaede-api:2.1.0";
           dependsOn = [ { pod = "ghost"; } ];
           environment = {
             GHOST_URL = "https://blog.nenw.dev";
