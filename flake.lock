@@ -551,22 +551,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-20251020": {
-      "locked": {
-        "lastModified": 1760965567,
-        "narHash": "sha256-0JDOal5P7xzzAibvD0yTE3ptyvoVOAL0rcELmDdtSKg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "cb82756ecc37fa623f8cf3e88854f9bf7f64af93",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-20261028": {
       "locked": {
         "lastModified": 1792842277,
@@ -665,7 +649,6 @@
         "midnightway": "midnightway",
         "nix-alien": "nix-alien",
         "nix-index-database": "nix-index-database",
-        "nixpkgs-20251020": "nixpkgs-20251020",
         "nixpkgs-20261028": "nixpkgs-20261028",
         "nixpkgs-base": [
           "nixpkgs-20261028"
