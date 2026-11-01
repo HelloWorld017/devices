@@ -8,7 +8,7 @@ in {
       # Service
       ports.allocation.names = [ "fence" ];
       containers.services.fence.pods.tinyauth = {
-        image = "ghcr.io/steveiliop56/tinyauth:v5.0.7";
+        image = "ghcr.io/steveiliop56/tinyauth:v5.2.0";
 
         environment = {
           TINYAUTH_APPURL = "https://fence.1e-9.space";

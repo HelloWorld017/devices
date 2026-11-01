@@ -7,7 +7,7 @@ in {
       # Service
       ports.allocation.names = [ "auth" ];
       containers.services.auth.pods.pocket-id = {
-        image = "ghcr.io/pocket-id/pocket-id:v2.9.0";
+        image = "ghcr.io/pocket-id/pocket-id:v2.19.1";
         secrets = [
           { from = "ruri-auth-encryption-key"; to = "ENCRYPTION_KEY"; }
         ];
