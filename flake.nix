@@ -47,7 +47,7 @@
     };
 
     midnightway = {
-      url = "github:HelloWorld017/midnightway/flakes-v1.2.0";
+      url = "github:HelloWorld017/midnightway/flakes-v1.3.0";
     };
 
     nix-alien = {
@@ -81,7 +81,7 @@
     extra-substituters = [
       "https://cache.nixos.org/"
       "https://github.com/HelloWorld017/keeless/releases/download/v0.1.5"
-      "https://github.com/HelloWorld017/midnightway/releases/download/v1.2.0"
+      "https://github.com/HelloWorld017/midnightway/releases/download/v1.3.0"
     ];
 
     extra-trusted-public-keys = [

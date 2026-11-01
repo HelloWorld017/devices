@@ -477,16 +477,16 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1793367530,
-        "narHash": "sha256-1nsl+1o+8q/tIXMX61zq6Hm4RtXVGPh+RK9jbNuFFDg=",
+        "lastModified": 1793525801,
+        "narHash": "sha256-5F308/2kZlZ8zZU4mbjSpkEof4ayQDio+r2j3VUT1M0=",
         "owner": "HelloWorld017",
         "repo": "midnightway",
-        "rev": "e4f3a176894ef2446463fac1998b05b642a52e21",
+        "rev": "2befa7a12ade432afacfdcf03211205cc033604c",
         "type": "github"
       },
       "original": {
         "owner": "HelloWorld017",
-        "ref": "flakes-v1.2.0",
+        "ref": "flakes-v1.3.0",
         "repo": "midnightway",
         "type": "github"
       }
@@ -585,11 +585,11 @@
     },
     "nixpkgs-latest": {
       "locked": {
-        "lastModified": 1792842277,
-        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
+        "lastModified": 1793494649,
+        "narHash": "sha256-Thn0OE71NF80ZfOMGCgJvKtbCcnnz0fToT/qsvb/Gtc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
+        "rev": "d357a2b54f0b6dc4aeb4e993190a52cf151b6f24",
         "type": "github"
       },
       "original": {
