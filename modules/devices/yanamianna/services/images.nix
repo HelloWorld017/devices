@@ -22,8 +22,8 @@ in {
           ];
 
           volumes = [
-            { from = "slink_data"; to = "/app/var/data"; uid = 1000; gid = 1000; }
-            { from = "slink_images"; to = "/app/slink/images"; uid = 1000; gid = 1000; }
+            { from = "slink_data"; to = "/app/var/data"; uid = 33; gid = 1000; }
+            { from = "slink_images"; to = "/app/slink/images"; uid = 33; gid = 1000; }
           ];
         };
       };
