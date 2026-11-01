@@ -7,9 +7,10 @@
     ./services/home.nix
     ./services/misskey.nix
     ./services/openssh.nix
-    ./services/paseo.nix
     ./services/redirect.nix
     ./services/tailscale.nix
+
+    # ./services/paseo.nix
   ];
 
   config = {

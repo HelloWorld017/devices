@@ -42,7 +42,7 @@ in
       ports.allocation.names.paseo = [ "paseo" "relay" ];
       containers.services.paseo.pods = {
         daemon = {
-          image = "ghcr.io/getpaseo/paseo:0.1.103";
+          image = "ghcr.io/getpaseo/paseo:0.14.0";
           pull = "missing";
 
           environment = {
@@ -72,7 +72,7 @@ in
         };
 
         relay = {
-          image = "ghcr.io/zenghongtu/paseo-relay:latest";
+          image = "ghcr.io/zenghongtu/paseo-relay:0.5.0";
           pull = "missing";
 
           environment = {
