@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   ports = config.pkgs.server.ports.ports;
   authUrl = "https://auth.nenw.dev";
@@ -8,7 +8,25 @@ in {
       # Service
       ports.allocation.names = [ "fence" ];
       containers.services.fence.pods.tinyauth = {
-        image = "ghcr.io/steveiliop56/tinyauth:v5.2.0";
+        image = pkgs.dockerTools.buildLayeredImage {
+          name = "tinyauth";
+          tag = pkgs.tinyauth.version;
+          contents = [ pkgs.cacert ];
+          extraCommands = ''
+            mkdir -p tinyauth data/resources data/oidc data/tailscale tmp
+            chmod 1777 tmp
+          '';
+          config = {
+            Entrypoint = [ "${pkgs.tinyauth}/bin/tinyauth" ];
+            Env = [
+              "RUNTIME_ENV=docker"
+              "PATH=${pkgs.tinyauth}/bin"
+            ];
+            WorkingDir = "/tinyauth";
+            ExposedPorts."3000/tcp" = {};
+            Volumes."/data" = {};
+          };
+        };
 
         environment = {
           TINYAUTH_APPURL = "https://fence.1e-9.space";
