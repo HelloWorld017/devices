@@ -71,6 +71,7 @@ in {
       ouch
       parsec-bin
       pinta
+      latestPkgs.photocraft
       pkg-config
       pnpm
       podman
@@ -86,6 +87,7 @@ in {
       rquickshare
       slack
       smartmontools
+      latestPkgs.soundcraft
       patchedPkgs.spotify
       tealdeer
       telegram-desktop
