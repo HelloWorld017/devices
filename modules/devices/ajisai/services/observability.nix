@@ -79,6 +79,7 @@
             GF_INSTALL_PLUGINS = "victoriametrics-logs-datasource";
             GF_SERVER_DOMAIN = "dashboard.1e-9.space";
             GF_SERVER_ROOT_URL = "https://dashboard.1e-9.space";
+            GF_AUTH_OAUTH_ALLOW_INSECURE_EMAIL_LOOKUP = "true";
           };
 
           secrets = [
