@@ -8,7 +8,7 @@ in {
       ports.allocation.names.blog = [ "ghost" "kaede" ];
       containers.services.blog.pods = {
         ghost = {
-          image = "ghcr.io/slopization/ghost-container:6.74.0-rc.0-nenw.1";
+          image = "ghcr.io/slopization/ghost-container:6.74.0-rc.0-nenw.2";
           dependsOn = [{ pod = "db"; }];
           environment = {
             database__client = "mysql";
@@ -17,10 +17,16 @@ in {
             database__connection__database = "ghost";
             security__staffDeviceVerification = "false";
             url = "https://blog.nenw.dev";
+
+            admin__auth__mode = "oidc";
+            admin__auth__oidc__issuer = "https://auth.nenw.dev";
+            admin__auth__oidc__clientId = "9e168366-f1c3-4847-a282-ac4f9468a5b5";
+            admin__auth__oidc__displayName = "nenw* Auth";
           };
 
           secrets = [
             { from = "yanamianna-blog-database-password"; to = "database__connection__password"; }
+            { from = "yanamianna-blog-client-secret"; to = "admin__auth__oidc__clientSecret"; }
           ];
 
           ports = [
