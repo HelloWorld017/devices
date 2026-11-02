@@ -17,6 +17,7 @@ in {
             database__connection__database = "ghost";
             security__staffDeviceVerification = "false";
             url = "https://blog.nenw.dev";
+            admin__url = "https://ghost.1e-9.space";
           };
 
           secrets = [
@@ -61,6 +62,16 @@ in {
       # Ingress
       ingress.rules."blog.nenw.dev" = {
         acmeHost = "nenw.dev";
+        proxyPort = ports.ghost;
+
+        locations."~* ^/ghost/api/(?:v[0-9]+/|canary/)?admin(?:/|$)".extraConfig = ''
+          return 404;
+        '';
+      };
+
+      ingress.rules."ghost.1e-9.space" = {
+        acmeHost = "1e-9.space";
+        tailscale = true;
         proxyPort = ports.ghost;
       };
 
