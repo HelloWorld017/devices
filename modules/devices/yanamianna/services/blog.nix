@@ -8,7 +8,7 @@ in {
       ports.allocation.names.blog = [ "ghost" "kaede" ];
       containers.services.blog.pods = {
         ghost = {
-          image = "docker.io/ghost:6.73-alpine";
+          image = "ghcr.io/slopization/ghost-container:6.74.0-rc.0-nenw.1";
           dependsOn = [{ pod = "db"; }];
           environment = {
             database__client = "mysql";
@@ -29,7 +29,7 @@ in {
           ];
 
           volumes = [
-            { from = "ghost_content"; to = "/var/lib/ghost/content"; uid = 1000; gid = 1000; }
+            { from = "ghost_content"; to = "/home/ghost/content"; uid = 1000; gid = 1000; }
           ];
         };
 
