@@ -6,12 +6,19 @@ in {
     pkgs.server = {
       # Service
       ports.allocation.names = [ "opencloud" ];
-      containers.services.opencloud.pods = {
+      containers.services.opencloud.pods = let
+        cspFile = builtins.toFile "opencloud-csp-auth.yaml" ''
+          directives:
+            connect-src:
+              - "https://auth.nenw.dev"
+        '';
+      in {
         opencloud = {
-          image = "docker.io/opencloudeu/opencloud-rolling:6.0.0";
+          image = "docker.io/opencloudeu/opencloud-rolling:9.0.0";
           volumes = [
             { from = "opencloud-data"; to = "/var/lib/opencloud"; uid = 1000; gid = 1000; }
             { from = "opencloud-config"; to = "/etc/opencloud"; uid = 1000; gid = 1000; }
+            { from = "${cspFile}"; to = "/etc/opencloud/csp-auth.yaml"; readOnly = true; }
           ];
 
           environment = {
@@ -19,6 +26,18 @@ in {
             OC_INSECURE = true;
             PROXY_HTTP_ADDR = "0.0.0.0:9200";
             PROXY_TLS = false;
+
+            # Auth Integration
+            GRAPH_ASSIGN_DEFAULT_USER_ROLE = false;
+            OC_EXCLUDE_RUN_SERVICES = "idp";
+            OC_OIDC_CLIENT_ID = "87b995ca-5e93-4310-ba38-ee909ef5dccb";
+            OC_OIDC_ISSUER = "https://auth.nenw.dev";
+            PROXY_CSP_CONFIG_FILE_LOCATION = "/etc/opencloud/csp-auth.yaml";
+            PROXY_OIDC_REWRITE_WELLKNOWN = true;
+            PROXY_ROLE_ASSIGNMENT_DRIVER = "oidc";
+            PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM = "opencloud_role";
+            PROXY_USER_OIDC_CLAIM = "email";
+            PROXY_USER_CS3_CLAIM = "mail";
           };
 
           ports = [
