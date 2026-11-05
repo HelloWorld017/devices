@@ -1,12 +1,16 @@
-{ repo, ... }:
+{ config, repo, ... }:
 {
   imports = [ repo.openssh ];
+
   config = {
     pkgs.server = {
-      # Firewall
+      ports = {
+        ports.openssh = 22;
+      };
+
       firewall.rules.ssh = {
-        from = [ "local" "tailscale" ];
-        allowedTCPPorts = [ 37089 ];
+        from = [ "tailscale" ];
+        allowedTCPPorts = [ config.pkgs.server.ports.ports.openssh ];
       };
     };
   };

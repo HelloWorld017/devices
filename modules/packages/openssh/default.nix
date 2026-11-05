@@ -1,9 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
   config = {
     services.openssh = {
       enable = true;
-      ports = [ 37089 ];
+      ports = lib.mkDefault [ 22 ];
       openFirewall = false;
       settings = {
         PasswordAuthentication = false;
