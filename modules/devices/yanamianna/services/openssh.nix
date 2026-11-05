@@ -9,7 +9,7 @@
       };
 
       firewall.rules.ssh = {
-        from = [ "tailscale" ];
+        from = [ "tailscale" "local" ];
         allowedTCPPorts = [ config.pkgs.server.ports.ports.openssh ];
       };
     };
