@@ -77,7 +77,7 @@ in {
         };
 
         webmail = {
-          image = "ghcr.io/bulwarkmail/webmail:1.18.0";
+          image = "ghcr.io/bulwarkmail/webmail:1.20.0";
           dependsOn = [ { pod = "mailserver"; } ];
           ports = [
             { from = { addr = "127.0.0.1"; port = ports.webmail; }; to = 3000; }
