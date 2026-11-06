@@ -36,7 +36,7 @@ in {
           return 404;
         '';
 
-        locations."^~ /image/" = {
+        locations."/image/" = {
           proxyPass = "http://127.0.0.1:${toString ports.images}";
         };
       };
