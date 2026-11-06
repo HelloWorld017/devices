@@ -109,31 +109,47 @@ in {
       };
 
       # Ingress
-      ingress.rules."mail.nenw.dev" = {
-        acmeHost = "nenw.dev";
-        proxyPort = ports.jmap;
+      ingress.rules = let
+        buildAliasIngress = host: {
+          acmeHost = host;
+          locations."/".extraConfig = ''
+            return 404;
+          '';
 
-        locations."/".extraConfig = ''
-            # Prevent duplicate upstream CORS headers
-            proxy_hide_header Access-Control-Allow-Origin;
-            proxy_hide_header Access-Control-Allow-Methods;
-            proxy_hide_header Access-Control-Allow-Headers;
-            proxy_hide_header Access-Control-Allow-Credentials;
+          locations."/.well-known/acme-challenge/" = {
+            proxyPass = "http://127.0.0.1:${toString ports.jmap}";
+          };
+        };
+      in {
+        "mail.nenw.dev" = {
+          acmeHost = "nenw.dev";
+          proxyPort = ports.jmap;
 
-            # Allow only Bulwark
-            add_header Access-Control-Allow-Origin "https://webmail.1e-9.space" always;
-            add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
-            add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-JMAP-Prefix, X-JMAP-Request-Id" always;
-            add_header Access-Control-Allow-Credentials "true" always;
-            add_header Vary "Origin" always;
+          locations."/".extraConfig = ''
+              # Prevent duplicate upstream CORS headers
+              proxy_hide_header Access-Control-Allow-Origin;
+              proxy_hide_header Access-Control-Allow-Methods;
+              proxy_hide_header Access-Control-Allow-Headers;
+              proxy_hide_header Access-Control-Allow-Credentials;
 
-            client_max_body_size 50m;
-        '';
-      };
+              # Allow only Bulwark
+              add_header Access-Control-Allow-Origin "https://webmail.1e-9.space" always;
+              add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+              add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-JMAP-Prefix, X-JMAP-Request-Id" always;
+              add_header Access-Control-Allow-Credentials "true" always;
+              add_header Vary "Origin" always;
 
-      ingress.rules."webmail.1e-9.space" = {
-        acmeHost = "1e-9.space";
-        proxyPort = ports.webmail;
+              client_max_body_size 50m;
+          '';
+        };
+
+        "webmail.1e-9.space" = {
+          acmeHost = "1e-9.space";
+          proxyPort = ports.webmail;
+        };
+
+        "mail.nenw.moe" = buildAliasIngress "nenw.moe";
+        "mail.khinenw.tk" = buildAliasIngress "khinenw.tk";
       };
 
       # Firewall

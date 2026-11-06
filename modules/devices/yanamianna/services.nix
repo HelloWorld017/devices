@@ -12,7 +12,7 @@
   ];
 
   config = {
-    pkgs.server.acme.domainNames = [ "nenw.dev" "1e-9.space" ];
+    pkgs.server.acme.domainNames = [ "khinenw.tk" "nenw.moe" "nenw.dev" "1e-9.space" ];
     pkgs.server.firewall.zones = {
       uplink = { interfaces = [ "enp3s0" "enp4s0" ]; };
       podman = { interfaces = [ "podman*" ]; };
