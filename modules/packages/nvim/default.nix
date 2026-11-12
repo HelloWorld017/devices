@@ -29,6 +29,11 @@
         type = bool;
         default = true;
       };
+
+      zig = mkOption {
+        type = bool;
+        default = true;
+      };
     };
   };
 
@@ -49,6 +54,7 @@
       ++ (lib.optional opts.languages.nix latestPkgs.nil)
       ++ (lib.optional opts.languages.graphql latestPkgs.graphql-language-service-cli)
       ++ (lib.optionals opts.languages.python [ latestPkgs.ruff latestPkgs.ty ])
+      ++ (lib.optionals opts.languages.zig [ latestPkgs.zls ])
     );
 
     home.programs.neovim = {
@@ -193,6 +199,13 @@
                 "filetypes" = ["python"];
                 "rootPatterns" = ["pyproject.toml"];
                 "requireRootPattern" = true;
+              };
+            })
+            // (lib.optionalAttrs opts.languages.python {
+              "zig" = {
+                "command" = "zls";
+                "filetypes" = ["zig"];
+                "rootPatterns" = ["build.zig"];
               };
             });
 
