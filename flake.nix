@@ -7,9 +7,9 @@
     self.submodules = true;
 
     # Core Inputs
-    nixpkgs-base = { follows = "nixpkgs-20261028"; };
+    nixpkgs-base = { follows = "nixpkgs-20261116"; };
     nixpkgs-latest = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
-    nixpkgs-20261028 = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
+    nixpkgs-20261116 = { url = "github:nixos/nixpkgs/nixpkgs-unstable"; };
 
     darwin = {
       url = "github:lnl7/nix-darwin/master";

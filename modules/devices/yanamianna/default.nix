@@ -1,11 +1,11 @@
-{ self, nixpkgs-20261028, ... }:
+{ self, nixpkgs-20261116, ... }:
 let
   device = self.lib.defineDevice {
     system = "x86_64-linux";
   };
 in
   {
-    nixosConfigurations."nenw-yanamianna" = nixpkgs-20261028.lib.nixosSystem {
+    nixosConfigurations."nenw-yanamianna" = nixpkgs-20261116.lib.nixosSystem {
       inherit (device) system specialArgs;
       modules = [
         device.base
