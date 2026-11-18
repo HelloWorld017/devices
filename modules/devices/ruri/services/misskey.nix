@@ -1,10 +1,7 @@
 { config, pkgs, ... }:
 let
   ports = config.pkgs.server.ports.ports;
-  misskey = (pkgs.misskey.override {
-      nodejs = pkgs.nodejs_26;
-      pnpm_11 = pkgs.pnpm_12;
-    })
+  misskey = pkgs.misskey
     .overrideAttrs (finalAttrs: previousAttrs: {
       version = "2026.10.1-nenw.1";
       src = pkgs.fetchFromGitHub {
