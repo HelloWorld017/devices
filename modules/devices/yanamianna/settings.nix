@@ -4,6 +4,13 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.supportedFilesystems = [ "ntfs" ];
+
+  # TODO(nixpkgs/linuxPackages_latest): Fix when nginx2root kernel vuln is resolved
+  boot.blacklistedKernelModules = [ "sctp" ];
+  boot.extraModprobeConfig = ''
+    install sctp ${pkgs.coreutils}/bin/false
+  '';
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

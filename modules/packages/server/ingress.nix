@@ -76,6 +76,16 @@
       recommendedProxySettings = true;
       recommendedTlsSettings = true;
 
+      package = pkgs.nginxMainline.overrideAttrs (old: {
+        version = "1.31.9";
+        nginxVersion = "1.31.9";
+
+        src = pkgs.fetchurl {
+          url = "https://nginx.org/download/nginx-1.31.9.tar.gz";
+          hash = "sha256-oRxe7uLiV/RHjw5kn4SwBAeH0nfS0+UjOVKqa23LgK0=";
+        };
+      });
+
       appendHttpConfig = lib.concatStringsSep "\n" (lib.flatten [
         ''
           proxy_ssl_server_name on;

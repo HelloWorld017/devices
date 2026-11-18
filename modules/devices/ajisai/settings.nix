@@ -5,6 +5,13 @@
   constants.device = "ajisai";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # TODO(nixpkgs/linuxPackages_latest): Fix when nginx2root kernel vuln is resolved
+  boot.blacklistedKernelModules = [ "sctp" ];
+  boot.extraModprobeConfig = ''
+    install sctp ${pkgs.coreutils}/bin/false
+  '';
+
   boot.loader.efi = {
     canTouchEfiVariables = false;
     efiSysMountPoint = "/boot/efi";
